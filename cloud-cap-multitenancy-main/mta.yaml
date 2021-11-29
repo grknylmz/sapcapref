@@ -1,0 +1,320 @@
+## Generated mta.yaml based on yo sap-partner-eng version 0.3.00
+## appName = capmt
+## language=nodejs; multiTenant=false
+## approuter=capmt-app
+_schema-version: '3.1'
+ID: capmt
+version: 0.0.1
+description: Cloud Application Programming(CAP) with Multitenancy using Service Manger Tenant Data Separation
+parameters:
+   enable-parallel-deployments: true
+  
+  
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install
+#      - npx -p @sap/cds-dk cds build
+# For some reason if you've bound a container in db it causes cds build to fail.
+      - rm -f db/.env
+      - cds build
+#      - cp -avp db/src/gen/ srv/gen/sdc/db/src
+#  after-all:
+#   - builder: custom
+#     commands:
+#      - rm -f srv/gen/sdc/db_comm/data-model.cds
+
+modules:
+
+### New Modules Here ###
+
+# cf push capmt-hdb -p db_comm -k 512M -m 512M -u none -b nodejs_buildpack ; sleep 30 ; cf stop capmt-hdb
+# cds build/all ; cf push capmt-hdb -p db_comm -k 512M -m 512M -u none -b nodejs_buildpack 
+ - name: capmt-hdb
+   type: hdb
+   path: db_comm
+   build-parameters:
+      # Don't package the dependencies if you're running into EINTEGRITY issues
+      ignore: ["default-env.json", "node_modules/", "package-lock.json"]
+      # Suppress the calling of npm install by listing no commands
+      builder: custom
+      commands: []
+   parameters:
+      memory: 512M
+      disk-quota: 512M
+   requires:
+    - name: capmt-hdi
+
+# cp -avp db_sub/src/views/ srv/hdbspecific/src/views/ ; cds build/all ; rm -rf db_sub ; cp -avp db db_sub ; cp -avp srv/hdbspecific/ db_sub/ ; cf push capmt-rtc -p db_sub -k 512M -m 512M -u none -b nodejs_buildpack ; sleep 30 ; cf stop capmt-rtc
+# cds build/all ; cf push capmt-rtc -p db -k 512M -m 512M -u none -b nodejs_buildpack
+ - name: capmt-rtc
+   type: hdb
+   path: db
+   build-parameters:
+      # Don't package the dependencies if you're running into EINTEGRITY issues
+      ignore: [".DS_Store", "default-env.json", "node_modules/", "package-lock.json"]
+      # Suppress the calling of npm install by listing no commands
+      builder: custom
+      commands: []
+   parameters:
+      memory: 512M
+      disk-quota: 512M
+   requires:
+    - name: capmt-hdi
+    - name: capmt-sub
+      properties:
+         TARGET_CONTAINER: '~{subscriber-container-name}'
+    - name: POC_XXX-table-grantor
+      group: SERVICE_REPLACEMENTS
+      properties:
+         key: POC_log-table-grantor
+         service: '~{POC_MAST-table-grantor-service}'
+
+
+# cf push capmt-srv -p srv -n ${org}-${space}-capmt-srv -d cfapps.us10.hana.ondemand.com -k 1024M -m 512M
+# cds build/all ; cp -avp db/src/gen/ srv/gen/sdc/db/src ; cf push capmt-srv -p srv -n partner-eng-prov-dev-capmt-srv -d cfapps.us10.hana.ondemand.com -k 1024M -m 512M -b nodejs_buildpack -c "node server.js"
+# cf deploy mta_archives/capmt.mtar -f -m capmt-srv
+ - name: capmt-srv
+   type: nodejs
+   build-parameters:
+      # Don't package the dependencies if you're running into EINTEGRITY issues
+      ignore: ["default-env.json", "node_modules/", "package-lock.json", "gen/sdc/db_comm/"]
+      # Suppress the calling of npm install by listing no commands
+      builder: custom
+      commands: []
+   path: srv
+   properties:
+      LOG_LEVEL: debug
+      EXIT: 1  # required by deploy.js task to terminate
+      SAP_JWT_TRUST_ACL: [{"clientid":"*","identityzone":"sap-provisioning"}]  # Trust between server and SaaS Manager
+      NODE_DEBUG: 'instance-manager'
+      # cf set-env capmt-srv CF_API_USER $CF_API_USER
+      # cf set-env capmt-srv CF_API_PW $CF_API_PW
+      # cf restage capmt-srv
+      #CF_API_USER: user@domain.com
+      #CF_API_PW: xxxxxx
+   parameters:
+      memory: 512M
+      disk-quota: 1024M
+      #host: ${org}-${space}-capmt-srv
+      #domain: cfapps.us10.hana.ondemand.com
+   provides:
+    - name: capmt_svc_api
+      properties:
+         url: ${default-url}
+   requires:
+    - name: capmt-uaa
+    - name: capmt-reg
+    - name: capmt-cis
+    - name: capmt-dst
+    - name: capmt-con
+    - name: capmt-smc
+    - name: capmt-hdi
+    - name: POC_XXX-table-grantor
+      group: SERVICE_REPLACEMENTS
+      properties:
+         key: POC_log-table-grantor
+         service: '~{POC_MAST-table-grantor-service}'
+
+
+# cf push capmt-app -p app -n capmt-app -d cfapps.us10.hana.ondemand.com -k 256M -m 256M
+ - name: capmt-app
+   type: html5
+   path: app
+   build-parameters:
+      # Don't package the dependencies if you're running into EINTEGRITY issues
+      ignore: ["default-env.json", "node_modules/", "package-lock.json"]
+      # Suppress the calling of npm install by listing no commands
+      builder: custom
+      commands: []
+   parameters:
+      #host: ${org}-${space}-capmt-app
+      #domain: cfapps.us10.hana.ondemand.com
+      #routes:
+      #  - route: capmt-app-${space}-${app-name}.${default-domain}
+      disk-quota: 256M
+      memory: 256M
+   provides:
+    - name: Router_api
+      properties:
+         url: ${default-url}
+         application: ${app-name}
+# CDS-MTX
+   properties:
+      TENANT_HOST_PATTERN: '^(.*)-${space}-${app-name}.${default-domain}'
+   requires:
+   # cf bind-service capmt-app CAPMT_UAA
+    - name: capmt-uaa
+   ### New Destinations Here ###
+    - name: capmt_svc_api
+      group: destinations
+      properties:
+         name: capmt_svc_be
+         url: ~{url}
+         forwardAuthToken: true
+
+resources:
+
+# cf create-service xsuaa application CAPMT_UAA -c ./cds-security.json
+ - name: capmt-uaa
+   type: org.cloudfoundry.managed-service
+   requires:
+    - name: Router_api
+   properties:
+      XSAPPNAME: ${xsuaa-app}
+   parameters:
+      # Re-run the following command after changing any @(requires: []) definitions in srv/*.cds
+      # Run this from the root of the project and uncomment the path:
+      # cds compile srv/ --to xsuaa,json > cds-security.json
+      #path: ./cds-security.json
+      # The combination of path: and config.scopes: Doesn't seem work.  Use one or the other.
+      # cds compile srv/ --to xsuaa,yaml and make sure the config: below matches
+      #path: ./cds-security.json
+      #path: ./xs-security.json
+      service: xsuaa
+      service-plan: application
+      service-name: CAPMT_UAA
+      xsuaa-app: ${space}-~{Router_api/application}
+      # Define within config what used to be in the xs-security.json file.  path: now pulls in cds scopes/role templates
+      # Convert with https://www.json2yaml.com/
+      # https://github.wdf.sap.corp/pages/cap/guides/authorization#role-assignments-with-xsuaa
+      config:
+         xsappname: ${xsuaa-app}
+         ### tenant-mode
+         tenant-mode: shared
+         description: Security profile of the capmt application
+         scopes:
+          - name: "$XSAPPNAME.Callback"
+            description: With this scope set, the callbacks for tenant onboarding, offboarding and getDependencies can be called.
+            grant-as-authority-to-apps: 
+             - "$XSAPPNAME(application,sap-provisioning,tenant-onboarding)"
+          - name: "$XSAPPNAME.Administrator"
+            description: Administrate the application
+          - name: "$XSAPPNAME.User"
+            description: Use the application
+         role-templates:
+          - name: Administrator
+            description: Administrator
+            scope-references:
+             - "$XSAPPNAME.Administrator"
+          - name: User
+            description: User Required
+            scope-references:
+             - "$XSAPPNAME.User"
+         oauth2-configuration:
+            redirect-uris: 
+             - "http*://*.${default-domain}/**"
+
+### New Resources Here ###
+
+# cf create-service hana hdi-shared CAPMT_HDI -c '{"config":{"schema":""}}'
+ - name: capmt-hdi
+   type: com.sap.xs.hdi-container
+   parameters:
+      service-name: CAPMT_HDI
+      config:
+         schema: 
+         #HANA Cloud in Partner Eng FSB : HANA Cloud : prod
+         #https://hana-cockpit.cfapps.us10.hana.ondemand.com/hcs/sap/hana/cloud/index.html#/org/8209938a-99cf-43cd-b7f1-b10dc6473d6d/space/07a22d2b-f1c9-465c-adec-a4ad43a75d29/databases/hana/9e54746d-8734-4889-a18b-7f16c3a29517/detail
+         #database_id: 9e54746d-8734-4889-a18b-7f16c3a29517
+         #HaaS in Home [US East (Ashburn)] : 0 Partner Eng US East : Machine_Learning_US : ml
+         #https://dbaas-web.cfapps.us10.hana.ondemand.com/dashboard#//org/c0baf8e2-045b-45b3-937b-5ef7197dc2e4/space/b6a8b872-6227-4d3b-b169-500046608477/service/197ee647-a43c-49f5-8ea6-5561a802ed6f
+         #database_id: 197ee647-a43c-49f5-8ea6-5561a802ed6f
+   properties:
+      common-container-name: '${service-name}'      
+
+# cf create-service hana hdi-shared CAPMT_SUB -c '{"config":{"schema":""}}'
+ - name: capmt-sub
+   type: com.sap.xs.hdi-container
+   parameters:
+      service-name: CAPMT_SUB
+      config:
+         schema: 
+         #HANA Cloud in Partner Eng FSB : HANA Cloud : prod
+         #https://hana-cockpit.cfapps.us10.hana.ondemand.com/hcs/sap/hana/cloud/index.html#/org/8209938a-99cf-43cd-b7f1-b10dc6473d6d/space/07a22d2b-f1c9-465c-adec-a4ad43a75d29/databases/hana/9e54746d-8734-4889-a18b-7f16c3a29517/detail
+         #database_id: 9e54746d-8734-4889-a18b-7f16c3a29517
+         #HaaS in Home [US East (Ashburn)] : 0 Partner Eng US East : Machine_Learning_US : ml
+         #https://dbaas-web.cfapps.us10.hana.ondemand.com/dashboard#//org/c0baf8e2-045b-45b3-937b-5ef7197dc2e4/space/b6a8b872-6227-4d3b-b169-500046608477/service/197ee647-a43c-49f5-8ea6-5561a802ed6f
+         #database_id: 197ee647-a43c-49f5-8ea6-5561a802ed6f
+   properties:
+      subscriber-container-name: '${service-name}'      
+
+# CAP-MTX Managed HANA (Internal Service Manager)
+ - name: capmt-smc
+   type: org.cloudfoundry.managed-service
+   requires:
+    - name: capmt-uaa
+   parameters:
+      service: service-manager
+      service-plan: container
+      service-name: CAPMT_SMC
+      polling_timeout_seconds: 240
+      config:
+         acquireTimeoutMillis: 9000
+         polling_timeout_seconds: 480
+         #HANA Cloud in Partner Eng FSB : HANA Cloud : prod
+         #https://hana-cockpit.cfapps.us10.hana.ondemand.com/hcs/sap/hana/cloud/index.html#/org/8209938a-99cf-43cd-b7f1-b10dc6473d6d/space/07a22d2b-f1c9-465c-adec-a4ad43a75d29/databases/hana/9e54746d-8734-4889-a18b-7f16c3a29517/detail
+         #database_id: 9e54746d-8734-4889-a18b-7f16c3a29517
+         #HaaS in Home [US East (Ashburn)] : 0 Partner Eng US East : Machine_Learning_US : ml
+         #https://dbaas-web.cfapps.us10.hana.ondemand.com/dashboard#//org/c0baf8e2-045b-45b3-937b-5ef7197dc2e4/space/b6a8b872-6227-4d3b-b169-500046608477/service/197ee647-a43c-49f5-8ea6-5561a802ed6f
+         #database_id: 197ee647-a43c-49f5-8ea6-5561a802ed6f
+
+# Multitenant Registration(using CAP-MTX style url)
+# Manually add route after tenant subscription
+# cf map-route capmt-app cfapps.us10.hana.ondemand.com --hostname xxxmtxsmsbi-dev-capmt-app
+ - name: capmt-reg
+   type: org.cloudfoundry.managed-service
+   requires:
+    - name: capmt-uaa
+   parameters:
+      service: saas-registry
+      service-plan: application
+      service-name: CAPMT_REG
+      config:
+         xsappname: ~{capmt-uaa/XSAPPNAME}
+         appName: capmt-${org}-${space}
+         displayName: capmt-${org}-${space}
+         description: 'capmt Multitenant App'
+         category: 'capmt Category'
+         appUrls:
+            onSubscription: https://${org}-${space}-capmt-srv.${default-domain}/mtx/v1/provisioning/tenant/{tenantId}
+            onSubscriptionAsync: false
+            onUnSubscriptionAsync: false
+            #callbackTimeoutMillis: 300000
+
+ - name: POC_XXX-table-grantor
+   type: org.cloudfoundry.existing-service
+   properties:
+      POC_MAST-table-grantor-service: '${service-name}'
+   parameters:
+      service-name: CAPMT_HDI
+
+# SAPCP 
+ - name: capmt-cis
+   type: org.cloudfoundry.managed-service
+   requires:
+    - name: capmt-uaa
+   parameters:
+      service: cis
+      service-plan: central
+      service-name: CAPMT_CIS
+
+# Destination Service  https://help.sap.com/viewer/cca91383641e40ffbe03bdc78f00f681/Cloud/en-US/7e306250e08340f89d6c103e28840f30.html
+ - name: capmt-dst
+   type: org.cloudfoundry.managed-service
+   requires:
+    - name: capmt-uaa
+   parameters:
+      service: destination
+      service-plan: lite
+      service-name: CAPMT_DST
+
+ - name: capmt-con
+   type: org.cloudfoundry.managed-service
+   requires:
+    - name: capmt-uaa
+   parameters:
+      service: connectivity
+      service-plan: lite
+      service-name: CAPMT_CON

@@ -1,0 +1,84 @@
+_schema-version: 3.3.0
+ID: city-explorer-demo-app
+version: 1.7.8
+parameters:
+  enable-parallel-deployments: true
+
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm install --production
+        - npx -p @sap/cds-dk cds build --production
+
+modules:
+  - name: city-cap-router
+    type: approuter.nodejs
+    path: app
+    deployed-after:
+      - city-image-uploader
+      - city-cap-srv
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: srv_api
+        group: destinations
+        properties:
+          forwardAuthToken: true
+          strictSSL: false
+          name: srv_api
+          url: ~{url}
+      - name: uploader_api
+        group: destinations
+        properties:
+          forwardAuthToken: true
+          strictSSL: false
+          name: uploader_api
+          url: ~{url}
+  - name: city-cap-db-deployer
+    type: hdb
+    path: db
+    parameters:
+      app-name: city-cap-db-deployer
+    requires:
+      - name: city-hdi-container
+  - name: city-cap-srv
+    type: nodejs
+    path: srv
+    provides:
+      - name: srv_api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: city-hdi-container
+  - name: city-image-uploader
+    type: nodejs
+    path: uploader
+    parameters:
+      memory: 512M
+      disk-quota: 512M
+    provides:
+      - name: uploader_api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: azure-blob-storage
+resources:
+  - name: city-hdi-container
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-container-name: ${service-name}
+    parameters:
+      service: hanatrial
+      service-alternatives: ["hana"]
+  - name: azure-blob-storage
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: azure-storage-blob-storage-account-and-container
+      service-plan: all-in-one
+      config:
+        location: "northeurope"
+        resourceGroup: "SAPCloudPlatform"
+        accessTier: "Cool"

@@ -1,0 +1,21 @@
+### Tüm Kitaplar
+get http://localhost:4004/browse/Books
+
+
+
+### 207 nolu  kitap
+get http://localhost:4004/browse/Books(207)
+
+
+### Submit Orders
+POST http://localhost:4004/browse/Orders
+Content-Type: application/json
+
+{
+    "OrderNo":"2019-09...",
+    "Items":[
+        {"book_ID":207,"amount": 5}
+    ]
+}
+
+

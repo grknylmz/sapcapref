@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!-- call with ?sap-ui5=[stable, nightly, local] to switch to another version -->
+
+	<head>
+		<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+		<meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+		<title>Office Supplies</title>
+
+		<script>
+			window["sap-ushell-config"] = {
+				defaultRenderer: "fiori2",
+				renderers: {
+					fiori2: {
+						componentData: {
+							config: {
+								search: "hidden",
+							},
+						},
+					},
+				},
+				applications: {
+					"books-manage": {
+						title: "Manage Books",
+						description: "Fiori Elements v4",
+						additionalInformation:
+							"SAPUI5.Component=c4u-flp-books",
+						applicationType: "URL",
+						url: "/browse/books/webapp",
+						navigationMode: "embedded",
+					},
+				},
+				bootstrapPlugins: {
+					RuntimeAuthoringPlugin: {
+						component: "sap.ushell.plugins.rta",
+						config: {
+							validateAppVersion: false,
+						},
+					},
+					PersonalizePlugin: {
+						component: "sap.ushell.plugins.rta-personalize",
+						config: {
+							validateAppVersion: false,
+						},
+					},
+				},
+			};
+
+			function urlParameter(sParam) {
+				var sPageURL = window.location.search.substring(1),
+					sURLVariables = sPageURL.split("&");
+
+				for (var i = 0; i < sURLVariables.length; i++) {
+					var sVariable = sURLVariables[i],
+						sParameterName = sVariable.split("=");
+
+					if (sParameterName[0] === sParam) {
+						return sParameterName[1];
+					}
+				}
+			}
+
+			var oUI5Versions = {
+					stable: "https://sapui5.hana.ondemand.com",
+					nightly:
+						"https://sapui5nightly.int.sap.eu2.hana.ondemand.com",
+					untested:
+						"https://sapui5untested.int.sap.eu2.hana.ondemand.com",
+					local: "http://localhost:8080",
+					undefined:
+						"https://sapui5nightly.int.sap.eu2.hana.ondemand.com",
+				},
+				oApps = window["sap-ushell-config"].applications,
+				sUI5 = oUI5Versions[urlParameter("sap-ui5")],
+				bUseCache = urlParameter("sap-ui5") !== "local";
+
+			window.onInit = function () {
+				sap.ui.require(
+					[
+						"sap/fe/core/AppComponent",
+						"sap/ui/fl/FakeLrepConnectorLocalStorage",
+					],
+					function (AppComponent, FakeLrepConnectorLocalStorage) {
+						"use strict";
+
+						var _init = AppComponent.prototype.init,
+							_destroy = AppComponent.prototype.destroy;
+
+						AppComponent.prototype.init = function () {
+							var hash = hasher.getHash().split("&")[0],
+								fakeLrep = oApps[hash].fakeLrep;
+
+							if (fakeLrep) {
+								// initialize with predefined changes
+								FakeLrepConnectorLocalStorage.enableFakeConnector(
+									{
+										sInitialComponentJsonPath: fakeLrep,
+									}
+								);
+							} else {
+								FakeLrepConnectorLocalStorage.enableFakeConnector();
+							}
+
+							return _init.apply(this, arguments);
+						};
+
+						AppComponent.prototype.destroy = function () {
+							FakeLrepConnectorLocalStorage.disableFakeConnector();
+
+							return _destroy.apply(this, arguments);
+						};
+
+						sap.ui.getCore().attachInit(function () {
+							sap.ushell.Container.createRenderer().placeAt(
+								"content"
+							);
+						});
+					}
+				);
+			};
+
+			document.write(
+				'<script src="' +
+					sUI5 +
+					'/test-resources/sap/ushell/bootstrap/sandbox.js"><' +
+					"/script>"
+			);
+			document.write(
+				'<script src="' +
+					sUI5 +
+					'/resources/sap-ui-core.js"' +
+					' data-sap-ui-theme="sap_fiori_3"' +
+					' data-sap-ui-libs="sap.m,sap.ushell"' +
+					' data-sap-ui-compatVersion="edge"' +
+					' data-sap-ui-bindingSyntax="complex"' +
+					' data-sap-ui-frameOptions="allow"' +
+					' data-sap-ui-async="true"' +
+					' data-sap-ui-xx-viewCache="' +
+					bUseCache +
+					'"' +
+					' data-sap-ui-onInit="onInit"><' +
+					"/script>"
+			);
+		</script>
+	</head>
+
+	<body class="sapUiBody" id="content"></body>
+</html>

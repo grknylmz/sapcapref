@@ -1,0 +1,14 @@
+### Browse Books
+GET http://localhost:4004/browse/Books
+
+### Browse Books with expanded Authors
+get http://localhost:4004/browse/Books?$expand=author
+
+###Try to insert into Books 
+POST  http://localhost:4004/browse/Books
+Content-Type: application/json
+
+{
+    "title" : "C# & NodeJS & ABAP & JAVASCRIPT",
+    "stock" : 101
+}

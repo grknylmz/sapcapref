@@ -1,0 +1,192 @@
+## Generated mta.yaml based on template version 0.2.0
+## appName = cap-flp
+## language=nodejs; multiTenant=false
+## approuter=
+_schema-version: '3.1'
+ID: cap-flp
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+  # deploy_mode: html5-repo
+  config:
+    sizeLimit: 16
+  
+  
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install
+      - npx cds build
+
+modules:
+
+#####################################################################################################################
+# DATABASE
+#####################################################################################################################
+ - name: cap-flp-db
+   type: hdb
+   path: gen/db  
+   parameters:
+     app-name: cap-flp-db-dev
+     memory: 64M  
+   requires:
+    - name: cap-flp-hdi-container
+
+#####################################################################################################################
+# Service
+#####################################################################################################################
+
+ - name: cap-flp-srv
+   type: nodejs
+   path: gen/srv
+   deployed-after:
+    - cap-flp-db
+   properties:
+     EXIT: 1  # required by deploy.js task to terminate 
+   requires:
+    # Resources extracted from CAP configuration
+    - name: cap-flp-hdi-container
+    - name: cap-flp-uaa
+   provides:
+    - name: srv-binding      # required by consumers of CAP services (e.g. approuter)
+      properties:
+        url: ${default-url}
+
+
+#####################################################################################################################
+# Apps
+#####################################################################################################################
+ - name: cap-flp-browse-books
+   type: html5
+   path: app/browse/books/
+   build-parameters:
+       builder: custom
+       commands:
+           - npm install
+           - npm run build
+           - cp ./xs-app.json dist/xs-app.json # needed!
+       supported-platforms: []
+       build-result: dist
+
+ - name: cap-flp-html5-app-deployer
+   type: com.sap.html5.application-content
+   path: cf_mta/appdeployer/
+   requires:
+       - name: cap-flp-html5-repo-host
+   parameters:
+       memory: 64M
+       disk-quota: 128M
+   build-parameters:
+       requires:
+           - name: cap-flp-browse-books
+             artifacts:
+                 - "./*"
+             target-path: resources/books/
+       ignore: [".gitignore"]
+#####################################################################################################################
+# App Router
+#####################################################################################################################
+ - name: cap-flp-approuter
+   deployed-after:
+       - cap-flp-portalsite
+   type: approuter.nodejs
+   path: cf_mta/approuter
+   parameters:
+       disk-quota: 256M
+       memory: 128M
+   requires:
+       - name: cap-flp-portalsite
+       - name: cap-flp-portal
+       - name: cap-flp-html5-repo-runtime
+       - name: cap-flp-uaa
+       - name: srv-binding
+         group: destinations
+         properties:
+             forwardAuthToken: true
+             name: srv-binding
+             strictSSL: false
+             url: ~{url}
+   properties:
+       SEND_XFRAMEOPTIONS: false     
+#####################################################################################################################
+# FLP
+#####################################################################################################################
+ - name: cap-flp-portalsite
+   type: com.sap.portal.content
+   path: cf_mta/portalsite
+   deployed-after:
+       - cap-flp-html5-app-deployer
+   parameters:
+       memory: 64M
+       disk-quota: 64M
+   requires:
+       - name: cap-flp-portal
+       - name: cap-flp-uaa
+       - name: cap-flp-html5-repo-host
+
+
+resources:
+ # services extracted from CAP configuration
+ # 'service-plan' can be configured via 'cds.requires.<name>.vcap.plan'
+# ------------------------------------------------------------
+#  - name: cap-flp-hdi-container
+# # ------------------------------------------------------------
+#    type: com.sap.xs.hdi-container
+#    parameters:
+#      service: hanatrial  # or 'hanatrial' on trial landscapes
+#      service-plan: hdi-shared
+#    properties:
+#      hdi-service-name: ${service-name}
+
+ - name: cap-flp-html5-repo-runtime
+   type: org.cloudfoundry.managed-service
+   parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+
+ - name: cap-flp-html5-repo-host
+   type: org.cloudfoundry.managed-service
+   parameters:
+      service-plan: app-host
+      service: html5-apps-repo
+
+ - name: cap-flp-hdi-container
+   type: com.sap.xs.hdi-container
+   properties:
+       hdi-container-name: ${service-name}
+   requires:
+       - name: db
+
+ - name: cap-flp-uaa
+   type: org.cloudfoundry.managed-service
+   parameters:
+       service-plan: application
+       service: xsuaa
+       config:
+           xsappname: cap-flp-${org}-${space}
+           tenant-mode: dedicated
+           scopes:
+               - name: uaa.user
+                 description: UAA
+           role-templates:
+               - name: Token_Exchange
+                 description: UAA
+                 scope-references:
+                     - uaa.user
+
+
+ - name: cap-flp-portal
+   type: org.cloudfoundry.managed-service
+   parameters:
+       service-plan: standard
+       service: portal
+
+ - name: db
+   type: com.sap.xs.hdi-container
+   parameters:
+     service: hanatrial  # or 'hanatrial' on trial landscapes
+     service-plan: hdi-shared
+   properties:
+     hdi-service-name: ${service-name}       

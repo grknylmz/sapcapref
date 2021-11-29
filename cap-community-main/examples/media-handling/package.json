@@ -1,0 +1,49 @@
+{
+  "name": "media-handling",
+  "version": "1.0.0",
+  "description": "application for demoing CAP media handling",
+  "repository": "<Add your repository here>",
+  "license": "WTFPL",
+  "dependencies": {
+    "@sap/cds": "^3.33.1",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.4.22",
+    "@ui5/cli": "2.0.2",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "helmet": "^3.22.0",
+    "passport": "^0.4.1"
+  },
+  "engines": {
+    "node": "^10"
+  },
+  "scripts": {
+    "build": "cds build/all --clean",
+    "deploy": "cds deploy",
+    "startv2": "node v2server",
+    "start": "cds run"
+  },
+  "files": [
+    "srv",
+    "db"
+  ],
+  "cds": {
+    "odata": {
+      "version": "v4"
+    },
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "model": [
+          "srv",
+          "db"
+        ],
+        "credentials": {
+          "database": "media-handling.db"
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "sqlite3": "^4.1.1"
+  }
+}

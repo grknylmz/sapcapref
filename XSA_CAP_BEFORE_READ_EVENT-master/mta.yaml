@@ -1,0 +1,50 @@
+ID: CAPCalcViewDemo
+_schema-version: "2.1"
+version: 0.0.1
+modules:
+  - name: CAPCalcViewDemo-db
+    type: hdb
+    path: db
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    requires:
+      - name: CAPCalcViewDemo-db-hdi-container
+        properties:
+          TARGET_CONTAINER: ~{hdi-container-name}
+
+  
+      - name: cross-container-service-1
+        group: SERVICE_REPLACEMENTS
+
+        properties:
+          key: ServiceName_1
+          service: ~{the-service-name}
+                            
+
+
+  - name: CAPCalcViewDemo-srv
+    type: nodejs
+    path: srv
+    parameters:
+      memory: 512M
+      disk-quota: 512M
+    provides:
+      - name: srv_api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: CAPCalcViewDemo-db-hdi-container
+resources:
+  - name: CAPCalcViewDemo-db-hdi-container
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-container-name: ${service-name}
+
+  - name: cross-container-service-1
+    parameters:
+       service-name: SFLIGHT
+    properties:
+       the-service-name: ${service-name}
+    type: org.cloudfoundry.existing-service
+

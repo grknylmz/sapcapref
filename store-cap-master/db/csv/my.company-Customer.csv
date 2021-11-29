@@ -1,0 +1,3 @@
+ID;forename;surname;socialId;phone;email;creationDate;address.streetName;address.streetNumber;address.city;address.state;address.country;address.postcode
+1;Nicholas;Checan;123456789;+551199999-9999;nicholas.checan@gmail.com;2019-07-15;Groove Street;420;Los Santos;San Adreas;Canada;90210
+2;Jonathan;Wick;91923929X;+551198765-4321;test@test.com;2020-02-25;Evergreen Terrace;742;Springfield;Missouri;United States;69696

@@ -1,0 +1,14 @@
+{
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "postgres"
+      },
+      "postgres": {
+        "dialect": "plain",
+        "impl": "../../../",
+        "model": ["srv"]
+      }
+    }
+  }
+}

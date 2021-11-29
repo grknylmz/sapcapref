@@ -1,0 +1,37 @@
+{
+  "name": "@capire/fiori",
+  "version": "1.0.0",
+  "dependencies": {
+    "@capire/bookstore": "*",
+    "@sap/cds": "^5",
+    "express": "^4.17.1",
+    "passport": "^0.4.1"
+  },
+  "scripts": {
+    "start": "cds run --in-memory?",
+    "watch": "cds watch"
+  },
+  "cds": {
+    "requires": {
+      "auth": {
+        "strategy": "dummy"
+      },
+      "ReviewsService": {
+        "kind": "odata",
+        "model": "@capire/reviews"
+      },
+      "OrdersService": {
+        "kind": "odata",
+        "model": "@capire/orders"
+      },
+      "messaging": {
+        "[production]": { "kind": "enterprise-messaging" },
+        "[development]": { "kind": "file-based-messaging" },
+        "[hybrid!]": { "kind": "enterprise-messaging-shared" }
+      },
+      "hana": {
+        "deploy-format": "hdbtable"
+      }
+    }
+  }
+}

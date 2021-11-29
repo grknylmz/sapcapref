@@ -1,0 +1,32 @@
+{
+  "name": "store-cap",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "ISC",
+  "dependencies": {
+    "@sap/cds": "3.21.x",
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "npx cds run"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "model": [
+          "db/",
+          "srv/",
+          "app/"
+        ],
+        "credentials": {
+          "database": "db/my-company.db"
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "sqlite3": "^4.1.1"
+  }
+}

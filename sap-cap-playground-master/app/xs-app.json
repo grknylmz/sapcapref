@@ -1,0 +1,10 @@
+{
+    "welcomeFile": "./index.html",
+    "authenticationMethod": "none",
+    "routes": [{
+        "source": "^.*/catalog/(.*)$",
+        "target": "$1",
+        "destination": "srv_api",
+        "csrfProtection": false
+      }]
+}

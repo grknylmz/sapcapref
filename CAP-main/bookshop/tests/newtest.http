@@ -1,0 +1,22 @@
+###Service Document
+GET http://localhost:4004/browse/
+
+
+###Service $metadata document 
+GET http://localhost:4004/browse/$metadata
+
+### Browsing Books  
+GET http://localhost:4004/browse/Books?
+&$select=title,author
+&$expand=curreny
+&sap-language=en
+
+
+### Browsing Authors
+GET http://localhost:4004/admin/Authors?
+ &$select=name,dateOfBirth,placeOfBirth
+ &$expand=books($select=title;$expand=currency)
+ &$filter=ID eq 101
+ &sap-language=en
+
+

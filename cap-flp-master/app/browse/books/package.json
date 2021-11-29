@@ -1,0 +1,11 @@
+{
+	"name": "c4u-flp-books",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"build": "ui5 build -a --include-task=generateManifestBundle generateCachebusterInfo --clean-dest"
+	},
+	"devDependencies": {
+		"@ui5/cli": "^2.2.6"
+	}
+}

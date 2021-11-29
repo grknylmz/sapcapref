@@ -1,0 +1,7 @@
+cds compile helloworld/srv/say.cds --to edmx
+cds compile helloworld/srv/say.cds --to sql
+cds compile helloworld/srv/say.cds --to json
+cds help
+cds run helloworld/
+cds init 
+cds watch

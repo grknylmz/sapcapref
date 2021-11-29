@@ -1,0 +1,26 @@
+_schema-version: 2.0.0
+ID: sap-cap-playground
+version: 1.0.0
+modules:
+  - name: sap-cap-playground-srv
+    type: nodejs
+    path: srv
+    parameters:
+      memory: 512M
+      disk-quota: 256M
+    provides:
+      - name: srv_api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: sap-cap-playground-db-hdi-container
+      - name: sap-cap-playground-uaa
+resources:
+  - name: sap-cap-playground-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: application
+      service: xsuaa
+      config:
+        xsappname: sap-cap-playground-${space}
+        tenant-mode: dedicated

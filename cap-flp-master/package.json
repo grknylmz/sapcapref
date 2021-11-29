@@ -1,0 +1,36 @@
+{
+  "name": "cap-flp",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^3",
+    "@sap/hana-client": "^2.4.202",
+    "@sap/xsenv": "^3.0.0",
+    "@sap/xssec": "^2.2.5",
+    "@ui5/cli": "^2.2.6",
+    "express": "^4"
+  },
+  "scripts": {
+    "start": "npx cds run"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "hana"
+      },
+      "uaa": {
+        "kind": "xsuaa"
+      }
+    }
+  },
+  "sapux": [
+    "app/browse/books"
+  ],
+  "devDependencies": {
+    "@sap-ux/specification": "^1.71.5",
+    "sqlite3": "^4.2.0"
+  }
+}

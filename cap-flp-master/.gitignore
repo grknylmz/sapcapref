@@ -1,0 +1,42 @@
+# CAP cap-flp
+_out
+*.db
+connection.properties
+default-*.json
+gen/
+node_modules/
+package-lock.json
+target/
+cf_mta/node_modules
+cf_mta/appdeployer/resources
+app/browse/books/dist
+app\browse\books\dist\*
+
+
+# Web IDE, App Studio
+.che/
+.gen/
+
+# MTA
+*_mta_build_tmp
+*.mtar
+mta_archives/
+
+# Other
+.DS_Store
+*.orig
+*.log
+
+*.iml
+*.flattened-pom.xml
+
+# IDEs
+.vscode
+.idea
+
+
+# Source folder of SAP Fiori Tools generated project
+app\books\src
+
+# Source folder of SAP Fiori Tools generated project
+app\books2\src

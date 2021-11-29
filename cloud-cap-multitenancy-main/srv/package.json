@@ -1,0 +1,129 @@
+{
+  "name": "capmt-srv",
+  "description": "Generated from ../package.json, do not change!",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=8.0.0 <11.0.0"
+  },
+  "saved_deps": {
+    "@sap/cds": "latest",
+    "@sap/cds-mtx": "git://github.wdf.sap.corp/I830671/cds-mtx.git#e2dd61a19e7e7e02ecd25ca93c545dc34836d0e6",
+    "@sap/instance-manager": "2.1.0",
+    "other": "latest"
+  },
+  "external_deps": {
+    "@sap/cds-mtx": "git://github.com/andrewlunde/cds-mtx.git#fix/suburl",
+    "@sap/instance-manager": "git://github.com/andrewlunde/node-instance-manager#poc-sm",
+    "@sap/hdi-deploy": "git://github.com/andrewlunde/hdideploy.js.git",
+    "other": "latest"
+  },
+  "deploy_deps3": {
+    "@sap/cds": "3.34.2",
+    "@sap/cds-mtx": "1.0.13",
+    "@sap/instance-manager": "^2.2",
+    "other": "not_latest_but_working"
+  },
+  "deploy_deps4": {
+    "@sap/cds": "^4",
+    "@sap/cds-mtx": "1.0.16",
+    "@sap/instance-manager": "^2.2",
+    "other": "latest_but_not_working"
+  },
+  "push_deps": {
+    "push_cmd": "cd srv ; npm install --production ; cd .. ; cf push mtxsm-srv -p srv -n conciletime-dev-mtxsm-srv -d cfapps.us10.hana.ondemand.com -k 1024M -m 512M",
+    "@sap/cds": "3.34.2",
+    "@sap/cds-mtx": "git://github.wdf.sap.corp/I830671/cds-mtx.git#fix/suburl",
+    "@sap/instance-manager": "git://github.wdf.sap.corp/I830671/node-instance-manager#poc-sm",
+    "xhdb": "^0.17.2",
+    "other": "latest"
+  },
+  "dependencies": {
+    "@sap/xsenv": "latest",
+    "@sap/xssec": "^3",
+    "@sap/cds": "^4",
+    "@sap/cds-mtx": ">=1.0.26",
+    "@sap/instance-manager": "^2.2",
+    "@sap/hana-client": "^2.7",
+    "@sap/hdi-deploy": "^4",
+    "nodemon": "^2",
+    "cfenv": "latest",
+    "passport": "^0.4.1",
+    "express": "^4.17.1",
+    "body-parser": "latest"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "xpostinstall": "npm dedupe && node .build.js",
+    "debugstart": "node --inspect server.js",
+    "start": "nodemon server.js",
+    "watch": "nodemon -w . -i node_modules/**,.git/** -e cds -x npm run build"
+  },
+  "private": true,
+  "cds": {
+    "mtx": {
+      "app": {
+        "urlpart": "-dev-capmt-app.cfapps.us10.hana.ondemand.com"
+      },
+      "api": {
+        "model": true,
+        "provisioning": true,
+        "metadata": true
+      },
+      "element-prefix": [
+        "Z_",
+        "ZZ_"
+      ],
+      "namespace-blacklist": [
+        "com.sap.",
+        "sap."
+      ],
+      "entity-whitelist": [
+        "my.bookshop.Books"
+      ],
+      "service-whitelist": []
+    },
+    "auth": {
+      "passport": {
+        "strategy": "JWT"
+      }
+    },
+    "odata": {
+      "version": "v4"
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "query": {
+      "limit": {
+        "max": 4000
+      }
+    },
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "pool": {
+          "acquireTimeoutMillis_doc": "max milliseconds an acquire call will wait for a resource before timing out. (default no limit), if supplied should non-zero positive integer.",
+          "acquireTimeoutMillis": 4000,
+          "softIdleTimeoutMillis_doc": "amount of time an object may sit idle in the pool before it is eligible for eviction by the idle object evictor (if any), with the extra condition that at least 'min idle' object instances remain in the pool. Default -1 (nothing can get evicted)",
+          "softIdleTimeoutMillis": 80000,
+          "evictionRunIntervalMillis_doc": "How often to run eviction checks. Default: 0 (does not run).",
+          "evictionRunIntervalMillis": 0,
+          "max_doc": "maximum number of resources to create at any given time. (default=1)",
+          "max": 3000,
+          "xmin_doc": "minimum number of resources to keep in pool at any given time. If this is set >= max, the pool will silently set the min to equal max. (default=0)",
+          "min": 10
+       },
+        "model": [
+          "gen"
+        ],
+        "multiTenant": true,
+        "vcap": {
+          "label": "service-manager"
+        }
+      },
+      "uaa": {
+        "kind": "xsuaa"
+      }
+    }
+  }
+}
