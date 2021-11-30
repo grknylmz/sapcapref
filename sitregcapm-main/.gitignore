@@ -1,0 +1,14 @@
+gen/
+.gen/
+node_modules/
+target/
+*.db
+.DS_Store
+_out
+.che/
+.cds_gen.log
+*.orig
+**/edmx/*
+default-env.json
+.testresults
+mta_archives/

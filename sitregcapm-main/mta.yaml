@@ -1,0 +1,65 @@
+ID: sitregcapm
+_schema-version: "2.1"
+version: 0.0.1
+parameters:
+  enable-parallel-deployments: true
+
+modules:
+  - name: sitregcapm-db
+    type: hdb
+    path: db
+    build-parameters:
+      ignore: ["node_modules/"]
+    parameters:
+      memory: 256M
+      disk-quota: 256M
+    requires:
+      - name: sitregcapm-db-hdi-container
+  - name: sitregcapm-srv
+    type: nodejs
+    path: srv
+    build-parameters:
+      ignore: ["node_modules/"]
+    parameters:
+      memory: 512M
+      disk-quota: 1024M
+    provides:
+      - name: srv_api
+        properties:
+          url: ${default-url}
+    requires:
+      - name: sitregcapm-db-hdi-container
+      - name: sitregcapm-uaa
+
+  - name: sitregcapm-app
+    type: html5
+    path: app
+    build-parameters:
+      ignore: ["node_modules/"]
+      builder: npm
+    parameters:
+       disk-quota: 512M
+       memory: 256M
+    requires:
+     - name: sitregcapm-uaa
+     - name: srv_api
+       group: destinations
+       properties:
+          forwardAuthToken: true
+          strictSSL: false
+          name: srv_api
+          url: ~{url}
+
+resources:
+  - name: sitregcapm-db-hdi-container
+    parameters:
+      service: hanatrial
+      service-plan: hdi-shared
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-container-name: ${service-name}
+  - name: sitregcapm-uaa
+    parameters:
+      path: ./xs-security.json
+      service-plan: application
+    type: com.sap.xs.uaa
