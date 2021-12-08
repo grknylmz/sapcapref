@@ -1,0 +1,15 @@
+{
+    "routes": [
+        {
+            "source": "^/NodeWS(.*)$",
+            "target": "$1",
+            "authenticationType": "none",
+            "destination": "NodeWsEm_api",
+            "csrfProtection": false
+        },
+        {
+            "source": "^/(.*)",
+            "destination": "srv_api"
+        }
+    ]
+}

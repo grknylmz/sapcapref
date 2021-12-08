@@ -1,0 +1,113 @@
+{
+  "_version": "1.8.0",
+  "sap.app": {
+    "id": "inicial",
+    "type": "application",
+    "title": "Browse Books",
+    "description": "Sample Application",
+    "i18n": "i18n/i18n.properties",
+    "dataSources": {
+      "CatalogService": {
+        "uri": "/v2/orders/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      }
+    },
+    "-sourceTemplate": {
+      "id": "ui5template.basicSAPUI5ApplicationProject",
+      "-id": "ui5template.smartTemplate",
+      "-version": "1.40.12"
+    }
+  },
+  "sap.ui5": {
+
+		"rootView": {
+			"viewName": "inicial.view.View1",
+			"type": "XML",
+			"async": true,
+			"id": "View1"
+		},
+        
+    "dependencies": {
+      "libs": {
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      },
+      "": {
+        "dataSource": "CatalogService",
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true,
+          "groupProperties": {
+            "default": {
+              "submit": "Auto"
+            }
+          }
+        }
+      }
+    },
+    "routing": {
+      "config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "inicial.view",
+				"controlAggregation": "pages",
+				"controlId": "app",
+				"clearControlAggregation": false
+			},
+			"routes": [
+				{
+					"name": "RouteView1",
+					"pattern": "RouteView1",
+					"target": [
+						"TargetView1"
+					]
+        },
+        {
+					"name": "Gannt",
+					"pattern": "Gannt",
+					"target": [
+						"Gannt"
+					]
+				}        
+			],
+			"targets": {
+				"TargetView1": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "View1",
+					"viewName": "View1"
+        },
+				"Gannt": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewId": "Gannt",
+					"viewName": "Gannt"
+				}        
+			}
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "fullWidth": true
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}

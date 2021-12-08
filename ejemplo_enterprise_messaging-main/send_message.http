@@ -1,0 +1,4 @@
+
+
+GET http://localhost:4004/enterprise-messaging/send() HTTP/1.1
+

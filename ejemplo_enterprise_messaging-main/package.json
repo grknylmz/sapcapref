@@ -1,0 +1,32 @@
+{
+    "name": "ejemplo_capm_gannt",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap/cds": "^4",
+        "@sap/cds-odata-v2-adapter-proxy": "^1.4.47",
+        "express": "^4",
+        "sqlite": "^4.0.15",
+        "@sap/xb-msg-amqp-v100": "latest"
+    },
+    "devDependencies": {
+        "sqlite3": "^5.0.0"
+    },
+    "scripts": {
+        "start": "npx cds run"
+    },
+    "cds": {
+        "requires": {
+            "db": {
+                "kind": "sqlite",
+                "model": "*"
+            },
+            "messaging": {
+                "kind": "enterprise-messaging"
+            }
+        }
+    }
+}

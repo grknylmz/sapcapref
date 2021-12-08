@@ -1,0 +1,4 @@
+ID;ObjectName;HierarchyNodeLevel;DrillDownState;Magnitude;StartDate;EndDate;parent_ID
+58040e66-1dcd-4ffb-ab10-fdce32028b79;Cepsa;1;leaf;25;2019-01-01;2020-01-31;58040e66-1dcd-4ffb-ab10-fdce32028b79
+58040e66-1dcd-4ffb-ab10-fdce32028b90;Jose Muñoz;2;leaf;25;2019-01-01;2020-01-31;58040e66-1dcd-4ffb-ab10-fdce32028b79
+58040e66-1dcd-4ffb-ab10-fdce32028b80;FCC Ceps;1;expanded;25;2019-01-31;2020-01-31;58040e66-1dcd-4ffb-ab10-fdce32028b80

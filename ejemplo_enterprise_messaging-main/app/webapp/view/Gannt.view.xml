@@ -1,0 +1,4 @@
+<mvc:View controllerName="inicial.controller.Gannt"	xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc">
+           
+    <Button text="lala" press=".onPress"/>
+</mvc:View>

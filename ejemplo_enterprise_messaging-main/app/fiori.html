@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Bookshop</title>
+
+	<script src="https://sapui5.hana.ondemand.com/1.78.6/resources/sap-ui-core.js"
+    	data-sap-ui-libs="sap.m, sap.collaboration, sap.ui.layout"
+    	data-sap-ui-compatVersion="edge"
+		data-sap-ui-theme="sap_fiori_3"
+		data-sap-ui-preload="async"
+		data-sap-ui-frameOptions="allow"
+		data-sap-ui-xx-bindingSyntax="complex" 
+		data-sap-ui-resourceroots='{"inicial": "./webapp"}'
+	></script>
+	<script>
+
+
+sap.ui.getCore().attachParseError(
+				function(oEvent) {
+					var oElement = oEvent.getParameter("element");
+					oElement.setValueState(sap.ui.core.ValueState.Error);
+				});
+			sap.ui.getCore().attachValidationSuccess(
+				function(oEvent) {
+					var oElement = oEvent.getParameter("element");
+					oElement.setValueState(sap.ui.core.ValueState.Success);
+				});
+		
+			sap.ui.getCore().attachInit(function() {
+
+				new sap.m.Shell({
+					appWidthLimited: false,
+					app: new sap.ui.core.ComponentContainer({
+						height : "100%",
+						width : "100%",
+						name : "inicial"
+					})
+				}).placeAt("content");
+			});
+
+		
+	</script>
+
+</head>
+<body class="sapUiBody" id="content"></body>
+</html>
