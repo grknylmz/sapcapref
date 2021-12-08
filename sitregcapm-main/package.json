@@ -53,10 +53,6 @@
       },
       "db": {
         "kind": "sqlite",
-        "model": [
-          "db",
-          "srv"
-        ],
         "credentials": {
           "database": "db/sitregcapm.db"
         }
