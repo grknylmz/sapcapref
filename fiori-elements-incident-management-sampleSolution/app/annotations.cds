@@ -36,7 +36,10 @@ annotate service.Incidents with @(UI : {
             Value : category_code
         },
         //insert your line item enhancement here
-
+        {
+            $Type : 'UI.DataField',
+            Value : title
+        }
     ],
 
     //the managed associations incidentStatus, category and priority provide a denormalized _code property to the root entity SafetIncidents
@@ -49,7 +52,7 @@ annotate service.Incidents with @(UI : {
         incidentStatus_code,
         priority_code,
         //insert your selection fields enhancement here
-
+        category_code
     ],
 
     //	Information for the header area of an entity representation
@@ -57,8 +60,7 @@ annotate service.Incidents with @(UI : {
         TypeName       : '{i18n>Incident}',
         TypeNamePlural : '{i18n>Incidents}',
         TypeImageUrl   : 'sap-icon://alert',
-        Title          : {Value : title},
-        Description    : {Value : ID}
+        Title          : {Value : title}
     },
 
     //Facets for additional object header information (shown in the object page header)
@@ -101,13 +103,32 @@ annotate service.Incidents with @(UI : {
                 Value : title
             },
             //insert your field group enhancement here 
-            
+            {
+                $Type : 'UI.DataField',
+                Value : description
+            }
        ]
     },
 
     //insert your new field group here
-
-
+    FieldGroup #GeneralInformation: {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type:'UI.DataField',
+                Value : priority_code,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : category_code,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : incidentStatus_code,
+            },
+        ],        
+    },
+    
     //object page content area is organized by facets referring to e.g. fieldgroup and lineItem annotations
     //https://github.com/SAP/odata-vocabularies/blob/master/vocabularies/UI.md#Facet    
     Facets : [
@@ -123,7 +144,12 @@ annotate service.Incidents with @(UI : {
                     Target : '@UI.FieldGroup#IncidentDetails'
                 },
                 //insert your reference facet enhancement here
-
+                {
+                    $Type : 'UI.ReferenceFacet',
+                    Target : '@UI.FieldGroup#GeneralInformation',
+                    Label : '{i18n>GeneralInformation}',
+                    ID : 'GeneralInformationFacet',
+                },
             ]
         },
         //this facet shows a table on the object page by referring to a lineItem annotation via association incidentFlow
@@ -141,7 +167,11 @@ annotate service.Incidents with @(UI : {
 annotate service.IncidentFlow with @(UI : {
     LineItem : [
         //insert your column enhancement here
-        
+        {
+            $Type : 'UI.DataField',
+            Value : stepStatus,
+            Criticality : criticality,
+        },
         {
             $Type : 'UI.DataField',
             Value : processStep

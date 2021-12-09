@@ -28,8 +28,24 @@ annotate service.Incidents with {
   category @Common : {
         Text            : category.name,
         TextArrangement : #TextOnly,
-        //insert your value list here       
-    };  
+        //insert your value list here    
+        ValueList : {
+            $Type :  'Common.ValueListType',
+            Label : 'Category',
+            CollectionPath : 'Category',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : category_code,
+                    ValueListProperty : 'code'
+                },
+                {
+                    $Type : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'descr'
+                }
+            ]
+        }       
+    };      
   priority @Common : {
         Text            : priority.name,
         TextArrangement : #TextOnly,
@@ -40,8 +56,8 @@ annotate service.Incidents with {
 annotate service.Category with {
     code @Common : {
         Text            : name,
-        TextArrangement : #TextOnly
-    }    @title :  'Category'
+        TextArrangement : #TextOnly,
+    }   @title :  'Category'
 };
 
 annotate service.Priority with {

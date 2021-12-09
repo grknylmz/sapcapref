@@ -23,6 +23,9 @@ The branch *sampleSolution* contains a sample solution which represents the fina
 
 After checking out the *sampleSolution* branch, execute the command *npm install* followed by the command *cds watch* to run the application.
 
+* Start application --> http://localhost:4004/incidents/webapp/index.html
+* Start OPA tests --> http://localhost:4004/incidents/webapp/test/integration/opaTests.qunit.html
+
 ## How to obtain support
 
 Project is provided as is. Check out the [SAP Community](https://answers.sap.com) for additional questions.
