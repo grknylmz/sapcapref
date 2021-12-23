@@ -1,0 +1,59 @@
+<mvc:View
+	controllerName="ui.controller.FacultyCourseEdit"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+    <App class="sapUiSizeCompact">
+        <pages>
+            <Page title="{i18n>CourseEditTitle}">
+                <customHeader>
+					<Bar>
+						<contentRight>
+                            <Button id="new" icon="sap-icon://add" text="{i18n>appNewCourse}" enabled="true" press=".onNewItemPress($event, 'Course')" />
+						</contentRight>
+					</Bar>
+				</customHeader>
+                <content>
+                    <Table
+                        id="courseTable"
+                        growing="true"
+                        growingThreshold="20"
+                        items="{
+                            path: '/Courses',
+                            parameters: {
+                                $count: true
+                            },
+                            sorter: {
+                                path: 'name'
+                            }
+                        }">
+                        <columns>
+                            <Column id="userNameColumn">
+                                <Text text="{i18n>CourseID}"/>
+                            </Column>
+                            <Column id="firstNameColumn">
+                                <Text text="{i18n>CourseName}"/>
+                            </Column>
+                            <Column id="lastNameColumn">
+                                <Text text="{i18n>CourseFaculty}"/>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem type="Navigation" press=".onListItemPress($event, 'Courses')">
+                                <cells>
+                                    <Text text="{ID}"/>
+                                </cells>
+                                <cells>
+                                    <Text text="{name}"/>
+                                </cells>
+                                <cells>
+                                    <Text text="{faculty/name}"/>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </content>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>

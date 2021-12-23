@@ -1,0 +1,12 @@
+msehi,dimid,isocode,name
+CM,LENGTH,CMT,Centimeter(cm)
+DM,LENGTH,DMT,Decimeter(dm)
+FT,LENGTH,FOT,Foot(Foot)
+IN,LENGTH,IN,Inch(")
+KM,LENGTH,KMT,Kilometer(km)
+M,LENGHT,MTR,Meter(m)
+MI,LENGTH,SMI,Micrometer(µm)
+MIM,LENGTH,4H,Micrometer(µm)
+MM,LENGTH,MMT,Mile(mile)
+NAM,LENGTH,C45,Nanometer(nm)
+YD,LENGTH,YRD,Yards(yd)

@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ibe-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ibe-app
+  template:
+    metadata:
+      labels:
+        app: ibe-app
+        version: v1
+    spec:
+      containers:
+      - name: ibe-app
+        image: nishgopdocker/ibeimage
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: 32Mi
+        ports:
+        - containerPort: 4004
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ibe-service
+  labels:
+    app: ibe-app
+spec:
+  ports:
+  - port: 4004
+    name: http
+    targetPort: 4004
+  selector:
+    app: ibe-app
+---
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  name: dev-team2214-ibe-rule
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  service:
+    name: ibe-service
+    port: 4004
+    host: dev-team2214-ibe-rule
+  rules:
+    - path: /.*
+      methods: ["GET"]
+      mutators: []
+      accessStrategies:
+        - handler: allow
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ibe-file01
+data:
+  testfile01.txt: |
+    # This is just a sample file content
+    # for a file added through yaml
+      volumes:
+      - name: ibe-volume
+        persistentVolumeClaim:
+          claimName: ibe-volumeclaim
+      - name: ibe-file01-configmap
+        configMap: 
+          name: ibe-file01
+      volumeMounts:
+      - mountPath: /usr/src/app/myvolume
+        name: ibe-volume
+      - mountPath: /usr/src/app/config
+        name: ibe-file01-configmap
+
+  

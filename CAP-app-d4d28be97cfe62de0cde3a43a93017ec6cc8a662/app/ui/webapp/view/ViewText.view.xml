@@ -1,0 +1,51 @@
+<mvc:View
+	height="100%"
+	controllerName="ui.controller.ViewText"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+    xmlns:l="sap.ui.layout">
+	<SplitApp id="splitApp" initialDetail="detailPage" initialMaster="masterPage">
+		<detailPages>
+			<Page
+				id="detailPage"
+				showHeader="true">
+				<customHeader>
+					<Bar>
+                        <contentLeft>
+                            <Button id="menuBack" icon="sap-icon://nav-back" visible="{device>/system/phone}" press=".onBackToMasterPress"/>
+                        </contentLeft>
+					</Bar>
+				</customHeader>
+                <l:VerticalLayout class="sapUiContentPadding" width="100%">
+                    <Label text="{i18n>ThesisTitle}:" labelFor="thesisTitle"/>
+                    <Text text="{title}" id="thesisTitle" emptyIndicatorMode="On"/>
+                    <Label text="{i18n>ThesisDesc}:" labelFor="thesisDesc"/>
+                    <Text text="{description}" id="thesisDesc" emptyIndicatorMode="On"/>
+                    <Label text="{i18n>ThesisLastEdited}:" labelFor="thesisLast"/>
+                    <Text text="{
+                        path: 'Text>/modifiedAt',
+                        type: 'sap.ui.model.type.DateTime',
+                        formatOptions: {
+                            source: {
+                                pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                            },
+                            style: 'medium'
+                        } 
+                    } ({Text>/modifiedBy})" id="thesisLast" emptyIndicatorMode="On"/>
+                    <Label text="{i18n>ThesisText}:" labelFor="thesisText"/>
+                    <TextArea value="{Text>/text}" id="thesisText" rows="25" width="100%" enabled="true" editable="false"/>
+                </l:VerticalLayout>
+			</Page>
+		</detailPages>
+		<masterPages>
+			<Page id="masterPage" title="{i18n>ViewThesesMasterTitle}" icon="sap-icon://action" class="sapUiStdPage">
+				<content>
+					<List id="thesisList">
+						<items>
+						</items>
+					</List>
+				</content>
+			</Page>
+		</masterPages>
+	</SplitApp>
+</mvc:View>

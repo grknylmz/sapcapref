@@ -1,0 +1,265 @@
+<mvc:View
+		height="100%"
+		controllerName="ui.controller.SubmitThesis"
+		xmlns:form="sap.ui.layout.form"
+		xmlns:core="sap.ui.core"
+		xmlns:u="sap.ui.unified"
+		xmlns:mvc="sap.ui.core.mvc"
+        xmlns:l="sap.ui.layout"
+		xmlns="sap.m">
+		<NavContainer id="wizardNavContainer">
+			<pages>
+				<Page
+				id="wizardContentPage"
+				showHeader="false">
+					<content>
+						<Wizard id="ThesisSubmitWizard" class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
+								complete="wizardCompletedHandler">
+							<WizardStep id="SelectThesisStep"
+										title="{i18n>WizardPageTitle1}"
+										validated="false">
+								<Text class="sapUiSmallMarginBottom"
+										text="{i18n>WizardPage1Desc}"/>
+								<VBox alignItems="Center"
+                                    justifyContent="Center"
+                                    width="100%">
+                                    <MessageStrip
+                                        id="noApplyFoundStrip"
+                                        text="{i18n>WizardThesisSelectError}"
+                                        type="Error"
+                                        showIcon="true"
+                                        visible="false"
+                                        showCloseButton="true"
+                                        class="sapUiMediumMarginBottom"/>
+                                    <MessageStrip
+                                        id="deadlineExpired"
+                                        text="{i18n>WizardDeadlineExpiredError}"
+                                        type="Error"
+                                        showIcon="true"
+                                        visible="false"
+                                        showCloseButton="true"
+                                        class="sapUiMediumMarginBottom"/>
+                                    <MessageStrip
+                                        id="archivedThesis"
+                                        text="{i18n>WizardArchivedThesisError}"
+                                        type="Error"
+                                        showIcon="true"
+                                        visible="false"
+                                        showCloseButton="true"
+                                        class="sapUiMediumMarginBottom"/>
+									<Select
+                                        id="thesisSelect"
+                                        wrapItemsText="true"
+                                        class="sapUiLargeMargin">
+                                        <items>
+                                            <core:Item text="Válassz tételt"/>                
+                                        </items>
+                                    </Select>
+                                    <Button
+                                        id="getThesisBtn"
+                                        enabled="true"
+                                        text="{i18n>WizardButtonCheck}"
+                                        press=".onCheckReceivedData"
+                                    />
+								</VBox>
+							</WizardStep>
+							<WizardStep id="SelectEditType"
+										validated="false"
+										title="{i18n>WizardPageTitle2}">
+								<Text text="{i18n>WizardPage2Desc}"/>
+                                <HBox alignItems="Center"
+                                    justifyContent="Center"
+                                    width="100%">
+                                    <SegmentedButton id="editTypeSelect"
+                                                    selectedButton="none"
+                                                    selectionChange=".onEditTypeSelected"
+                                                    enabled="true"
+                                                    width="200px">
+                                        <items>
+                                            <SegmentedButtonItem key="edit" text="{i18n>WizardButtonEditMode}"/> 
+                                            <SegmentedButtonItem key="new" text="{i18n>WizardButtonNewMode}"/>
+                                        </items>
+                                    </SegmentedButton>
+                                </HBox>
+							</WizardStep>
+							<WizardStep id="SelectThesisText"
+										validated="true"
+										activate="bindDataToForm"
+										title="{i18n>WizardPageTitle3}">
+								<Text text="{i18n>WizardPage3Desc}"/>
+                                <form:SimpleForm id="inputForm" 
+                                                width="auto"
+                                                class="sapUiResponsiveMargin"
+                                                layout="ResponsiveGridLayout"
+                                                labelSpanL="3"
+                                                labelSpanM="3"
+                                                emptySpanL="4"
+                                                emptySpanM="4"
+                                                columnsL="1"
+                                                columnsM="1"
+                                                title="{i18n>WizardPageTitle3a}" >
+
+
+                                        <Label text="{i18n>ThesisTitle}" />
+                                        <Text text="{Form>/title}" emptyIndicatorMode="On"/>
+                                        <Label text="{i18n>ThesisDesc}" />
+                                        <Text text="{Form>/description}" emptyIndicatorMode="On"/>
+                                        <Label text="{i18n>ThesisFaculty}" />
+                                        <Text text="{Form>/faculty/name}" emptyIndicatorMode="On"/>
+                                        <Label text="{i18n>ThesisDate}" />
+                                        <Text text="{
+                                            path: 'Form>/date',
+                                            type: 'sap.ui.model.type.DateTime',
+                                            formatOptions: {
+                                                source: {
+                                                    pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                                                },
+                                                style: 'medium'
+                                            }
+                                        } ({
+                                            path: 'Form>/date',
+                                            type: 'sap.ui.model.type.DateTime',
+                                            formatOptions: {
+                                                source: {
+                                                    pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                                                },
+                                                relative: true,
+                                                relativeScale: 'auto'
+                                            }
+                                        })" emptyIndicatorMode="On"/>
+                                        <Label text="{i18n>ThesisPersonCount2}" />
+                                        <Text text="{Form>/max_students}" emptyIndicatorMode="On"/>
+	                            </form:SimpleForm>
+                                <form:SimpleForm title="{i18n>WizardPageTitle3b}" >
+                                    <Table inset="false"
+                                            items="{
+                                                path: 'Form>/students'
+                                            }"
+                                            class="sapFDynamicPageAlignContent"
+                                            width="auto">
+                                        <columns>
+                                            <Column width="auto">
+                                                <Text text="{i18n>ThesisPersonName}"/>
+                                            </Column>
+                                            <Column width="auto">
+                                                <Text text="{i18n>ThesisPersonApplyDate}"/>
+                                            </Column>
+                                            <Column width="auto">
+                                                <Text text="{i18n>ThesisPersonFaculty}"/>
+                                            </Column>
+                                            <Column	hAlign="End">
+                                                <Text text="{i18n>ThesisPersonCourse}"/>
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem type="Inactive">
+                                                <cells>
+                                                    <ObjectIdentifier text="{Form>student/last_name} {Form>student/first_name}"/>
+                                                    <Text text="{
+                                                        path: 'Form>createdAt',
+                                                        type: 'sap.ui.model.type.DateTime',
+                                                        formatOptions: {
+                                                            source: {
+                                                                pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                                                            },
+                                                            style: 'medium'
+                                                        }
+                                                    } ({
+                                                        path: 'Form>createdAt',
+                                                        type: 'sap.ui.model.type.DateTime',
+                                                        formatOptions: {
+                                                            source: {
+                                                                pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                                                            },
+                                                            relative: true,
+                                                            relativeScale: 'auto'
+                                                        }
+                                                    })"/>
+                                                    <Text text="{Form>student/faculty/name}"/>
+                                                    <Text text="{Form>student/course/name}"/>
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </form:SimpleForm>
+                                <form:SimpleForm title="{i18n>WizardPageTitle3c}" >
+                                    <Table inset="false"
+                                            items="{
+                                                path: 'Form>/teachers'
+                                            }"
+                                            class="sapFDynamicPageAlignContent"
+                                            width="auto">
+                                        <columns>
+                                            <Column width="auto">
+                                                <Text text="{i18n>ThesisPersonName}"/>
+                                            </Column>
+                                            <Column width="auto">
+                                                <Text text="{i18n>ThesisPersonFaculty}"/>
+                                            </Column>
+                                            <Column	hAlign="End">
+                                                <Text text="{i18n>ThesisPersonEmail}"/>
+                                            </Column>
+                                        </columns>
+                                        <items>
+                                            <ColumnListItem type="Inactive" >
+                                                <cells>
+                                                    <ObjectIdentifier text="{Form>teacher/last_name} {Form>teacher/first_name}"/>
+                                                    <Text text="{Form>teacher/faculty/name}"/>
+                                                    <Text text="{Form>teacher/email}"/>
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </form:SimpleForm>
+                                <form:SimpleForm title="{i18n>WizardPageTitle3d}" >
+                                	<Label text="{i18n>WizardThesisText}">
+                                        <layoutData>
+                                            <l:GridData span="XL2 L2 M2 S12" />
+                                        </layoutData>
+                                    </Label>
+                                    <TextArea value="{Form>/thesisText}" width="100%" valueLiveUpdate="true" rows="20"/>
+                                </form:SimpleForm>
+							</WizardStep>
+						</Wizard>
+					</content>
+					<footer>
+						<OverflowToolbar>
+							<ToolbarSpacer/>
+							<Button text="{i18n>WizardCancelText}" press="onWizardCancel"/>
+						</OverflowToolbar>
+					</footer>
+				</Page>
+				<Page id="wizardReviewPage" showHeader="false">
+					<content>
+						<form:SimpleForm
+								title="{i18n>WizardReviewTitle}"
+								editable="false">
+							<form:content>
+                                <Label text="{i18n>ThesisTitle}">
+                                    <layoutData>
+                                        <l:GridData span="XL2 L2 M2 S12" />
+                                    </layoutData>
+                                </Label>
+                                <Text text="{Form>/title}" emptyIndicatorMode="On"/>
+								<Label text="{i18n>WizardThesisNewText}">
+                                    <layoutData>
+                                        <l:GridData span="XL2 L2 M2 S12" />
+                                    </layoutData>
+                                </Label>
+								<TextArea value="{Form>/thesisText}" width="100%" height="100%" editable="false" rows="20"/>
+								<Link press=".editThesisText" text="{i18n>WizardEditText}"/>
+							</form:content>
+						</form:SimpleForm>
+					</content>
+					<footer>
+						<Bar>
+							<contentRight>
+								<Button text="{i18n>WizardFinalSubmitText}" press="onWizardSubmit"/>
+								<Button text="{i18n>WizardCancelText}" press="onWizardCancel"/>
+							</contentRight>
+						</Bar>
+					</footer>
+				</Page>
+			</pages>
+		</NavContainer>
+</mvc:View>

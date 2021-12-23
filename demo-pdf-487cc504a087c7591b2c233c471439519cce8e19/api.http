@@ -1,0 +1,20 @@
+POST http://localhost:4004/demo/Directory
+Content-Type: application/json
+
+{
+    "fileName": "Just a Filename",
+    "fileDescription": "Just a description for testing"
+}
+
+### Create the new media resource. Use the ID returned from the previous call for the directory ID
+POST http://localhost:4004/demo/Documents
+Content-Type: application/json
+
+{
+    "mimeType": "application/pdf",
+    "directory_ID": "196d4aeb-b323-4f27-8332-589fb18b8898",
+    "downloadName": "Test_PDF.pdf"
+}
+
+### Update the MediaResource via i.e. Postman
+### Use the ID returned from the previous call

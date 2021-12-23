@@ -1,0 +1,133 @@
+{
+	"_version": "1.8.0",
+	"sap.app": {
+		"id": "ibe",
+		"type": "application",
+		"title": "Individualized Buying Experience",
+		"description": "Sample Application",
+		"i18n": "i18n/i18n.properties",
+		"dataSources": {
+			"ibeService": {
+				"uri": "/ibe/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "4.0"
+				}
+			}
+		},
+        "-sourceTemplate": {
+            "id": "ui5template.basicSAPUI5ApplicationProject",
+			"-id": "ui5template.smartTemplate",
+			"-version": "1.40.12"
+		}
+	},
+	"sap.ui5": {
+        "dependencies": {
+            "libs": {
+                "sap.fe.templates": {}
+            }
+        },
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"": {
+				"dataSource": "ibeService",
+				"settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect" : true,
+                    "earlyRequests": true,
+                    "groupProperties": {
+                        "default": {
+                          "submit": "Auto"
+                        }
+                    }
+				}
+			}
+		},
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "ibeList",
+                    "target": "ibeList"
+                },
+                {
+                    "pattern": "Reqs({key}):?query:",
+                    "name": "ReqsDetails",
+                    "target": "ReqsDetails"
+                },
+                {
+                    "pattern": "ibe({boo})/Items({boo2}):?query:",
+                    "name": "ibeItemsDetails",
+                    "target": "ibeItemsDetails"
+                }
+            ],
+            "targets": {
+                "ibeList": {
+                    "type": "Component",
+                    "id": "ibeList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+						"settings" : {
+							"entitySet" : "ibeReq",
+							"navigation" : {
+								"Reqs" : {
+									"detail" : {
+										"route" : "ibeDetails"
+										}
+								}
+							}
+						}
+					}
+                },
+                "ibeDetails": {
+                    "type": "Component",
+                    "id": "ibeDetails",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings" : {
+                            "entitySet": "ibeReq",
+							"navigation" : {
+								"Items": {
+                                    "detail": {
+                                        "route": "ibeItemsDetails"
+                                    }
+                                },
+                                "dummy": {
+                                    "detail": {
+                                        "route": "ibeDetails"
+                                    }
+                                }
+							}
+						}
+					}
+                },
+                "ibeItemsDetails": {
+                    "type": "Component",
+                    "id": "ibeItemsDetails",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings" : {
+                            "entitySet": "ibeReq_Items"
+                        }
+                    }
+                }
+            }
+        },
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"fullWidth": false
+	},
+	"sap.fiori": {
+		"registrationIds": [],
+		"archeType": "transactional"
+	}
+}

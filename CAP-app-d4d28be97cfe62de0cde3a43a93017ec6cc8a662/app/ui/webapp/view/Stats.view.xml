@@ -1,0 +1,109 @@
+<mvc:View
+	controllerName="ui.controller.Stats"
+	displayBlock="true"
+	xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core">
+    <App class="sapUiSizeCompact">
+        <pages>
+            <Page showHeader="false">
+                <content>
+                    <Panel expandable="true" expanded="true" headerText="{i18n>TeachersStats}" width="auto">
+                        <content>
+                            <layout:FixFlex minFlexSize="500">
+                                <layout:fixContent>
+                                    <OverflowToolbar>
+                                        <Label text="{i18n>QueryLabelPart1}" />
+                                        <Select
+                                            id="TeachersSelect">
+                                            <core:Item key="gt" text="{i18n>DateAfter}" />
+                                            <core:Item key="lt" text="{i18n>DateBefore}" />
+                                        </Select>
+                                        <Label text="{i18n>QueryLabelPart2}" />
+                                        <DateTimePicker
+                                            id="TeacherQueryDatePicker" valueFormat="yyyy-MM-ddTHH:mm:ss'Z'" displayFormat="medium" width="auto" placeholder="Dátum..." change=".onDatePickerChange"/>
+                                        <Button press=".onQueryButtonPress($event, 'Teacher')" type="Emphasized" icon="sap-icon://search" text="{i18n>QueryText}"/>
+                                    </OverflowToolbar>
+                                </layout:fixContent>
+                                <layout:flexContent>
+                                    <viz:Popover id="chartPopover"></viz:Popover>
+                                    <viz:VizFrame id="vizFrame" uiConfig="{applicationSet:'fiori'}"
+                                        height='100%' width="100%" vizType='donut'>
+                                        <viz:dataset>
+                                            <viz.data:FlattenedDataset data="{/TeachersStats()}">
+                                                <viz.data:dimensions>
+                                                    <viz.data:DimensionDefinition name="Oktatói NEPTUN"
+                                                        value="{NEPTUN}" />
+                                                </viz.data:dimensions>
+                                                <viz.data:measures>
+                                                    <viz.data:MeasureDefinition name="Kapcsolódó témák száma"
+                                                        value="{VALUE}" />
+                                                </viz.data:measures>
+                                            </viz.data:FlattenedDataset>
+                                        </viz:dataset>
+
+                                        <viz:feeds>
+                                            <viz.feeds:FeedItem uid="size" type="Measure"
+                                                values="Kapcsolódó témák száma" />
+                                            <viz.feeds:FeedItem uid="color" type="Dimension"
+                                                values="Oktatói NEPTUN" />
+                                        </viz:feeds>
+                                    </viz:VizFrame>
+                                </layout:flexContent>
+                            </layout:FixFlex>
+                        </content>
+                    </Panel>
+                    <Panel expandable="true" expanded="true" headerText="{i18n>StudentsStats}" width="auto">
+                        <content>
+                            <Table
+                                id="StudentsTable"
+                                growing="true"
+                                growingThreshold="20"
+                                items="{
+                                    path: '/StudentsStats()',
+                                    type: 'sap.ui.model.odata.type.Int32'
+                                }">
+                                <headerToolbar>
+                                    <OverflowToolbar>
+                                        <Label text="{i18n>QueryLabelPart1}" />
+                                        <Select
+                                            id="StudentsSelect">
+                                            <core:Item key="gt" text="{i18n>DateAfter}" />
+                                            <core:Item key="lt" text="{i18n>DateBefore}" />
+                                        </Select>
+                                        <Label text="{i18n>QueryLabelPart2}" />
+                                        <DateTimePicker
+                                            id="StudentQueryDatePicker" valueFormat="yyyy-MM-ddTHH:mm:ss'Z'" displayFormat="medium" width="auto" placeholder="Dátum..." change=".onDatePickerChange"/>
+                                        <Button press=".onQueryButtonPress($event, 'Student')" type="Emphasized" icon="sap-icon://search" text="{i18n>QueryText}"/>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column>
+                                        <Text text="{i18n>UsersStudents}"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>StatsNumberOfMods}"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem type="Inactive">
+                                        <cells>
+                                            <Text text="{LAST_NAME} {FIRST_NAME} ({NEPTUN})"/>
+                                        </cells>
+                                        <cells>
+                                            <Text text="{VALUE}"/>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+                    </Panel>
+                </content>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>

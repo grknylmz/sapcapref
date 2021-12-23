@@ -1,0 +1,23 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+    <Dialog
+        id="facultyEditDialog"
+        title="{i18n>EditDialogTitle}">
+        <buttons>
+            <Button icon="sap-icon://save" text="{i18n>appSave}" type="Emphasized" press=".onCloseEditDialog($event, 'faculty')"/>
+        </buttons>
+	    <f:SimpleForm id="facultyEditForm"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			singleContainerFullSize="false" >
+			<f:content>
+                <Label text="{i18n>FacultyID}"/>
+				<Text text="{ID}" emptyIndicatorMode="On"/>
+				<Label text="{i18n>FacultyName}"/>
+				<Input id="name" value="{name}" />
+            </f:content>
+        </f:SimpleForm>
+    </Dialog>
+</core:FragmentDefinition>

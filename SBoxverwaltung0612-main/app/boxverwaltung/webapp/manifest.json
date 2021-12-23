@@ -1,0 +1,199 @@
+{
+  "_version": "1.32.0",
+  "sap.app": {
+    "id": "slah.db",
+    "type": "application",
+    "title": "{{title}}",
+    "description": "{{description}}",
+    "i18n": {
+      "bundleName": "slah.db.i18n.i18n",
+      "supportedLocales": ["en", "de"],
+      "fallbackLocale": "en"
+    },
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "processor/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "offline": false,
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "ui5template.fiorielements.v4.lrop",
+      "version": "1.0.0"
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "box-inbound": {
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          },
+          "semanticObject": "box",
+          "action": "process",
+          "title": "Process Box",
+          "subTitle": "Process Boxen",
+          "icon": "sap-icon://flight"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "sap-icon://flight",
+      "favIcon": "sap-icon://flight",
+      "phone": "sap-icon://flight",
+      "phone@2": "sap-icon://flight",
+      "tablet": "sap-icon://flight",
+      "tablet@2": "sap-icon://flight"
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "resources": {
+      "js": [],
+      "css": []
+    },
+    "dependencies": {
+      "minUI5Version": "1.89.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "slah.db.i18n.i18n",
+          "supportedLocales": ["en", "de", "fr"],
+          "fallbackLocale": "en"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "BoxList",
+          "target": "BoxList"
+        },
+        {
+          "pattern": "Box({key}):?query:",
+          "name": "BoxObjectPage",
+          "target": "BoxObjectPage"
+        },
+        {
+          "pattern": "Box({key})/to_Geraete({key2}):?query:",
+          "name": "GeraeteObjectPage",
+          "target": "GeraeteObjectPage"
+        }
+      ],
+      "targets": {
+        "BoxList": {
+          "type": "Component",
+          "id": "BoxList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "entitySet": "Box",
+              "variantManagement": "Page",
+              "initialLoad": true,
+              "navigation": {
+                "Box": {
+                  "detail": {
+                    "route": "BoxObjectPage"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "BoxObjectPage": {
+          "type": "Component",
+          "id": "BoxObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "Box",
+              "navigation": {
+                "to_Geraete": {
+                  "detail": {
+                    "route": "GeraeteObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "to_Geraete/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "personalization": {
+                      "column": true,
+                      "sort": false
+                    },
+                    "creationMode": {
+                      "name": "Inline",
+                      "createAtEnd": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "GeraeteObjectPage": {
+          "type": "Component",
+          "id": "GeraeteObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "Geraete"
+            }
+          }
+        }
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    }
+  },
+  "sap.platform.abap": {
+    "_version": "1.1.0",
+    "uri": ""
+  },
+  "sap.platform.hcp": {
+    "_version": "1.1.0",
+    "uri": ""
+  },
+  "sap.fiori": {
+    "_version": "1.1.0",
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "service": "slah.db"
+  }
+}

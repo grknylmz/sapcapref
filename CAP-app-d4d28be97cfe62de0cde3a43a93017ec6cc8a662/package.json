@@ -1,0 +1,39 @@
+{
+  "name": "CAPapp",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/audit-logging": "^5.0.0",
+    "@sap/cds": "^4",
+    "@sap/hana-client": "^2.6.61",
+    "@sap/xsenv": "^3.1.0",
+    "@sap/xssec": "^3.1.2",
+    "express": "^4",
+    "passport": "^0.4.1"
+  },
+  "scripts": {
+    "start": "NODE_ENV=production cds run"
+  },
+  "cds": {
+    "build": {
+      "target": "."
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "requires": {
+      "db": {
+        "kind": "hana"
+      },
+      "uaa": {
+        "kind": "xsuaa"
+      }
+    }
+  },
+  "sapux": [
+    "app/ui"
+  ]
+}

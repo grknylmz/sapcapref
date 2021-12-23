@@ -1,0 +1,9 @@
+{
+    "DestinationName": "../service/workflowtest2/",
+    "OfflineEnabled": false,
+    "LanguageURLParam": "",
+    "OnlineOptions": {},
+    "PathSuffix": "",
+    "SourceType": "Cloud",
+    "ServiceUrl":""
+}

@@ -1,0 +1,127 @@
+<mvc:View 
+    controllerName="ui.controller.Users"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <ScrollContainer
+        height="100%"
+        width="100%"
+        horizontal="false"
+        vertical="true">
+	<IconTabBar
+		id="idIconTabBarMulti"
+		expanded="{device>/isNoPhone}"
+        stretchContentHeight="true"
+		class="sapUiResponsiveContentPadding sapUiSizeCompact">
+		<items>
+			<IconTabFilter
+				icon="sap-icon://study-leave"
+                iconColor="Positive"
+				text="{i18n>UsersStudents}">
+				<Table 
+                    inset="false"
+                    items="{
+						path: '/Students',
+						sorter: {
+							path: 'last_name'
+						}
+					}"
+                    class="sapFDynamicPageAlignContent"
+                    width="auto">
+                    <columns>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonName}"/>
+                        </Column>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonFaculty}"/>
+                        </Column>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonCourse}"/>
+                        </Column>
+                        <Column hAlign="End">
+                            <Text text="{i18n>ThesisPersonEmail}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Inactive">
+                            <cells>
+                                <ObjectIdentifier text="{last_name} {first_name}"/>
+                                <Text text="{faculty/name}"/>
+                                <Text text="{course/name}"/>
+                                <Text text="{email}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>   
+			</IconTabFilter>
+            <IconTabFilter
+                icon="sap-icon://learning-assistant"
+                iconColor="Default"
+                text="{i18n>UsersTeachers}">
+                <Table 
+                    inset="false" 
+                    items="{
+						path: '/Teachers',
+						sorter: {
+							path: 'last_name'
+						}
+					}"
+                    class="sapFDynamicPageAlignContent"
+                    width="auto">
+                    <columns>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonName}"/>
+                        </Column>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonFaculty}"/>
+                        </Column>
+                        <Column hAlign="End">
+                            <Text text="{i18n>ThesisPersonEmail}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Inactive">
+                            <cells>
+                                <ObjectIdentifier text="{last_name} {first_name}"/>
+                                <Text text="{faculty/name}"/>
+                                <Text text="{email}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+			</IconTabFilter>
+            <IconTabFilter
+                icon="sap-icon://key-user-settings"
+                iconColor="Negative"
+                text="{i18n>UsersAdmins}">
+                <Table 
+                    inset="false" 
+                    items="{
+						path: '/Admins',
+						sorter: {
+							path: 'last_name'
+						}
+					}"
+                    class="sapFDynamicPageAlignContent"
+                    width="auto">
+                    <columns>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonName}"/>
+                        </Column>
+                        <Column hAlign="End">
+                            <Text text="{i18n>ThesisPersonEmail}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Inactive">
+                            <cells>
+                                <ObjectIdentifier text="{last_name} {first_name}"/>
+                                <Text text="{email}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+			</IconTabFilter>
+		</items>
+	</IconTabBar>
+    </ScrollContainer>
+</mvc:View>

@@ -1,0 +1,47 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "command": "npm run type",
+      "name": "npm run type",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "type": "node",
+      "name": "jest",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "args": [
+        "--runInBand",
+        "--watchAll=false"
+      ],
+      "env": {},
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true
+    },
+    {
+      "name": "cds run",
+      "program": "${workspaceFolder}/node_modules/.bin/cds-ts",
+      "request": "launch",
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register"
+      ],
+      "env": {},
+      "args": [
+        "run",
+        "--with-mocks",
+        "--in-memory?"
+      ],
+      "sourceMaps": true,
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "pwa-node"
+    }
+  ]
+}

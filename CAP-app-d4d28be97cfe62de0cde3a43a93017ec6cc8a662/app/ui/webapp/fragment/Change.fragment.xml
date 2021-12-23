@@ -1,0 +1,212 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="SimpleFormChange471"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			title="{i18n>EditThesisEditTitle}"
+			labelSpanXL="4"
+			labelSpanL="4"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="1"
+			emptySpanL="1"
+			emptySpanM="1"
+			emptySpanS="0"
+			columnsXL="1"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false" >
+			<f:content>
+                <Label text="{i18n>ThesisID}"/>
+				<Text text="{ID}" emptyIndicatorMode="On"/>
+				<Label text="{i18n>ThesisTitle}"/>
+				<Input id="name" value="{title}" enabled="{= !${archived}}" />
+				<Label text="{i18n>ThesisDesc}"/>
+				<TextArea value="{description}" rows="3" enabled="{= !${archived}}"/>
+                <Label text="{i18n>ThesisFaculty}"/>
+                <Select selectedKey="{faculty_ID}"
+                        change=".onFacultyChanged"
+                        enabled="{= !${archived}}"
+                        items="{
+                            path: '/Faculties',
+                            sorter: { path: 'name' }
+                        }">
+					<core:Item key="{ID}" text="{name}" />
+				</Select>
+                <Label text="{i18n>ThesisPersonCount}"/>
+                <StepInput 
+                    value="{max_students}"
+                    min="1"
+                    enabled="{= !${archived}}"
+                    width="120px"/>
+                <Label text="{i18n>ThesisState}"/>
+                <Switch type="AcceptReject" state="{open}" enabled="{= !${archived}}">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Switch>
+                <Label text="{i18n>ThesisCanIApplyOnlyFromPreferredCourse}"/>
+                <Switch type="AcceptReject" state="{only_preferred}" enabled="{= !${archived}}">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Switch>
+                <Label text="{i18n>ThesisArchived}"/>
+                <Switch type="AcceptReject" state="{archived}">
+                    <layoutData>
+                        <FlexItemData growFactor="1" />
+                    </layoutData>
+                </Switch>
+                <Label text="{i18n>ThesisDate}" />
+                <DateTimePicker
+                    value="{date}" valueFormat="yyyy-MM-ddTHH:mm:ssZ" displayFormat="medium" enabled="{= !${archived}}"/>
+                <Label text="{i18n>ThesisAvailableTime}" />
+                <DateRangeSelection
+                    delimiter=" - "
+                    enabled="{= !${archived}}"
+                    dateValue="{fromdate}"
+                    secondDateValue="{todate}"
+                    valueFormat="yyyy-MM-ddTHH:mm:ssZ"
+                    displayFormat="medium"/>
+                <Label text="{i18n>ThesisStudents}"/>  
+                <MultiInput id="thesisStudents"
+                    enabled="{= !${archived}}"
+                    suggestionItems="{
+                        path: '/Students'
+                    }"
+                    tokens="{
+                        path: 'students'
+                    }"
+                    tokenUpdate=".onSelectableTokenUpdate"
+                    maxTokens="{max_students}"
+                    showValueHelp="false">
+                    <tokens>
+                        <Token key="{student/neptun}" text="{student/last_name} {student/first_name}" />
+                    </tokens>
+                    <core:ListItem key="{neptun}" text="{last_name} {first_name}" additionalText="{neptun}"/>
+                </MultiInput>
+                <Label text="{i18n>ThesisTeachers}"/> 
+                <MultiInput id="thesisTeachers"
+                    enabled="{= !${archived}}"
+                    suggestionItems="{
+                        path: '/Teachers'
+                    }"
+                    tokens="{
+                        path: 'teachers'
+                    }"
+                    tokenUpdate=".onSelectableTokenUpdate"
+                    showValueHelp="false">
+                    <tokens>
+                        <Token key="{teacher/neptun}" text="{teacher/last_name} {teacher/first_name}" />
+                    </tokens>
+                    <core:ListItem key="{neptun}" text="{last_name} {first_name}" additionalText="{neptun}"/>
+                </MultiInput>
+                <Label text="{i18n>ThesisCourses}"/>
+                <MultiInput id="thesisCourses"
+                    enabled="{= !${archived}}"
+                    suggestionItems="{
+                        path: '/Courses'
+                    }"
+                    tokens="{
+                        path: 'courses'
+                    }"
+                    tokenUpdate=".onSelectableTokenUpdate"
+                    showValueHelp="false">
+                    <tokens>
+                        <Token key="{course/ID}" text="{course/name}" />
+                    </tokens>
+                    <core:ListItem key="{ID}" text="{name}" additionalText="{faculty/name}"/>
+                </MultiInput>
+                <Label text="{i18n>ThesisPrerequisites}">
+                    <layoutData>
+                      <l:GridData span="XL4 L4 M4 S12" />
+                    </layoutData>
+                </Label>
+                <MultiInput id="thesisPrerequisites"
+                    enabled="{= !${archived}}"
+                    suggestionItems="{
+                        path: '/Prerequisites'
+                    }"
+                    tokens="{
+                        path: 'prerequisites'
+                    }"
+                    tokenUpdate=".onTokenUpdate"
+                    showValueHelp="false">
+                    <tokens>
+                        <Token key="{knowledge/ID}" text="{knowledge/knowledge}" />
+                    </tokens>
+                    <core:Item key="{ID}" text="{knowledge}" />
+                    <layoutData>
+                        <l:GridData span="XL6 L6 M6 S12" />
+                    </layoutData>
+                </MultiInput>
+                <Button press=".onEnableMyInput($event, 'thesisPrerequisites')" icon="sap-icon://add-favorite" tooltip="Saját érték engedélyezése">
+                    <layoutData>
+                      <l:GridData span="XL1 L1 M1 S4" />
+                    </layoutData>
+                </Button>
+                <Label text="{i18n>ThesisLiteratures}">
+                    <layoutData>
+                      <l:GridData span="XL4 L4 M4 S12" />
+                    </layoutData>
+                </Label>
+                <MultiInput id="thesisLiteratures"
+                    enabled="{= !${archived}}"
+                    suggestionItems="{
+                        path: '/Literatures'
+                    }"
+                    tokens="{
+                        path: 'literatures'
+                    }"
+                    tokenUpdate=".onTokenUpdate"
+                    showValueHelp="false">
+                    <tokens>
+                        <Token key="{literature/ID}" text="{literature/literature}" />
+                    </tokens>
+                    <core:Item key="{ID}" text="{literature}" />
+                    <layoutData>
+                        <l:GridData span="XL6 L6 M6 S12" />
+                    </layoutData>
+                </MultiInput>
+                <Button press=".onEnableMyInput($event, 'thesisLiteratures')" icon="sap-icon://add-favorite" tooltip="Saját érték engedélyezése">
+                    <layoutData>
+                      <l:GridData span="XL1 L1 M1 S4" />
+                    </layoutData>
+                </Button>
+                <Label text="{i18n>ThesisTags}">
+                    <layoutData>
+                      <l:GridData span="XL4 L4 M4 S12" />
+                    </layoutData>
+                </Label>
+                <MultiInput id="thesisTags"
+                    enabled="{= !${archived}}"
+                    suggestionItems="{
+                        path: '/Tags'
+                    }"
+                    tokens="{
+                        path: 'tags'
+                    }"
+                    tokenUpdate=".onTokenUpdate"
+                    showValueHelp="false">
+                    <tokens>
+                        <Token key="{tag/ID}" text="{tag/name}" />
+                    </tokens>
+                    <core:Item key="{ID}" text="{name}" />
+                    <layoutData>
+                        <l:GridData span="XL6 L6 M6 S12" />
+                    </layoutData>
+                </MultiInput>
+                <Button press=".onEnableMyInput($event, 'thesisTags')" icon="sap-icon://add-favorite" tooltip="Saját érték engedélyezése">
+                <layoutData>
+                      <l:GridData span="XL1 L1 M1 S4" />
+                </layoutData>
+                </Button>
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>

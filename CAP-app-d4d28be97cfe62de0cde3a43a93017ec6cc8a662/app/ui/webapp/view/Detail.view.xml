@@ -1,0 +1,317 @@
+<mvc:View
+	controllerName="ui.controller.Detail"
+	xmlns="sap.uxap"
+	xmlns:m="sap.m"
+	xmlns:f="sap.f"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc">
+    <ObjectPageLayout 
+		id="ObjectPageLayout"
+		showTitleInHeaderContent="true"
+		alwaysShowContentHeader="false"
+		preserveHeaderStateOnScroll="false"
+		headerContentPinnable="true"
+		isChildPage="true"
+		upperCaseAnchorBar="false">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle>
+				<expandedHeading>
+					<m:Title text="{Thesis>/title}" wrapping="true" class="sapUiSmallMarginEnd"/>
+				</expandedHeading>
+
+				<snappedHeading>
+					<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
+						<m:FlexBox wrap="NoWrap" fitContainer="true" alignItems="Center" class="sapUiTinyMarginEnd">
+							<m:Title text="{Thesis>/title}" wrapping="true"/>
+						</m:FlexBox>
+					</m:FlexBox>
+				</snappedHeading>
+
+				<!--<navigationActions>
+					<m:OverflowToolbarButton
+						type="Transparent"
+						icon="sap-icon://decline"
+						press=".onhandleClose"
+						tooltip="{i18n>DetailCloseIconTooltip}"/>
+				</navigationActions>-->
+                <actions>
+                    <m:Button
+                        id="applyClearButton"
+						icon="sap-icon://clear-all"
+                        text="{i18n>DetailApplyClearText}"
+						type="Reject"
+                        press=".onApplyClearButtonPress"
+                        enabled="false"
+                        visible="false"
+                        tooltip="{i18n>DetailApplyClearTooltip}"/>
+                    <m:Button
+                        id="applyButton"
+						icon="sap-icon://approvals"
+                        text="{i18n>DetailApplyText}"
+						type="Emphasized"
+                        press=".onApplyButtonPress"
+                        enabled="false"
+                        visible="false"
+                        tooltip="{= ${UserAttributes>/Rank}[0] === 'Student' ? ${i18n>DetailApplyTextStudentTooltip} : ${Thesis>/studentCountValue} &lt; ${Thesis>/max_students} ?  ${i18n>DetailApplyTextNotStudentTooltip} : ${i18n>DetailApplyTextNoPlaceTooltip} }"/>
+                    <!--<m:Button
+                        id="applyButton"
+						icon="sap-icon://approvals"
+                        text="{i18n>DetailApplyText}"
+						type="Emphasized"
+                        press=".onApplyButtonPress"
+                        enabled="{= ${Thesis>/students}.length &lt; ${Thesis>/max_students} }"
+                        visible="{= ${UserAttributes>/Rank}[0] === 'Student'}"
+                        tooltip="{= ${UserAttributes>/Rank}[0] === 'Student' ? ${i18n>DetailApplyTextStudentTooltip} : ${Thesis>/students}.length &lt; ${Thesis>/max_students} ?  ${i18n>DetailApplyTextNotStudentTooltip} : ${i18n>DetailApplyTextNoPlaceTooltip} }"/>-->
+                    <m:OverflowToolbarButton
+						type="Transparent"
+						icon="sap-icon://decline"
+						press=".onHandleClose"
+						tooltip="{i18n>DetailCloseIconTooltip}"/>
+				</actions>
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+
+		<headerContent>
+            <m:MessageStrip
+                id="applyClearText"
+                text="{i18n>DetailApplyClearMessageText} {
+                    path: 'Thesis>/studentApplyCreateDate',
+                    type: 'sap.ui.model.type.DateTime',
+                    formatOptions: {
+                        source: {
+                            pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                        },
+                        relative: true,
+                        relativeScale: 'auto'
+                    }
+                }!"
+                type="Success"
+                showIcon="true"
+                visible="false"
+                showCloseButton="true"
+                class="sapUiMediumMarginBottom">
+            </m:MessageStrip>
+            <m:MessageStrip
+                id="courseWarningText"
+                text="{i18n>DetailCourseWarningText}"
+                type="Warning"
+                showIcon="true"
+                visible="false"
+                showCloseButton="true"
+                class="sapUiMediumMarginBottom">
+            </m:MessageStrip>
+			<m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Stretch">
+				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd sapUiMediumMarginBottom">
+					<m:Label text="{i18n>ThesisFaculty}"/>
+					<m:Text text="{Thesis>/faculty/name}"/>
+				</m:VBox>
+				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd sapUiMediumMarginBottom">
+					<m:Label text="{i18n>ThesisDate}"/>
+					<m:Text text="{
+                        path: 'Thesis>/date',
+                        type: 'sap.ui.model.type.DateTime',
+                        formatOptions: {
+                            source: {
+                                pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                            },
+                            style: 'medium'
+                        }
+                    } ({
+                        path: 'Thesis>/date',
+                        type: 'sap.ui.model.type.DateTime',
+                        formatOptions: {
+                            source: {
+                                pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                            },
+                            relative: true,
+                            relativeScale: 'auto'
+                        }
+                    })"/>
+				</m:VBox>
+                <m:VBox justifyContent="Center" class="sapUiSmallMarginEnd sapUiMediumMarginBottom">
+					<m:Label text="{i18n>ThesisAvailableTime}"/>
+					<m:Text text="{
+                        path: 'Thesis>/fromdate',
+                        type: 'sap.ui.model.type.DateTime',
+                        formatOptions: {
+                            source: {
+                                pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                            },
+                            style: 'medium'
+                        }
+                    } - {
+                        path: 'Thesis>/todate',
+                        type: 'sap.ui.model.type.DateTime',
+                        formatOptions: {
+                            source: {
+                                pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                            },
+                            style: 'medium'
+                        }
+                    }"/>
+				</m:VBox>
+				<m:VBox justifyContent="Center" class="sapUiSmallMarginEnd sapUiMediumMarginBottom">
+					<m:Label text="{i18n>ThesisPersonCount2}"/>
+					<m:Text text="{= ${Thesis>/studentCountValue} } / {Thesis>/max_students} {i18n>DetailPersonMeasure}"/>
+				</m:VBox>
+                <m:VBox justifyContent="Center" class="sapUiSmallMarginEnd sapUiMediumMarginBottom">
+					<m:Label text="{i18n>ThesisState}"/>
+					<m:Text text="{= ${Thesis>/open} ? ${i18n>appYes} : ${i18n>appNo}} "/>
+				</m:VBox>
+                <m:VBox justifyContent="Center" class="sapUiSmallMarginEnd sapUiMediumMarginBottom">
+					<m:Label text="{i18n>ThesisCanIApplyFromNonPreferredCourse}"/>
+					<m:Text text="{= ${Thesis>/only_preferred} ? ${i18n>appNo} : ${i18n>appYes}} "/>
+				</m:VBox>
+			</m:FlexBox>
+		</headerContent>
+
+		<sections>
+			<ObjectPageSection title="{i18n>DetailDescription}">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<form:SimpleForm
+								maxContainerCols="2"
+								editable="false"
+								layout="ResponsiveGridLayout"
+								labelSpanL="12"
+								labelSpanM="12"
+								emptySpanL="0"
+								emptySpanM="0"
+								columnsL="1"
+								columnsM="1">
+								<form:content>
+                                    <m:Label text="{i18n>DetailThesisName}"/>
+									<m:Text text="{Thesis>/title}"/>
+									<m:Label text="{i18n>ThesisDesc}"/>
+									<m:Text text="{Thesis>/description}"/>
+									<m:Label text="{i18n>DetailThesisOpenedBy}"/>
+									<m:Text text="{path : 'Thesis>/teachers', formatter : '.formatter.onTeachersFormat'}"/>
+								</form:content>
+							</form:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+			<ObjectPageSection title="{i18n>ThesisTeachers}">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:Table
+								id="teachersTable"
+                                width="auto"
+								items="{path : 'Thesis>/teachers'}">
+								<m:columns>
+									<m:Column/>
+									<m:Column/>
+								</m:columns>
+								<m:items>
+									<m:ColumnListItem type="Inactive" press=".onTeacherPress">
+										<m:cells>
+											<m:ObjectIdentifier text="{Thesis>teacher/last_name} {Thesis>teacher/first_name}"/>
+                                            <m:Text text="{Thesis>teacher/email}"/>
+										</m:cells>
+									</m:ColumnListItem>
+								</m:items>
+							</m:Table>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+            <ObjectPageSection title="{i18n>ThesisCourses}">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:Table
+								id="coursesTable"
+                                width="auto"
+								items="{path : 'Thesis>/courses'}">
+								<m:columns>
+									<m:Column/>
+								</m:columns>
+								<m:items>
+									<m:ColumnListItem type="Inactive">
+										<m:cells>
+											<m:ObjectIdentifier text="{Thesis>course/name}"/>
+										</m:cells>
+									</m:ColumnListItem>
+								</m:items>
+							</m:Table>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+            <ObjectPageSection title="{i18n>ThesisLiteratures}">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:Table
+								id="literaturesTable"
+                                width="auto"
+								items="{path : 'Thesis>/literatures'}">
+								<m:columns>
+									<m:Column/>
+								</m:columns>
+								<m:items>
+									<m:ColumnListItem type="Inactive">
+										<m:cells>
+											<m:ObjectIdentifier text="{Thesis>literature/literature}"/>
+										</m:cells>
+									</m:ColumnListItem>
+								</m:items>
+							</m:Table>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+            <ObjectPageSection title="{i18n>ThesisPrerequisites}">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:Table
+								id="prerequsutesTable"
+                                width="auto"
+								items="{path : 'Thesis>/prerequisites'}">
+								<m:columns>
+									<m:Column/>
+								</m:columns>
+								<m:items>
+									<m:ColumnListItem type="Inactive">
+										<m:cells>
+											<m:ObjectIdentifier text="{Thesis>knowledge/knowledge}"/>
+										</m:cells>
+									</m:ColumnListItem>
+								</m:items>
+							</m:Table>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+            <ObjectPageSection title="{i18n>ThesisTags}">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:Table
+								id="tagsTable"
+                                width="auto"
+								items="{path : 'Thesis>/tags'}">
+								<m:columns>
+									<m:Column/>
+								</m:columns>
+								<m:items>
+									<m:ColumnListItem type="Inactive">
+										<m:cells>
+											<m:ObjectIdentifier text="{Thesis>tag/name}"/>
+										</m:cells>
+									</m:ColumnListItem>
+								</m:items>
+							</m:Table>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+
+	</ObjectPageLayout>
+</mvc:View>

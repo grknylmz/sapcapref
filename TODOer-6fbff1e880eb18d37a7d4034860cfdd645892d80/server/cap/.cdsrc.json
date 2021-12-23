@@ -1,0 +1,13 @@
+{
+  "odata": {
+    "flavor": "x4"
+  },
+  "requires": {
+    "db": {
+      "kind": "sql"
+    }
+  },
+  "hana": {
+    "deploy-format": "hdbtable"
+  }
+}

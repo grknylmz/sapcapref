@@ -1,0 +1,488 @@
+openapi: 3.0.0
+
+info:
+  title: "TODOer API"
+  version: "0.0.1"
+  contact:
+    name: Robert Witt
+    url: https://github.com/robertwitt/TODOer
+
+servers:
+  - url: /beta
+
+paths:
+  /ping:
+    get:
+      operationId: ping
+      summary: Ping!
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServerInfo"
+  /Tasks:
+    get:
+      operationId: getTasks
+      summary: Get a list of tasks
+      parameters:
+        - name: collection
+          in: query
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Task"
+    post:
+      operationId: createTask
+      summary: Create a new task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task-create"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+  /Tasks/{id}:
+    get:
+      operationId: getTask
+      summary: Get a task by key
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        "404":
+          description: Not Found
+    patch:
+      operationId: updateTask
+      summary: Update a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task-update"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        "404":
+          description: Not Found
+    delete:
+      operationId: deleteTask
+      summary: Delete a task by key
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+  /Tasks/{id}/setToDone:
+    post:
+      operationId: setTaskToDone
+      summary: Set a task's status to done
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+  /Tasks/{id}/cancel:
+    post:
+      operationId: cancelTask
+      summary: Cancel a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+  /Tasks/{id}/reopen:
+    post:
+      operationId: reopenTask
+      summary: Reopen a task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+  /TaskLists:
+    get:
+      operationId: getTaskLists
+      summary: Get a list of task lists
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TaskList"
+    post:
+      operationId: createTaskList
+      summary: Create a new task list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskList-create"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskList"
+  /TaskLists/{id}:
+    get:
+      operationId: getTaskList
+      summary: Get a task list by key
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskList"
+        "404":
+          description: Not Found
+  /TaskLists/{id}/assignedTasks:
+    get:
+      operationId: getTaskListWithTasks
+      summary: Get a task list with all assigned tasks
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskListWithTasks"
+        "404":
+          description: Not Found
+
+components:
+  schemas:
+    ServerInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        version:
+          type: string
+        uptime:
+          type: number
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+          maxLength: 40
+        collection:
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+            title:
+              type: string
+              maxLength: 40
+          required:
+            - id
+        dueDate:
+          type: string
+          format: date
+        dueTime:
+          type: string
+          maxLength: 8
+        status:
+          type: object
+          properties:
+            code:
+              type: string
+              maxLength: 1
+            name:
+              type: string
+              maxLength: 40
+          required:
+            - code
+        isUpdatable:
+          type: boolean
+        isDeletable:
+          type: boolean
+        priority:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            name:
+              type: string
+              maxLength: 40
+          required:
+            - code
+        isPlannedForMyDay:
+          type: boolean
+      required:
+        - id
+        - collection
+        - status
+        - isUpdatable
+        - isDeletable
+        - isPlannedForMyDay
+    Task-create:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 40
+        collection:
+          type: integer
+          format: int64
+        dueDate:
+          type: string
+          format: date
+        dueTime:
+          type: string
+          maxLength: 8
+        priority:
+          type: integer
+          format: int32
+        isPlannedForMyDay:
+          type: boolean
+      required:
+        - collection
+    Task-update:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 40
+        collection:
+          type: integer
+          format: int64
+        dueDate:
+          type: string
+          format: date
+        dueTime:
+          type: string
+          maxLength: 8
+        priority:
+          type: integer
+          format: int32
+        isPlannedForMyDay:
+          type: boolean
+    TaskList:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+          maxLength: 40
+        color:
+          type: string
+          minLength: 6
+          maxLength: 6
+        type:
+          type: string
+          enum:
+            - COLLECTION
+            - MY_DAY
+            - TOMORROW
+        isUpdatable:
+          type: boolean
+        isDeletable:
+          type: boolean
+        isDefaultCollection:
+          type: boolean
+      required:
+        - id
+        - type
+        - isUpdatable
+        - isDeletable
+        - isDefaultCollection
+    TaskListWithTasks:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+          maxLength: 40
+        color:
+          type: string
+          minLength: 6
+          maxLength: 6
+        type:
+          type: string
+          enum:
+            - COLLECTION
+            - MY_DAY
+            - TOMORROW
+        assignedTasks:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              title:
+                type: string
+                maxLength: 40
+              collection:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                  title:
+                    type: string
+                    maxLength: 40
+                required:
+                  - id
+              dueDate:
+                type: string
+                format: date
+              dueTime:
+                type: string
+                maxLength: 8
+              status:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    maxLength: 1
+                  name:
+                    type: string
+                    maxLength: 40
+                required:
+                  - code
+              isUpdatable:
+                type: boolean
+              isDeletable:
+                type: boolean
+              priority:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  name:
+                    type: string
+                    maxLength: 40
+                required:
+                  - code
+              isPlannedForMyDay:
+                type: boolean
+            required:
+              - id
+              - collection
+              - status
+              - isUpdatable
+              - isDeletable
+              - isPlannedForMyDay
+      required:
+        - id
+        - type
+        - assignedTasks
+    TaskList-create:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 40
+        color:
+          type: string
+          minLength: 6
+          maxLength: 6
+        isDefaultCollection:
+          type: boolean

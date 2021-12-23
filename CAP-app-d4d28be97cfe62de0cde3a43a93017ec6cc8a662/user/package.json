@@ -1,0 +1,19 @@
+{
+  "name": "user",
+  "version": "1.0.0",
+  "description": "User API",
+  "main": "server.js",
+  "dependencies": {
+    "express": "latest",
+    "body-parser": "latest",
+    "@sap/xsenv": "latest",
+    "@sap/xssec": "^2",
+    "passport": "latest"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Papp",
+  "license": "ISC"
+}

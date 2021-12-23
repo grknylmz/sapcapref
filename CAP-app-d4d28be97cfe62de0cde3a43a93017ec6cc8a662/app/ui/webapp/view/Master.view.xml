@@ -1,0 +1,138 @@
+<mvc:View
+	controllerName="ui.controller.Master"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc">
+	<f:DynamicPage id="dynamicPageId" toggleHeaderOnTitleClick="false">
+		<f:content>
+			<VBox fitContainer="true">
+				<l:VerticalLayout width="100%" class="sapUiSmallMarginBottom">
+                    <fb:FilterBar id="thesisFilterBar" reset="onReset" search="onSearch" showRestoreOnFB="true" showFilterConfiguration="true">
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem groupName="Base" name="Date" label="Elérhető ekkor" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                <fb:control>
+                                    <DateTimePicker valueFormat="yyyy-MM-ddTHH:mm:ss'Z'" displayFormat="medium" placeholder="Dátum..." change=".onDatePickerChange"/>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="Extra" name="Teacher" label="Oktató" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                <fb:control>
+                                    <ComboBox
+                                        id="teacherComboBox"
+                                        showSecondaryValues= "true"
+                                        change=".onComboBoxChange"
+                                        items="{
+                                            path: '/Teachers',
+                                            sorter: { path: 'last_name' },
+                                            templateShareable: false
+                                        }">
+                                        <core:ListItem key="{neptun}" text="{last_name} {first_name}" additionalText = "{neptun}"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="Base" groupTitle="Alap dolgok" name="Faculty" label="Kar" visibleInFilterBar="true">
+                                <fb:control>
+                                    <ComboBox
+                                        id="facultyComboBox"
+                                        showSecondaryValues= "true"
+                                        change=".onComboBoxChange"
+                                        items="{
+                                            path: '/Faculties',
+                                            sorter: { path: 'name' },
+                                            templateShareable: false
+                                        }">
+                                        <core:ListItem key="{ID}" text="{name}"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            
+                            <fb:FilterGroupItem groupName="Extra" groupTitle="Extra" name="Tag" label="Címkék" visibleInFilterBar="true">
+                                <fb:control>
+                                    <MultiInput id="thesisTags"
+                                        suggestionItems="{
+                                            path: '/Tags',
+                                            templateShareable: false
+                                        }"
+                                        showValueHelp="true"
+                                        valueHelpRequest=".handleValueHelp">
+                                        <core:Item key="{ID}" text="{name}" />
+                                    </MultiInput>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem groupName="Base" name="Course" label="Szak" visibleInFilterBar="true">
+                                <fb:control>
+                                    <ComboBox
+                                        id="courseComboBox"
+                                        showSecondaryValues= "false"
+                                        change=".onComboBoxChange"
+                                        items="{
+                                            path: '/Courses',
+                                            sorter: { path: 'name' },
+                                            templateShareable: false
+                                        }">
+                                        <core:ListItem key="{ID}" text="{name}"/>
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            
+                            <fb:FilterGroupItem groupName="Base" name="Open" label="Nyitva van-e" visibleInFilterBar="true">
+                                <fb:control>
+                                    <Select
+                                        forceSelection="false"
+                                        id="openSelect"
+                                        selectedKey="None">
+                                        <core:Item key="None" text="Mindegy" />
+                                        <core:Item key="true" text="Igen" />
+                                        <core:Item key="false" text="Nem" />
+                                    </Select>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem groupName="Base" name="Title" label="Téma neve" visibleInFilterBar="true">
+                                <fb:control>
+                                    <Input type="Text"/>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                                
+                    </fb:FilterBar>		
+				</l:VerticalLayout>
+				<Table
+					id="thesesTable"
+					inset="false"
+					items="{
+						path: '/StudentCount',
+						sorter: {
+							path: 'title'
+						}
+					}"
+                    growing="true"
+                    growingScrollToLoad="true"
+					class="sapFDynamicPageAlignContent"
+					width="auto">
+					<columns>
+						<Column width="auto">
+							<Text text="{i18n>MasterThesisName}"/>
+						</Column>
+						<Column	hAlign="End">
+							<Text text="{i18n>PersonCount}"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem type="Navigation" press=".onListItemPress">
+							<cells>
+								<ObjectIdentifier text="{title}"/>
+                                <Text text="{count} / {max_students}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

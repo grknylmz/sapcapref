@@ -1,0 +1,65 @@
+{
+    "authenticationMethod": "route",
+    "welcomeFile": "ui/webapp/index.html",
+    "routes": [
+        {
+            "source": "/data/(.*)",
+            "destination": "srv-api",
+            "csrfProtection": true,
+            "authenticationType": "xsuaa"
+        },
+        {
+            "source": "^/user-api(.*)",
+            "target": "$1",
+            "service": "sap-approuter-userapi"
+        },
+        {
+            "source": "^/static/(.*)$",
+            "target": "$1",
+            "localDir": "./ui/static",
+            "authenticationType": "none"
+        },
+        {
+            "source": "^/user/(.*)$",
+            "authenticationType": "xsuaa",
+            "scope": "uaa.user",
+            "csrfProtection": true,
+            "destination": "user-api"
+        },
+        {
+            "source": "^/webapp/index.html",
+            "target": "index.html",
+            "localDir": "ui",
+            "cacheControl": "no-cache, no-store, must-revalidate"
+        },
+        {
+            "source": "/(.*)",
+            "authenticationType": "xsuaa",
+            "scope": "uaa.user",
+            "localDir": ".",
+            "cacheControl": "no-cache, no-store, must-revalidate"
+        }
+    ],
+    "logout": {
+        "logoutEndpoint": "/my/logout",
+        "logoutPage": "./static/logout.html"
+    },
+    "login": {
+        "callbackEndpoint": "/my/login"
+    },
+    "errorPage": [
+        {
+            "status": [
+                400,
+                401,
+                402,
+                404
+            ],
+            "file": "ui/static/err-4xx.html"
+        },
+        {
+            "status": 501,
+            "file": "./ui/static/err-501.html"
+        }
+    ]
+}

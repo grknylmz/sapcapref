@@ -1,0 +1,15 @@
+<mvc:View
+	height="100%"
+    controllerName="ui.controller.AuthFail"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+	<MessagePage 
+        showHeader="false" 
+        text="{i18n>appAuthFailTitle}"
+        description="{i18n>appAuthFailText}"
+        icon="sap-icon://employee-rejections">
+        <buttons>
+			<Button text="{i18n>appLogoutText}" press=".onLogoutPress"/>
+		</buttons>
+    </MessagePage>
+</mvc:View>

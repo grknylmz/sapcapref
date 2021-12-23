@@ -1,0 +1,39 @@
+<mvc:View
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
+    controllerName="ui.controller.Welcome">
+    <Page showHeader="false" class="welcome-bg">
+        <HBox alignItems="Center"
+              justifyContent="Center">
+            <VBox>
+                <HBox alignItems="Center"
+                      justifyContent="Center">
+                <Image 
+                    id="logo"
+                    height="14em"
+                    src="css/resources/elte_cimer_ff_dark.svg" 
+                    class="sapUiSmallMargin imgShadow"/>
+                </HBox>
+                <l:BlockLayout id="BlockLayout" background="Dashboard" class="boxShadow">
+                    <l:BlockLayoutRow>
+                        <l:BlockLayoutCell width="1" title="{i18n>Welcome}, {Welcome>/last_name} {Welcome>/first_name}!">
+                            <Text text="{Welcome>/welcome_text}"/>
+                            <f:SimpleForm singleContainerFullSize="false" layout="ResponsiveGridLayout">
+                                <f:content>
+                                    <Label text="{i18n>WelcomeRankLabel}"/>
+                                    <Text text="{Welcome>/rank_name}" emptyIndicatorMode="On"/>
+                                    <Label text="{i18n>WelcomeFacultyLabel}"/>
+                                    <Text text="{Welcome>/faculty_name}" emptyIndicatorMode="On"/>
+                                    <Label text="{i18n>WelcomeCourseLabel}"/>
+                                    <Text text="{Welcome>/course_name}" emptyIndicatorMode="On"/>
+                                </f:content>
+                            </f:SimpleForm>
+                        </l:BlockLayoutCell>
+                    </l:BlockLayoutRow>
+                </l:BlockLayout>
+            </VBox>
+        </HBox>
+    </Page>
+</mvc:View>

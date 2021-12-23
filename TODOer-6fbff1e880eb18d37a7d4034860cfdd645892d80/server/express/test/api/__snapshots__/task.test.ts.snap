@@ -1,0 +1,185 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The API server can cancel a task 1`] = `
+Object {
+  "collection": Object {
+    "id": 1,
+    "title": "My Tasks",
+  },
+  "dueDate": "2021-05-31",
+  "dueTime": null,
+  "id": 1,
+  "isDeletable": false,
+  "isPlannedForMyDay": false,
+  "isUpdatable": false,
+  "priority": Object {
+    "code": 5,
+    "name": "low",
+  },
+  "status": Object {
+    "code": "X",
+    "name": "cancelled",
+  },
+  "title": "Tax declaration",
+}
+`;
+
+exports[`The API server can create a new task 1`] = `
+Object {
+  "collection": Object {
+    "id": 1,
+    "title": "My Tasks",
+  },
+  "dueDate": "2021-04-08",
+  "dueTime": null,
+  "id": 43,
+  "isDeletable": true,
+  "isPlannedForMyDay": true,
+  "isUpdatable": true,
+  "priority": null,
+  "status": Object {
+    "code": "O",
+    "name": "open",
+  },
+  "title": "new task",
+}
+`;
+
+exports[`The API server can filter tasks by collection 1`] = `
+Object {
+  "value": Array [
+    Object {
+      "collection": Object {
+        "id": 42,
+        "title": null,
+      },
+      "dueDate": null,
+      "dueTime": null,
+      "id": 42,
+      "isDeletable": false,
+      "isPlannedForMyDay": false,
+      "isUpdatable": false,
+      "priority": null,
+      "status": Object {
+        "code": "D",
+        "name": "done",
+      },
+      "title": "What is the meaning of life?",
+    },
+  ],
+}
+`;
+
+exports[`The API server can read a single task by ID 1`] = `
+Object {
+  "collection": Object {
+    "id": 1,
+    "title": "My Tasks",
+  },
+  "dueDate": "2021-05-31",
+  "dueTime": null,
+  "id": 1,
+  "isDeletable": true,
+  "isPlannedForMyDay": false,
+  "isUpdatable": true,
+  "priority": Object {
+    "code": 5,
+    "name": "low",
+  },
+  "status": Object {
+    "code": "O",
+    "name": "open",
+  },
+  "title": "Tax declaration",
+}
+`;
+
+exports[`The API server can reopen a task 1`] = `
+Object {
+  "collection": Object {
+    "id": 42,
+    "title": null,
+  },
+  "dueDate": null,
+  "dueTime": null,
+  "id": 42,
+  "isDeletable": true,
+  "isPlannedForMyDay": false,
+  "isUpdatable": true,
+  "priority": null,
+  "status": Object {
+    "code": "O",
+    "name": "open",
+  },
+  "title": "What is the meaning of life?",
+}
+`;
+
+exports[`The API server can set a task to done 1`] = `
+Object {
+  "collection": Object {
+    "id": 1,
+    "title": "My Tasks",
+  },
+  "dueDate": "2021-05-31",
+  "dueTime": null,
+  "id": 1,
+  "isDeletable": false,
+  "isPlannedForMyDay": false,
+  "isUpdatable": false,
+  "priority": Object {
+    "code": 5,
+    "name": "low",
+  },
+  "status": Object {
+    "code": "D",
+    "name": "done",
+  },
+  "title": "Tax declaration",
+}
+`;
+
+exports[`The API server can update a task 1`] = `
+Object {
+  "collection": Object {
+    "id": 1,
+    "title": "My Tasks",
+  },
+  "dueDate": "2021-04-10",
+  "dueTime": "18:00:00",
+  "id": 1,
+  "isDeletable": true,
+  "isPlannedForMyDay": true,
+  "isUpdatable": true,
+  "priority": Object {
+    "code": 5,
+    "name": "low",
+  },
+  "status": Object {
+    "code": "O",
+    "name": "open",
+  },
+  "title": "Tax declaration",
+}
+`;
+
+exports[`The API server can update status with idempotent calls 1`] = `
+Object {
+  "collection": Object {
+    "id": 42,
+    "title": null,
+  },
+  "dueDate": null,
+  "dueTime": null,
+  "id": 42,
+  "isDeletable": false,
+  "isPlannedForMyDay": false,
+  "isUpdatable": false,
+  "priority": null,
+  "status": Object {
+    "code": "D",
+    "name": "done",
+  },
+  "title": "What is the meaning of life?",
+}
+`;

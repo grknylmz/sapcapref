@@ -1,0 +1,240 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="SimpleFormDisplay471" title="{i18n>EditThesisViewTitle}" labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="1" emptySpanL="1" emptySpanM="1" emptySpanS="0" columnsXL="1" columnsM="1" singleContainerFullSize="false" columnsL="1" layout="ResponsiveGridLayout">
+			<f:content>
+                <Label text="{i18n>ThesisID}"/>
+				<Text text="{ID}" emptyIndicatorMode="On"/>
+				<Label text="{i18n>ThesisTitle}"/>
+				<Text id="nameText" text="{title}" emptyIndicatorMode="On"/>
+				<Label text="{i18n>ThesisDesc}"/>
+				<Text text="{description}" emptyIndicatorMode="On"/>
+				<Label text="{i18n>ThesisFaculty}"/>
+				<Text text="{faculty/name}" emptyIndicatorMode="On" tooltip="{faculty_ID}"/>
+				<Label text="{i18n>ThesisPersonCount}"/>
+				<Text text="{max_students}" emptyIndicatorMode="On"/>
+                <Label text="{i18n>ThesisState}"/>
+                <Text text="{open}" emptyIndicatorMode="On"/>
+                <Label text="{i18n>ThesisCanIApplyOnlyFromPreferredCourse}"/>
+                <Text text="{only_preferred}" emptyIndicatorMode="On"/>
+                <Label text="{i18n>ThesisArchived}"/>
+                <Text text="{archived}" emptyIndicatorMode="On"/>
+                <Label text="{i18n>ThesisDate}" />
+                <Text text="{
+                    path: 'date',
+                    type: 'sap.ui.model.type.DateTime',
+                    formatOptions: {
+                        source: {
+                            pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                        },
+                        style: 'medium'
+                    }
+                } ({
+                    path: 'date',
+                    type: 'sap.ui.model.type.DateTime',
+                    formatOptions: {
+                        source: {
+                            pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                        },
+                        relative: true,
+                        relativeScale: 'auto'
+                    }
+                })" emptyIndicatorMode="On"/>
+                <Label text="{i18n>ThesisAvailableTime}" />
+                <Text text="{
+                    path: 'fromdate',
+                    type: 'sap.ui.model.type.DateTime',
+                    formatOptions: {
+                        source: {
+                            pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                        },
+                        style: 'medium'
+                    }
+                } - {
+                    path: 'todate',
+                    type: 'sap.ui.model.type.DateTime',
+                    formatOptions: {
+                        source: {
+                            pattern: 'yyyy-MM-ddTHH:mm:ssZ'
+                        },
+                        style: 'medium'
+                    }
+                }" emptyIndicatorMode="On"/>
+                <Label text="{i18n>ThesisCreatedBy}"/>
+				<Text text="{createdBy} {
+                    path: 'createdAt',
+                    type: 'sap.ui.model.type.DateTime',
+                    formatOptions: {
+                        source: {
+                            pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                        },
+                        style: 'medium'
+                    }
+                } ({
+                    path: 'createdAt',
+                    type: 'sap.ui.model.type.DateTime',
+                    formatOptions: {
+                        source: {
+                            pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                        },
+                        relative: true,
+                        relativeScale: 'auto'
+                    }
+                })" emptyIndicatorMode="On"/>
+                <Label text="{i18n>ThesisLastEdited}"/>
+				<Text text="{modifiedBy} {
+                    path: 'modifiedAt',
+                    type: 'sap.ui.model.type.DateTime',
+                    formatOptions: {
+                        source: {
+                            pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                        },
+                        style: 'medium'
+                    }
+                } ({
+                    path: 'modifiedAt',
+                    type: 'sap.ui.model.type.DateTime',
+                    formatOptions: {
+                        source: {
+                            pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                        },
+                        relative: true,
+                        relativeScale: 'auto'
+                    }
+                })" emptyIndicatorMode="On"/>
+				<Label text="{i18n>ThesisStudents}"/>                
+                <Table inset="false" items="{students}" class="sapFDynamicPageAlignContent" width="auto">
+                    <columns>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonName}"/>
+                        </Column>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonApplyDate}"/>
+                        </Column>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonFaculty}"/>
+                        </Column>
+                        <Column hAlign="End">
+                            <Text text="{i18n>ThesisPersonCourse}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Inactive">
+                            <cells>
+                                <ObjectIdentifier text="{student/last_name} {student/first_name}"/>
+                                <Text text="{
+                                    path: 'createdAt',
+                                    type: 'sap.ui.model.type.DateTime',
+                                    formatOptions: {
+                                        source: {
+                                            pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                                        },
+                                        style: 'medium'
+                                    }
+                                } ({
+                                    path: 'createdAt',
+                                    type: 'sap.ui.model.type.DateTime',
+                                    formatOptions: {
+                                        source: {
+                                            pattern: 'yyyy-MM-ddTHH:mm:ss.SSSZ'
+                                        },
+                                        relative: true,
+                                        relativeScale: 'auto'
+                                    }
+                                })"/>
+                                <Text text="{student/faculty/name}"/>
+                                <Text text="{student/course/name}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>                
+                <Label text="{i18n>ThesisTeachers}"/>
+                <Table inset="false" items="{teachers}" class="sapFDynamicPageAlignContent" width="auto">
+                    <columns>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonName}"/>
+                        </Column>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonFaculty}"/>
+                        </Column>
+                        <Column hAlign="End">
+                            <Text text="{i18n>ThesisPersonEmail}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Inactive">
+                            <cells>
+                                <ObjectIdentifier text="{teacher/last_name} {teacher/first_name}"/>
+                                <Text text="{teacher/faculty/name}"/>
+                                <Text text="{teacher/email}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+                <Label text="{i18n>ThesisCourses}"/>
+                <Table inset="false" items="{courses}" class="sapFDynamicPageAlignContent" width="auto">
+                    <columns>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonCourse}"/>
+                        </Column>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisPersonFaculty}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Inactive">
+                            <cells>
+                                <ObjectIdentifier text="{course/name}"/>
+                                <Text text="{course/faculty/name}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+                <Label text="{i18n>ThesisPrerequisites}"/>
+                <Table inset="false" items="{prerequisites}" class="sapFDynamicPageAlignContent" width="auto">
+                    <columns>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisEntityName}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Inactive">
+                            <cells>
+                                <ObjectIdentifier text="{knowledge/knowledge}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+                <Label text="{i18n>ThesisLiteratures}"/>
+                <Table inset="false" items="{literatures}" class="sapFDynamicPageAlignContent" width="auto">
+                    <columns>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisEntityName}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Inactive">
+                            <cells>
+                                <ObjectIdentifier text="{literature/literature}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+                <Label text="{i18n>ThesisTags}"/>
+                <Table inset="false" items="{tags}" class="sapFDynamicPageAlignContent" width="auto">
+                    <columns>
+                        <Column width="auto">
+                            <Text text="{i18n>ThesisEntityName}"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Inactive">
+                            <cells>
+                                <ObjectIdentifier text="{tag/name}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>

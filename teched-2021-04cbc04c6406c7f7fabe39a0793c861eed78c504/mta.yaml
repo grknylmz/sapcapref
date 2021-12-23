@@ -1,0 +1,103 @@
+## Generated mta.yaml based on template version 0.4.0
+## appName = teched-2021
+## language=nodejs; multitenant=false
+## approuter=
+_schema-version: '3.1'
+ID: riz.inno.teched-2021
+version: 1.0.0
+description: "TechEd 2021 Example."
+parameters:
+  enable-parallel-deployments: true
+   
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install --production
+      - npx -p @sap/cds-dk cds build --production
+
+modules:
+
+ # ------------------- APP ROUTER MODULE -----------------------
+ - name: teched-2021-router # Approuter Module channeling the traffic to the correct destination
+ # ------------------------------------------------------------
+   type: nodejs
+   path: approuter
+   parameters:
+      memory: 100M
+      buildpack: nodejs_buildpack
+   requires:
+      - name: teched-2021-srv_api
+        group: destinations
+        properties:
+          name: teched-2021-srv_api
+          url: ~{srv-url}
+          forwardAuthToken: true
+          timeout: 600000
+   properties:
+      COOKIES: >
+          { "SameSite": "None" }
+      CORS: >
+          [
+            {
+              "uriPattern": "^(.*)$",
+              "allowedOrigin": [ 
+                                { "host": "*.hana.ondemand.com", "protocol": "https" },
+                                { "host": "*.hana.ondemand.com", "protocol": "http" }
+              ],
+              "allowedMethods": ["GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE"],
+              "allowedHeaders": ["Origin", "Accept", "X-Requested-With", "Content-Type", 
+                                                    "Access-Control-Request-Method", 
+                                                    "Access-Control-Request-Headers", "Authorization", "X-Sap-Cid", 
+                                                    "X-Csrf-Token", "Accept-Language"],
+              "exposeHeaders": ["Accept", "Authorization", "X-Requested-With", "X-Sap-Cid", 
+                                                  "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", 
+                                                  "X-Csrf-Token", "Content-Type"]
+            }
+          ]
+
+ # --------------------- SERVER MODULE ------------------------
+ - name: teched-2021-srv
+ # ------------------------------------------------------------
+   type: nodejs
+   path: gen/srv
+   parameters:
+     buildpack: nodejs_buildpack
+     memory: 200M
+     disk-quota: 250M
+   requires:
+    # Resources extracted from CAP configuration
+    - name: teched-2021-db
+   provides:
+    - name: teched-2021-srv_api      # required by consumers of CAP services (e.g. approuter)
+      properties:
+        srv-url: ${default-url}
+
+ # -------------------- SIDECAR MODULE ------------------------
+ - name: teched-2021-db-deployer
+ # ------------------------------------------------------------
+   type: hdb
+   path: gen/db  
+   parameters:
+     buildpack: nodejs_buildpack
+   requires:
+    # 'hana' and 'xsuaa' resources extracted from CAP configuration
+    - name: teched-2021-db
+
+
+resources:
+ # services extracted from CAP configuration
+ # 'service-plan' can be configured via 'cds.requires.<name>.vcap.plan'
+# ------------------------------------------------------------
+ - name: teched-2021-db
+# ------------------------------------------------------------
+   type: com.sap.xs.hdi-container
+   parameters:
+     service: hana  # or 'hanatrial' on trial landscapes
+     service-plan: hdi-shared
+     config:
+       schema: teched_2021
+   properties:
+     hdi-service-name: ${service-name}
+
+

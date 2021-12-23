@@ -1,0 +1,37 @@
+<mvc:View
+	height="100%"
+	controllerName="ui.controller.EditTheses"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+	<SplitContainer id="SimpleFormSplitscreen" initialDetail="detailPage" initialMaster="masterPage">
+		<detailPages>
+			<Page
+				id="detailPage"
+				showHeader="true" >
+				<customHeader>
+					<Bar>
+						<contentRight>
+                            <Button id="new" icon="sap-icon://add-document" text="{i18n>appNewThesis}" type="Ghost" enabled="true" press=".handleNewThesisPress" />
+							<Button id="edit" icon="sap-icon://edit" text="{i18n>appEdit}" type="Ghost" enabled="false" press=".handleEditPress" />
+							<Button id="save" icon="sap-icon://save" text="{i18n>appSaveThesis}" type="Emphasized" visible="false" press=".handleSavePress" />
+							<!--<Button id="cancel" text="Cancel" visible="false" press="handleCancelPress" />-->
+						</contentRight>
+                        <contentLeft>
+                            <Button id="menuBack" icon="sap-icon://nav-back" visible="{device>/system/phone}" press=".onBackToMasterPress"/>
+                        </contentLeft>
+					</Bar>
+				</customHeader>
+			</Page>
+		</detailPages>
+		<masterPages>
+			<Page id="masterPage" title="{i18n>EditThesesMasterTitle}" icon="sap-icon://action" class="sapUiStdPage">
+				<content>
+					<List id="thesisList">
+						<items>
+						</items>
+					</List>
+				</content>
+			</Page>
+		</masterPages>
+	</SplitContainer>
+</mvc:View>

@@ -1,0 +1,3 @@
+BusinessPartner;FirstName;MiddleName;LastName;BusinessPartnerIsBlocked
+John;John;Winston;Lennon;false
+Paul;Paul; James; McCartney;true

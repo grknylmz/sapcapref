@@ -1,0 +1,158 @@
+<mvc:View
+	controllerName="ui.controller.ToolPage"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt"
+    height="100%">
+
+    <tnt:ToolPage id="toolPage">
+		<tnt:header>
+			<tnt:ToolHeader>
+				<Button
+					id="sideNavigationToggleButton"
+					icon="sap-icon://menu2"
+					type="Transparent"
+                    tooltip="{i18n>toolHeaderHamburgerTooltipSmall}"
+					press=".onSideNavButtonPress">
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow" />
+					</layoutData>
+				</Button>
+				<ToolbarSpacer width="20px" />
+				
+				<tnt:ToolHeaderUtilitySeparator />
+				<ToolbarSpacer>
+					<layoutData>
+						<OverflowToolbarLayoutData priority="NeverOverflow" minWidth="20px" />
+					</layoutData>
+				</ToolbarSpacer>
+                <MenuButton tooltip="{i18n>toolHeaderUserSettingsTooltip}" id="aboutMenuButton" text="{UserInfo>/familyName} {UserInfo>/givenName}" icon="sap-icon://user-settings" type="Transparent" visible="true">
+                     <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow" />
+                     </layoutData>
+                     <menu>
+                        <Menu id="aboutMenu" class="sapContrast sapContrastPlus" itemSelected="handleMenuItemClick">
+                           <items>
+                              <MenuItem icon="sap-icon://hint" key="info" text="{i18n>toolHeaderUserSettingsInfo}" />
+                              <MenuItem icon="sap-icon://palette" key="appearance" text="{i18n>toolHeaderUserSettingsTheme}">
+                                 <items>
+                                    <MenuItem key="light" text="{i18n>toolHeaderUserSettingsThemeLight}" />
+                                    <MenuItem key="dark" text="{i18n>toolHeaderUserSettingsThemeDark}" />
+                                    <MenuItem key="auto" text="{i18n>toolHeaderUserSettingsThemeAuto}" />
+                                 </items>
+                              </MenuItem>
+                              <MenuItem icon="sap-icon://log" key="logout" text="{i18n>toolHeaderUserSettingsLogout}" />
+                           </items>
+                        </Menu>
+                     </menu>
+                  </MenuButton>
+			</tnt:ToolHeader>
+		</tnt:header>
+		<tnt:sideContent>
+			<tnt:SideNavigation
+				expanded="true"
+				selectedKey="base"
+				itemSelect=".onItemSelect">
+				<tnt:NavigationList>
+					<tnt:NavigationListItem
+                        id="thesisList"
+						text="{i18n>appNavItemTheses}"
+						icon="sap-icon://bullet-text"
+						enabled="true"
+                        visible="false"
+						key="base">
+					</tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+                        id="thesisEdit"
+                        text="{i18n>appNavItemEditTheses}"
+                        icon="sap-icon://request"
+                        enabled="true"
+                        visible="false"
+                        key="editTheses">
+                    </tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+                        id="thesisView"
+						text="{i18n>appNavItemView}"
+						icon="sap-icon://detail-view"
+						enabled="true"
+                        visible="false"
+						key="viewThesesText">
+					</tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+                        id="thesisKeywords"
+						text="{i18n>appNavItemKeywords}"
+						icon="sap-icon://two-keys"
+						enabled="true"
+                        visible="false"
+						key="viewKeywords">
+					</tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+                        id="thesisSubmit"
+						text="{i18n>appNavItemSubmit}"
+						icon="sap-icon://approvals"
+						enabled="true"
+                        visible="false"
+						key="submitThesis">
+					</tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+                        id="viewUsers"
+						text="{i18n>appNavItemUsers}"
+						icon="sap-icon://customer"
+						enabled="true"
+                        visible="false"
+						key="viewUsers">
+					</tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+                        id="editCourses"
+						text="{i18n>appNavItemCourses}"
+						icon="sap-icon://list"
+						enabled="true"
+                        visible="false"
+						key="editCourses">
+					</tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+                        id="editFaculties"
+						text="{i18n>appNavItemFaculties}"
+						icon="sap-icon://compare-2"
+						enabled="true"
+                        visible="false"
+						key="editFaculties">
+					</tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+                        id="editDeadlines"
+						text="{i18n>appNavItemDeadlines}"
+						icon="sap-icon://date-time"
+						enabled="true"
+                        visible="false"
+						key="editDeadlines">
+					</tnt:NavigationListItem>
+                    <tnt:NavigationListItem
+                        id="viewStats"
+						text="{i18n>appNavItemStats}"
+						icon="sap-icon://area-chart"
+						enabled="true"
+                        visible="false"
+						key="viewStats">
+					</tnt:NavigationListItem>
+				</tnt:NavigationList>
+				<tnt:fixedItem>
+					<tnt:NavigationList>
+						<tnt:NavigationListItem
+                            text="{i18n>appNavItemWelcome}"
+                            icon="sap-icon://home"
+                            enabled="true"
+                            key="welcomePage"/>
+					</tnt:NavigationList>
+				</tnt:fixedItem>
+			</tnt:SideNavigation>
+		</tnt:sideContent>
+		<tnt:mainContents>
+			<NavContainer id="pageContainer">
+				<pages>
+				</pages>
+			</NavContainer>
+		</tnt:mainContents>
+	</tnt:ToolPage>
+
+</mvc:View>

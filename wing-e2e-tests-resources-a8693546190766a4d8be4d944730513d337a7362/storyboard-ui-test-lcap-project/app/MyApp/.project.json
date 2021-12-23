@@ -1,0 +1,49 @@
+{
+    "Credential": "cf",
+    "CF": {
+        "Target": "",
+        "Organization": "",
+        "Space": "",
+        "Deploy": {
+            "Description": "My SAP application",
+            "WebClient": {
+                "Version": "",
+                "URL": ""
+            },
+            "Destination": [{
+                "CF": "workflowtest2-app-srv",
+                "MDK": "../service/workflowtest2/",
+                "URL": ""
+            }]
+        }
+    },
+    "MobileService": {
+        "Type": "standard",
+        "AdminAPI": "",
+        "AppId": "",
+        "Destination": []
+    },
+    "Onboarding": {
+        "Schema": "sapmobilesvcs",
+        "TimeZone": "UTC",
+        "URL": ""
+    },
+    "LCAP": {
+        "FullName": "workflowtest2_MyApp",
+        "Service": [{
+            "mdk": "MyApp/Services/service1.service",
+            "cap": {
+                "name": "workflowtest2Service",
+                "sourcePath": "srv/service.cds",
+                "path": "/service/workflowtest2/",
+                "entryPath": "/service/workflowtest2",
+                "destination": "workflowtest2-app-srv",
+                "value": "0"
+            }
+        }],
+        "sourceTemplate": {
+            "id": "html5moduletemplates.basicSAPUI5ApplicationProjectModule",
+            "version": "1.40.12"
+        }
+    }
+}

@@ -1,0 +1,143 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    com.sap.k8s.app: cloud-native-cap-hdi-container-deploy
+  name: cloud-native-cap-hdi-container-deploy
+spec:
+  template:
+    metadata:
+      labels:
+        com.sap.k8s.app: cloud-native-cap-hdi-container-deploy
+    spec:
+      containers:
+        - name: cloud-native-cap-hdi-container-v
+          image: quay.io/cloud-native-public/cloud-native-cap-db:0.0.4
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: "500Mi"
+          volumeMounts:
+            - name: cloud-native-cap-hdi-container-v
+              mountPath: "/etc/secrets/sapcp/hana/hdi-container"
+              readOnly: true
+      volumes:
+        - name: cloud-native-cap-hdi-container-v
+          secret:
+            secretName: cloud-native-cap-hdi-container
+      restartPolicy: Never
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    com.sap.k8s.app: cloud-native-cap-srv
+  name: cloud-native-cap-srv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      com.sap.k8s.app: cloud-native-cap-srv
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        com.sap.k8s.app: cloud-native-cap-srv
+    spec:
+      containers:
+        - image: quay.io/cloud-native-public/cloud-native-cap-srv:0.0.4
+          imagePullPolicy: Always
+          name: cloud-native-cap-srv
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: "0.1"
+              memory: "500Mi"
+          volumeMounts:
+            - name: cloud-native-cap-hdi-container-v
+              mountPath: "/etc/secrets/sapcp/hana/hdi-container"
+              readOnly: true
+            - name: cloud-native-cap-xsuaa-sb-v
+              mountPath: "/etc/secrets/sapcp/xsuaa/cloud-native-cap-xsuaa"
+              readOnly: true
+      volumes:
+        - name: cloud-native-cap-hdi-container-v
+          secret:
+            secretName: cloud-native-cap-hdi-container
+        - name: cloud-native-cap-xsuaa-sb-v
+          secret:
+            secretName: cloud-native-cap-xsuaa-sb
+      restartPolicy: Always
+---
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: cloud-native-cap-srv-hps
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cloud-native-cap-srv
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    com.sap.k8s.app: cloud-native-cap-service
+  name: cloud-native-cap-service
+spec:
+  ports:
+    - name: web
+      port: 8080
+      targetPort: 8080
+  selector:
+    com.sap.k8s.app: cloud-native-cap-srv
+---
+# expose as external HTTPS endpoint, internal works with istio
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  generation: 1
+  name: cloud-native-cap-api-rule
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  rules:
+    - accessStrategies:
+        - config: {}
+          handler: allow
+      methods:
+        - GET
+        - POST
+        - PUT
+        - PATCH
+        - DELETE
+        - HEAD
+      path: /.*
+  service:
+    host: cloud-native-cap
+    name: cloud-native-cap-service # please remember this is 'SERVICE' resource name
+    port: 8080
+---
+# service binding
+apiVersion: servicecatalog.kyma-project.io/v1alpha1
+kind: ServiceBindingUsage
+metadata:
+  name: cloud-native-cap-xsuaa-sbu
+spec:
+  serviceBindingRef:
+    name: cloud-native-cap-xsuaa-sb
+  usedBy:
+    kind: deployment
+    name: cloud-native-cap-srv

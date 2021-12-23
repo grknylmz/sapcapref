@@ -1,0 +1,6 @@
+ID;title;descr;author_ID;stock;price;currency_code;category_ID
+201;Wuthering Heights;Wuthering Heights;101;12;11.11;GBP;9
+207;Jane Eyre;Jane Eyre;107;11;12.34;GBP;10
+251;The Raven;The Raven;150;333;13.13;USD;1
+252;Eleonora;Eleonora;150;555;14;USD;5
+271;Catweazle;Catweazle;170;22;15;EUR;3

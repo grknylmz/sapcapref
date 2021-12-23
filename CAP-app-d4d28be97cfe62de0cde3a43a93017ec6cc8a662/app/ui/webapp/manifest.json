@@ -1,0 +1,279 @@
+{
+	"_version": "",
+
+	"sap.app": {
+		"id": "ui",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"resources": {
+            "css": [{
+                "uri": "ui/css/style.css"
+            }]
+        },
+		"dataSources": {
+			"mainService": {
+				"uri": "/data/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "4.0",
+					"localUri": "localService/metadata.xml"
+				}
+			}
+		}
+	},
+
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://task",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "ui.view.ToolPage",
+			"type": "XML",
+			"async": true,
+			"id": "toolPage"
+		},
+
+		"dependencies": {
+			"minUI5Version": "1.66.0",
+			"libs": {
+                "sap.ui.core": {},
+                "sap.ui.comp": {},
+                "sap.uxap": {},
+				"sap.m": {},
+				"sap.f": {}
+			}
+		},
+
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "ui.i18n.i18n"
+				}
+			},
+			"": {
+				"dataSource": "mainService",
+				"preload": true,
+				"settings": {
+					"operationMode": "Server",
+					"groupId": "$direct",
+					"synchronizationMode": "None",
+					"autoExpandSelect":true
+				}
+			}
+		},
+
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "ui.view",
+				"controlId": "pageContainer",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": ["notFound"]
+				},
+				"async": true
+			},
+
+			"routes": [
+                {
+					"pattern": "",
+					"name": "welcomePage",
+					"target": [
+						"welcomePage"
+					]
+                },
+				{
+					"pattern": "base",
+					"name": "base",
+					"target": [
+						"base"
+					]
+                },
+				{
+					"pattern": "viewKeywords",
+					"name": "viewKeywords",
+					"target": [
+						"viewKeywords"
+					]
+                },
+                {
+					"pattern": "viewUsers",
+					"name": "viewUsers",
+					"target": [
+						"viewUsers"
+					]
+                },
+                {
+					"pattern": "editCourses",
+					"name": "editCourses",
+					"target": [
+						"editCourses"
+					]
+                },
+                {
+					"pattern": "editDeadlines",
+					"name": "editDeadlines",
+					"target": [
+						"editDeadlines"
+					]
+                },
+                
+                {
+					"pattern": "viewStats",
+					"name": "viewStats",
+					"target": [
+						"viewStats"
+					]
+                },
+                {
+					"pattern": "editFaculties",
+					"name": "editFaculties",
+					"target": [
+						"editFaculties"
+					]
+                },
+                {
+					"pattern": "viewThesesText",
+					"name": "viewThesesText",
+					"target": [
+						"viewThesesText"
+					]
+                },
+                {
+					"pattern": "submitThesis",
+					"name": "submitThesis",
+					"target": [
+						"submitThesis"
+					]
+                },
+                {
+					"pattern": "authFail",
+					"name": "authFail",
+					"target": [
+						"authFail"
+					]
+                },
+                {
+					"pattern": "permissionFail",
+					"name": "permissionFail",
+					"target": [
+						"permissionFail"
+					]
+                },
+                {
+					"pattern": "editTheses",
+					"name": "editTheses",
+					"target": [
+						"editTheses"
+					]
+				},
+				{
+					"pattern": "detail/{id}",
+					"name": "detail",
+					"layout": "TwoColumnsMidExpanded",
+					"target": [
+                        "detail",
+                        "base"
+					]
+				}
+			],
+
+			"targets": {
+                "master": {
+					"viewName": "Master",
+					"viewId": "master"
+                },
+                "detail": {
+					"viewName": "Detail",
+					"viewId": "detail"
+				},
+				"toolPage": {
+					"viewName": "ToolPage",
+					"viewId": "toolPage"
+                },
+                "welcomePage": {
+					"viewName": "Welcome",
+					"viewId": "welcomePage"
+                },
+                "base": {
+					"viewName": "Base",
+					"viewId": "base"
+                },
+                "viewUsers": {
+                    "viewName" : "Users",
+                    "viewId": "viewUsers"
+                },
+                "editCourses": {
+                    "viewName" : "EditCourses",
+                    "viewId" : "editCourses"
+                },
+                "editDeadlines": {
+                    "viewName" : "EditDeadlines",
+                    "viewId" : "editDeadlines"
+                },
+                "viewStats": {
+                    "viewName" : "Stats",
+                    "viewId" : "viewStats"
+                },
+                "editFaculties": {
+                    "viewName" : "EditFaculties",
+                    "viewId" : "editFaculties"
+                },
+                "viewThesesText": {
+                    "viewName" : "ViewText",
+                    "viewId": "viewThesesText"
+                },
+                "viewKeywords": {
+                    "viewName" : "Keywords",
+                    "viewId": "viewKeywords"
+                },
+                "submitThesis": {
+                    "viewName" : "SubmitThesis",
+                    "viewId": "submitThesis"
+                },
+                "editTheses": {
+                    "viewName" : "EditTheses",
+                    "viewId": "editTheses"
+                },
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
+                },
+                "authFail": {
+					"viewName": "AuthFail",
+					"viewId": "authFail"
+                },
+                "permissionFail": {
+					"viewName": "PermissionFail",
+					"viewId": "permissionFail"
+				}
+			}
+		}
+	}
+}

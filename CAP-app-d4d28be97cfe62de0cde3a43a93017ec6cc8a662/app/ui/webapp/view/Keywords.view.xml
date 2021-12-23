@@ -1,0 +1,86 @@
+<mvc:View
+	height="100%"
+	controllerName="ui.controller.Keywords"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+    xmlns:l="sap.ui.layout">
+	<SplitApp id="splitApp" initialDetail="detailPage" initialMaster="masterPage">
+		<detailPages>
+			<Page
+				id="detailPage"
+				showHeader="true">
+				<customHeader>
+					<Bar>
+                        <contentLeft>
+                            <Button id="menuBack" icon="sap-icon://nav-back" visible="{device>/system/phone}" press=".onBackToMasterPress"/>
+                        </contentLeft>
+                        <contentRight>
+                            <Button id="cloudSettings" icon="sap-icon://settings" type="Ghost" text="{i18n>WordCloudSettingsText}" press=".onShowSettingsDialog"/>
+                        </contentRight>
+					</Bar>
+				</customHeader>
+                <l:VerticalLayout id="detailLayout" class="sapUiContentPadding" width="100%">
+                    <Title
+                        id="thesisTitle"
+                        wrapping="true"
+                        text="{title}"
+                        visible="false"/>
+                    <ScrollContainer
+                        id="scrollContainer"
+                        height="100%"
+                        width="100%"
+                        horizontal="true"
+                        vertical="true">
+                        <VBox id="vboxid"/>
+                    </ScrollContainer>
+                    <MenuButton id="generate" text="{i18n>ThesisWordCloudFromKeywords}" type="Emphasized" buttonMode="Split" width="400px" visible="false" defaultAction=".onDefaultWordcloudSelected">
+                        <menu>
+                            <Menu itemSelected=".onWordcloudSelect">
+                                <MenuItem key="keyword" text="{i18n>ThesisWordCloudFromKeywords}" icon="sap-icon://key" />
+                                <MenuItem key="text" text="{i18n>ThesisWordCloudFromText}" icon="sap-icon://document-text" />
+                            </Menu>
+                        </menu>
+                    </MenuButton>
+                    
+                    <Panel expandable="true" headerText="{i18n>ThesisText}" width="auto">
+                        <content>
+                            <TextArea value="{Text>/text}" id="thesisText" visible="true" rows="15" width="100%" enabled="true" editable="false"/>
+                        </content>
+                    </Panel>
+                    <Panel expandable="true" headerText="{i18n>ThesisKeywords}" width="auto" expanded="true">
+                        <content>
+                            <Table id="keywordTable" inset="false" items="{path : 'Keyword>/data'}" class="sapFDynamicPageAlignContent sapUiSizeCompact" width="auto">
+                                <columns>
+                                    <Column width="auto">
+                                        <Text text="{i18n>ThesisKeyword}"/>
+                                    </Column>
+                                    <Column width="auto">
+                                        <Text text="{i18n>ThesisKeywordOccurrence}"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem type="Inactive">
+                                        <cells>
+                                            <ObjectIdentifier text="{Keyword>text}"/>
+                                            <Text text="{Keyword>count} ({Keyword>ratio} %)"/>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+                    </Panel>
+                </l:VerticalLayout>
+			</Page>
+		</detailPages>
+		<masterPages>
+			<Page id="masterPage" title="{i18n>ViewThesesMasterTitle}" icon="sap-icon://action" class="sapUiStdPage">
+				<content>
+					<List id="thesisList">
+						<items>
+						</items>
+					</List>
+				</content>
+			</Page>
+		</masterPages>
+	</SplitApp>
+</mvc:View>

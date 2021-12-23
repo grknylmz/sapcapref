@@ -1,0 +1,31 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+    <Dialog
+        id="courseEditDialog"
+        title="Szerkesztés">
+        <buttons>
+            <Button icon="sap-icon://save" text="{i18n>appSave}" type="Emphasized" press=".onCloseEditDialog($event, 'course')"/>
+        </buttons>
+	    <f:SimpleForm id="courseEditForm"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			singleContainerFullSize="false" >
+			<f:content>
+                <Label text="{i18n>CourseID}"/>
+				<Text text="{ID}" emptyIndicatorMode="On"/>
+				<Label text="{i18n>CourseName}"/>
+				<Input id="name" value="{name}" />
+                <Label text="{i18n>CourseFaculty}"/>
+                <Select selectedKey="{faculty_ID}"
+                        items="{
+                            path: '/Faculties',
+                            sorter: { path: 'name' }
+                        }">
+					<core:Item key="{ID}" text="{name}" />
+				</Select>
+            </f:content>
+        </f:SimpleForm>
+    </Dialog>
+</core:FragmentDefinition>

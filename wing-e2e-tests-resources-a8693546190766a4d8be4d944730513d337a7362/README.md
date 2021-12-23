@@ -1,0 +1,1 @@
+# wing-e2e-tests-resources

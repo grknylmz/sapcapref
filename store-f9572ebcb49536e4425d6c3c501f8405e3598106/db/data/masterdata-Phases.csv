@@ -1,0 +1,5 @@
+ID,name,criticality
+1,Planning,3
+2,Development,2
+3,Production,1
+4,Out,0

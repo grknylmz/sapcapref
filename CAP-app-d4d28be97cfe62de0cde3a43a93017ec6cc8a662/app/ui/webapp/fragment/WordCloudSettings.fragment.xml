@@ -1,0 +1,39 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+    <Dialog
+        id="wordCloudSettingsDialog"
+        title="Szerkesztés">
+        <buttons>
+            <Button icon="sap-icon://delete" text="{i18n>CloudDelete}" type="Reject" press=".onCloudDelete"/>
+            <Button icon="sap-icon://save" text="{i18n>appSave}" type="Emphasized" press=".onCloseSettingsDialog"/>
+        </buttons>
+	    <f:SimpleForm id="editForm"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			singleContainerFullSize="false" >
+			<f:content>
+				<Label text="{i18n>CloudInitialSizeW}"/>
+                <StepInput 
+                    value="{CloudSettings>/sizeW}"
+                    min="1"
+                    enabled="{CloudSettings>/enableSizeChange}"
+                    width="120px"/>
+                <Label text="{i18n>CloudInitialSizeH}"/>
+				<StepInput 
+                    value="{CloudSettings>/sizeH}"
+                    min="1"
+                    enabled="{CloudSettings>/enableSizeChange}"
+                    width="120px"/>
+                <Label text="{i18n>CloudMaxWords}"/>
+                <StepInput 
+                    value="{CloudSettings>/maxWords}"
+                    min="1"
+                    width="120px"/>
+                <Label text="{i18n>CloudFont}"/>
+                <Input value="{CloudSettings>/font}"/>
+            </f:content>
+        </f:SimpleForm>
+    </Dialog>
+</core:FragmentDefinition>

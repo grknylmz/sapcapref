@@ -1,0 +1,7 @@
+PatientID;Vorname;Nachname;Anrede;Strasse;Plz;Stadt;CountryCode_code;Telefonnr;EMail
+000001;Theresia;Buchholm;Frau.;Lerchenstr. 82;71116;Gaertringen;DE;+49-341-184709;theresia.buchholm@flight.example.de
+000002;Johannes;Buchholm;Herr;Muehltalstr. 14;68723;Schwetzingen;DE;+49-291-299232;johannes.buchholm@flight.example.de
+000003;James;Buchholm;Herr;Froschstr. 91;90419;Nuernberg;DE;+49-601-130850;james.buchholm@flight.example.de
+000004;Thomas;Buchholm;Herr;Hauptstr. 84;63263;Neu-Isenburg;DE;+49-394-339928;thomas.buchholm@flight.example.de
+000005;Anna;Buchholm;Frau;Hasnerstrasse 13;4020;Linz;AT;+43-957-258037;anna.buchholm@flight.example.at
+000006;Uli;Buchholm;Frau;Caspar-David-Friedrich-Str. 97;75757;Elsenz;DE;+49-367-156738;uli.buchholm@flight.example.de

@@ -1,0 +1,9 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+    <FlexBox direction="Column" renderType="Div" class="sapUiSmallMargin">
+        <PDFViewer source="{pdfUrl}" title="{fileName}" height="600px">
+            <layoutData>
+                <FlexItemData growFactor="1" />
+            </layoutData>
+        </PDFViewer>
+    </FlexBox>
+</core:FragmentDefinition>
