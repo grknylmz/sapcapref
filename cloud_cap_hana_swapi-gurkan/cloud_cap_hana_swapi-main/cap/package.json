@@ -1,0 +1,65 @@
+{
+  "name": "cap-hana-swapi",
+  "version": "1.0.2",
+  "description": "SAP Cloud Application Programming Model fun sample to demonstrate many-to-many relationships.",
+  "repository": "https://github.com/SAP-samples/cloud-cap-hana-swapi",
+  "license": "Apache-2.0",
+  "private": false,
+  "dependencies": {
+    "@sap/cds": "^5.5.1",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.7.11",
+    "@sap/hana-client": "^2.10.13",
+    "cors": "^2.8.5",
+    "express": "^4",
+    "sqlite3": "^5.0.2",
+    "swagger-ui-express": "^4.1",
+    "uuid": "^8.3"
+  },
+  "engines": {
+    "node": "^12.18.0  || ^14.0.0"
+  },
+  "scripts": {
+    "hana": "cds deploy --to hana:starwars --auto-undeploy",
+    "sql":"cds deploy --to sqlite:my.db",
+    "start": "cds run",
+    "build": "cds build",
+    "build2": "cp ./gen/db/.env ./ && cds build && cp ./.env ./gen/db/",
+    "openapi": "cds compile srv --service all -o docs --to openapi --openapi:diagram",
+    "load": "cds build && npm run sql && node convertData"
+  },
+  "cds": {
+    "i18n": {
+      "folders": [
+        "_i18n"
+      ]
+    },
+    "preview": {
+      "ui5": {
+        "version": "1.94.1"
+      }
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "database": "my.db"
+        }
+      }
+    },
+    "features": {
+      "preserve_computed": true,
+      "kibana_formatter": true,
+      "audit_personal_data": true,
+      "optimized_search": true
+    },
+    "log": {
+      "service": true
+    }
+  },
+  "sapux": [
+    "app\\people"
+  ]
+}
