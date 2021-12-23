@@ -20,7 +20,7 @@
   },
   "scripts": {
     "hana": "cds deploy --to hana:starwars --auto-undeploy",
-    "sql":"cds deploy --to sqlite:my.db",
+    "sql": "cds deploy --to sqlite:my.db",
     "start": "cds run",
     "build": "cds build",
     "build2": "cp ./gen/db/.env ./ && cds build && cp ./.env ./gen/db/",
