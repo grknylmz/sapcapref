@@ -1,0 +1,4 @@
+customerNumber,validFrom,validTo,externalTaxWarehouseRegistration,externalExciseDutyNumber,exciseDutySpecialPartnerTypeId,thirdCountryIndicator,registeredConsignee
+BACCHUS,2017-01-01,,cd8d3be31d9c44e,231ebe33a1b44d3,,0,
+FLORIAN,2017-01-01,,,,,0,
+TELL,2017-01-01,,,,,1,12345

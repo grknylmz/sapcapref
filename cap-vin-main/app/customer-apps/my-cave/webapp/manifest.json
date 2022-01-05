@@ -1,0 +1,190 @@
+{
+  "_version": "1.32.0",
+  "sap.app": {
+    "id": "my.cave.mycave",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "dataSources": {
+      "mainService": {
+        "uri": "/customer/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "offline": false,
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "ui5template.fiorielements.v4.lrop",
+      "version": "1.0.0"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "resources": {
+      "js": [],
+      "css": []
+    },
+    "dependencies": {
+      "minUI5Version": "1.95.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "models": {
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      },
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "routing": {
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "CaveList",
+          "target": "CaveList"
+        },
+        {
+          "pattern": "Cave({key}):?query:",
+          "name": "CaveObjectPage",
+          "target": "CaveObjectPage"
+        },
+        {
+          "pattern": "Cave({key})/to_vins({key2}):?query:",
+          "name": "VinObjectPage_to_vins",
+          "target": "VinObjectPage_to_vins"
+        },
+        {
+          "pattern": "Cave({key})/to_vins({key2})/to_cepages({key3}):?query:",
+          "name": "AssemblageObjectPage_to_cepages",
+          "target": "AssemblageObjectPage_to_cepages"
+        }
+      ],
+      "targets": {
+        "CaveList": {
+          "type": "Component",
+          "id": "CaveList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "entitySet": "Cave",
+              "variantManagement": "None",
+              "navigation": {
+                "Cave": {
+                  "detail": {
+                    "route": "CaveObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "selectAll": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "CaveObjectPage": {
+          "type": "Component",
+          "id": "CaveObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "Cave",
+              "navigation": {
+                "to_vins": {
+                  "detail": {
+                    "route": "VinObjectPage_to_vins"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "VinObjectPage_to_vins": {
+          "type": "Component",
+          "id": "VinObjectPage_to_vins",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "Vin",
+              "navigation": {
+                "to_cepages": {
+                  "detail": {
+                    "route": "AssemblageObjectPage_to_cepages"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "AssemblageObjectPage_to_cepages": {
+          "type": "Component",
+          "id": "AssemblageObjectPage_to_cepages",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "entitySet": "Assemblage",
+              "navigation": {}
+            }
+          }
+        }
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    }
+  },
+  "sap.platform.abap": {
+    "_version": "1.1.0",
+    "uri": ""
+  },
+  "sap.platform.hcp": {
+    "_version": "1.1.0",
+    "uri": ""
+  },
+  "sap.fiori": {
+    "_version": "1.1.0",
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}

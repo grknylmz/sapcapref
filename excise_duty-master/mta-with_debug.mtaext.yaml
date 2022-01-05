@@ -1,0 +1,9 @@
+_schema-version: "3.1.0"
+extends: com.sap.xs2.samples.odata.exciseDuty
+ID: com.sap.xs2.samples.odata.exciseDuty-JavaDebug
+
+modules:
+
+  - name: exciseDuty-java
+    properties:
+      JBP_CONFIG_JAVA_OPTS: "[from_environment: false, java_opts: '-Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,suspend=n']"

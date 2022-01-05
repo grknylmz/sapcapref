@@ -1,0 +1,35 @@
+{
+	"fileName": "id_1517237786356_101_propertyChange",
+	"fileType": "change",
+	"changeType": "propertyChange",
+	"reference": "com.sap.icd.edpoc.ExciseDutyStockLedgerLineItem.Component",
+	"packageName": "$TMP",
+	"content": {
+		"property": "useExportToExcel",
+		"newValue": true
+	},
+	"selector": {
+		"id": "com.sap.icd.edpoc.ExciseDutyStockLedgerLineItem::sap.suite.ui.generic.template.ListReport.view.ListReport::StockLedgerLineItem--listReport",
+		"type": "sap.ui.comp.smarttable.SmartTable",
+		"idIsLocal": false
+	},
+	"layer": "VENDOR",
+	"texts": {},
+	"namespace": "apps/com.sap.icd.edpoc.ExciseDutyStockLedgerLineItem/changes/",
+	"creation": "2018-01-29T14:56:36.705Z",
+	"originalLanguage": "EN",
+	"conditions": {},
+	"context": "",
+	"support": {
+		"generator": "Change.createInitialFileContent",
+		"service": "",
+		"user": "",
+		"sapui5Version": "1.52.4"
+	},
+	"dependentSelector": {},
+	"validAppVersions": {
+		"creation": "${project.version}",
+		"from": "${project.version}",
+		"to": "${project.version}"
+	}
+}

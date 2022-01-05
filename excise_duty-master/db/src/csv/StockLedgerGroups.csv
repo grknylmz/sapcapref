@@ -1,0 +1,7 @@
+id,description,stockLedgerDivision,stockLedgerSubdivision,movementEntryBehavior
+02010,Sale to customer,2,0,2
+02040,Sale to customer TWH,3,5,2
+02000,Sale to EU cusomter,3,,2
+02030,Sale to Third Country c..,3,3,2
+02060,Sale to EU customer TWH,3,2,2
+01080,Production,1,1,2

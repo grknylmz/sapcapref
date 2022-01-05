@@ -1,0 +1,10 @@
+id,description,taxationRelevantIndicator
+1,Army,0
+2,diplomats,0
+3,duty free sales,1
+4,testing,0
+5,allowance,0
+10,Foreign armed force,0
+11,Free drink,1
+12,House drink,1
+99,other,0

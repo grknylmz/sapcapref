@@ -1,0 +1,5 @@
+service message @(
+  path     : '/message',
+) {
+
+}

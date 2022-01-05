@@ -1,0 +1,8 @@
+ID;category_code;status_code;inquiry;startedAt;answer;satisfaction_code;createdAt
+abe62651-07d0-4b50-a141-a30c5f8f712d;1;3;I want to buy a new phone.;2020-09-10 12:00:00;Go to the store.;3;2020-09-10 08:00:00
+53772526-bfc6-4cac-a73e-3027ecad93c1;1;3;I want to change plan.;2020-09-12 09:00:00;;4;2020-09-12 08:00:00
+4b973b67-aa8e-49fe-a3ad-f129bff3df79;2;3;My phone doesn't work.;2020-09-13 13:00:00;Go to the store.;4;2020-09-13 12:00:00
+5d1372ca-c982-40dc-9619-798b7a683cfd;2;3;My phone is mullfunctioning.;2020-09-16 08:00:00;Go to the store.;3;2020-09-15 12:00:00
+14d8a8b5-90b7-4bcb-82c2-a38e71b8252a;3;3;How to use camera?;2020-09-20 12:00:00;;2;2020-09-18 12:00:00
+0c928303-4926-4fad-ad79-2cfb7fe405cc;3;3;How to send emails?;2020-09-20 15:00:00;;5;2020-09-20 12:00:00
+84143283-345b-43a9-a12f-748840820e8f;3;1;How to send emails?;;;3;2020-10-11 12:00:00

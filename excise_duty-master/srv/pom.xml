@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.sap.cloud.servicesdk.prov</groupId>
+		<artifactId>projects-parent-odatav2</artifactId>
+		<version>1.22.0</version>
+	</parent>
+
+	<artifactId>exciseDuty-java</artifactId>
+	<groupId>com.sap.icd.poc</groupId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<packaging>war</packaging>
+	<name>exciseDuty-java</name>
+
+	<properties>
+		<packageName>com.sap.exciseduty</packageName>
+		<sap.gateway.version>1.22.0</sap.gateway.version>
+		<s4sdk.version>2.4.2</s4sdk.version>
+		<httpClient.version>4.5.3</httpClient.version>
+		<slf4j.version>1.7.25</slf4j.version>
+
+		<rabbitmq.version>5.0.0</rabbitmq.version>
+		<!-- For testing -->
+		<junit.version>4.12</junit.version>
+		<ngdbc.version>2.3.1</ngdbc.version>
+		<mockito.version>1.9.5</mockito.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<vdmInputDir>${project.basedir}/src/main/resources/vdm/input</vdmInputDir>
+		<vdmMappingFile>${project.basedir}/src/main/resources/vdm/serviceNameMappings.properties</vdmMappingFile>
+		<vdmOutputDir>${project.build.directory}/vdm_lombok</vdmOutputDir>
+		<delombokTargetDir>${project.build.directory}/vdm</delombokTargetDir>
+	</properties>
+
+	<build>
+		<finalName>${project.artifactId}-${project.version}</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.8</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+					<wtpversion>2.0</wtpversion>
+					<projectNameTemplate>[artifactId]-[version]</projectNameTemplate>
+
+
+					<additionalConfig>
+						<!-- Enable annotation processing in Eclipse -->
+						<file>
+							<name>.factorypath</name>
+							<content>
+					<![CDATA[<factorypath><factorypathentry
+	kind="VARJAR" id="M2_REPO/com/sap/cloud/sdk/service/prov/annotation-processor/${cxs.version}/annotation-processor-${cxs.version}.jar"
+	enabled="true" runInBatchMode="false"/></factorypath>
+	 ]]>
+							</content>
+						</file>
+
+						<file>
+							<name>.settings/org.eclipse.jdt.core.prefs</name>
+							<content>
+					<![CDATA[
+eclipse.preferences.version=1
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.8
+org.eclipse.jdt.core.compiler.compliance=1.8
+org.eclipse.jdt.core.compiler.processAnnotations=enabled
+org.eclipse.jdt.core.compiler.source=1.8
+ ]]>
+							</content>
+						</file>
+					</additionalConfig>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<packagingExcludes>WEB-INF/classes/connection.properties </packagingExcludes>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/webapp</directory>
+							<includes>
+								<include>**/web.xml</include>
+							</includes>
+						</resource>
+					</webResources>
+					<warSourceDirectory>src/main/webapp</warSourceDirectory>
+					<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>npm install cds</id>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<phase>generate-sources</phase>
+						<configuration>
+							<!-- assuming npm is in the $PATH -->
+							<executable>npm</executable>
+							<workingDirectory>${project.basedir}/../</workingDirectory>
+							<arguments>
+								<argument>install</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>npm run build cds</id>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<phase>generate-sources</phase>
+						<configuration>
+							<!-- assuming npm is in the $PATH -->
+							<executable>npm</executable>
+							<workingDirectory>${project.basedir}/../</workingDirectory>
+							<arguments>
+								<argument>run</argument>
+								<argument>build</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.sap.cloud.s4hana.datamodel</groupId>
+				<artifactId>odata-generator-maven-plugin</artifactId>
+				<version>${s4sdk.version}</version>
+				<configuration>
+					<nameSource>NAME</nameSource>
+					<serviceNameMappingFile>${vdmMappingFile}</serviceNameMappingFile>
+					<inputDirectory>${vdmInputDir}</inputDirectory>
+					<outputDirectory>${vdmOutputDir}</outputDirectory>
+					<deleteOutputDirectory>true</deleteOutputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Delombok generated code -->
+			<plugin>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok-maven-plugin</artifactId>
+				<version>1.16.20.0</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>delombok</goal>
+						</goals>
+						<configuration>
+							<addOutputDirectory>true</addOutputDirectory>
+							<sourceDirectory>${vdmOutputDir}</sourceDirectory>
+							<outputDirectory>${delombokTargetDir}</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Delete sources with lombok-annotations (optional) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<delete includeEmptyDirs="true" verbose="true">
+									<fileset dir="${vdmOutputDir}" />
+								</delete>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!-- This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. the plugins mention 
+					here are the ones we do not have direct control over, but are used for a 
+					jenkins plugin - all other will be changed to in there source to support 
+					eclipse soon (hpi, license, localizer, access-modifier). see also: http://wiki.eclipse.org/M2E_compatible_maven_plugins -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>exec-maven-plugin</artifactId>
+										<versionRange>1.6.0</versionRange>
+										<goals>
+											<goal>exec</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.sap.cloud.s4hana.datamodel</groupId>
+										<artifactId>odata-generator-maven-plugin</artifactId>
+										<versionRange>1.*</versionRange>
+										<goals>
+											<goal>generate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-antrun-plugin</artifactId>
+										<versionRange>1.*</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.sap.cloud.s4hana</groupId>
+				<artifactId>sdk-bom</artifactId>
+				<version>${s4sdk.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+	
+	<!-- override version mismatch betwenn S4SDK and Gateway -->
+      <dependency>
+        <groupId>com.sap.cloud.servicesdk</groupId>
+        <artifactId>odatav2-connectivity</artifactId>
+        <version>${sap.gateway.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sap.cloud.servicesdk</groupId>
+        <artifactId>odata-v2-lib</artifactId>
+        <version>${sap.gateway.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sap.cloud.servicesdk.prov</groupId>
+        <artifactId>api</artifactId>
+        <version>${sap.gateway.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sap.cloud.servicesdk.prov</groupId>
+        <artifactId>odata2.cdx</artifactId>
+        <version>${sap.gateway.version}</version>
+      </dependency>	
+      <dependency>
+        <groupId>com.sap.cloud.servicesdk.prov</groupId>
+        <artifactId>odatav4</artifactId>
+        <version>${sap.gateway.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sap.cloud.servicesdk.prov</groupId>
+        <artifactId>odata2.web</artifactId>
+        <version>${sap.gateway.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sap.cloud.servicesdk.prov</groupId>
+        <artifactId>odata2.xsa</artifactId>
+        <version>${sap.gateway.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sap.cloud.servicesdk.prov</groupId>
+        <artifactId>odatav2-hybrid</artifactId>
+        <version>${sap.gateway.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.sap.cloud.servicesdk.prov</groupId>
+        <artifactId>odatav2-prov</artifactId>
+        <version>${sap.gateway.version}</version>
+      </dependency>
+	      
+
+
+		<dependency>
+			<groupId>com.sap.cloud.s4hana.cloudplatform</groupId>
+			<artifactId>scp-cf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.cloud.s4hana</groupId>
+			<artifactId>s4hana-all</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- For http communication -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+
+		<!-- For Cloud Connector -->
+		<dependency>
+			<groupId>com.sap.xs2.security</groupId>
+			<artifactId>java-container-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.cloudfoundry.identity</groupId>
+			<artifactId>cloudfoundry-identity-client-lib</artifactId>
+			<version>3.16.0</version>
+		</dependency>
+
+		<!-- Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
+
+		<!-- Message Queue -->
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>${rabbitmq.version}</version>
+		</dependency>
+
+		<!-- For Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- HANA Driver -->
+		<dependency>
+			<groupId>com.sap.db.jdbc</groupId>
+			<artifactId>ngdbc</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+	</dependencies>
+	<profiles>
+		<!-- Needed for Web IDE Java Debugging -->
+		<profile>
+			<activation>
+				<property>
+					<name>devmode</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<webResources combine.children="append">
+								<resource>
+									<directory>${project.build.sourceDirectory}</directory>
+									<targetPath>sources</targetPath>
+								</resource>
+							</webResources>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

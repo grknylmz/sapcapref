@@ -1,0 +1,484 @@
+{ 
+  "format_version": 1, 
+  "imports": 
+  [ 
+	{ 
+		"target_table": "EXCISEDUTYMODEL_EXCISEDUTYTYPE", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "ExciseDutyTypes.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"ID", 
+									"DESCRIPTION",
+									"CONTAINERCONTENTCALCULATIONINDICATOR",
+									"CONTAINERCONTENTUNIT",
+									"CONTAINERCONTENTDECIMALPLACES"
+									]
+							}, 
+		"column_mappings" : { 
+									"ID"                                   : 1, 
+									"DESCRIPTION"                          : 2,
+									"CONTAINERCONTENTCALCULATIONINDICATOR" : 3,
+									"CONTAINERCONTENTUNIT"                 : 4,
+									"CONTAINERCONTENTDECIMALPLACES"        : 5
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_SETTLEMENTUNIT", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "SettlementUnits.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"COMPANYCODE", 
+									"EXCISEDUTYTYPEID",
+									"SETTLEMENTUNIT",
+									"BASEQUANTITYUNIT",
+									"VOLUMEDECIMALPLACES"
+									]
+							}, 
+		"column_mappings" : { 
+									"COMPANYCODE"         : 1, 
+									"EXCISEDUTYTYPEID"    : 2,
+									"SETTLEMENTUNIT"      : 3,
+									"BASEQUANTITYUNIT"    : 4,
+									"VOLUMEDECIMALPLACES" : 5
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_SPECIALPARTNERTYPE", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "SpecialPartnerTypes.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"ID", 
+									"DESCRIPTION",
+									"TAXATIONRELEVANTINDICATOR"
+									]
+							}, 
+		"column_mappings" : { 
+									"ID"                                   : 1, 
+									"DESCRIPTION"                          : 2,
+									"TAXATIONRELEVANTINDICATOR"            : 3
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_CONTAINERCONTENTCALCULATIONINDICATORVALUEHELP", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "ContainerContentCalculationIndicatorValueHelp.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"ID", 
+									"DESCRIPTION"
+									]
+							}, 
+		"column_mappings" : { 
+									"ID"                                   : 1, 
+									"DESCRIPTION"                          : 2
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_STOCKLEDGERDIVISIONVALUEHELP", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "StockLedgerDivisionValueHelp.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"ID", 
+									"DESCRIPTION"
+									]
+							}, 
+		"column_mappings" : { 
+									"ID"                                   : 1, 
+									"DESCRIPTION"                          : 2
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_STOCKLEDGERSUBDIVISIONVALUEHELP", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "StockLedgerSubdivisionValueHelp.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"ID", 
+									"STOCKLEDGERDIVISION", 
+									"DESCRIPTION"
+									]
+							}, 
+		"column_mappings" : { 
+									"ID"                                   : 1, 
+									"STOCKLEDGERDIVISION"                  : 2,
+									"DESCRIPTION"                          : 3
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_MOVEMENTENTRYBEHAVIORVALUEHELP", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "MovementEntryBehaviorValueHelp.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"ID", 
+									"DESCRIPTION"
+									]
+							}, 
+		"column_mappings" : { 
+									"ID"                                   : 1, 
+									"DESCRIPTION"                          : 2
+							} 
+	},
+		{ 
+		"target_table": "EXCISEDUTYMODEL_TAXWAREHOUSE", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "TaxWarehouses.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"TAXWAREHOUSEREGISTRATION",
+									"VALIDFROM",
+									"VALIDTO",
+									"COMPANYCODE",
+									"USESTOCKLEDGERSUBDIVISIONS",
+									"STOCKLEDGERTYPE",
+									"EXCISEDUTYTYPEID",
+									"DESCRIPTION",
+									"COUNTRY_COUNTRYKEY"
+									]
+							}, 
+		"column_mappings" : { 
+									"TAXWAREHOUSEREGISTRATION" :1, 
+									"VALIDFROM" :2,
+									"VALIDTO" :3,
+									"COMPANYCODE" :4,
+									"USESTOCKLEDGERSUBDIVISIONS" :5,
+									"STOCKLEDGERTYPE" :6,
+									"EXCISEDUTYTYPEID" :7,
+									"DESCRIPTION" :8,
+									"COUNTRY_COUNTRYKEY" :9
+							} 
+	},
+		{ 
+		"target_table": "EXCISEDUTYMODEL_MATERIALMASTEREXTENSION", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "MaterialMasterExtensions.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"MATERIALNUMBER",
+									"COMPANYCODE",
+									"EXCISEDUTYTYPEID",
+									"EXCISEDUTYPROCUREMENTINDICATOR",
+									"TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT",
+									"EXCISEDUTYNUMBERFORTAXWAREHOUSE",
+									"EXCISEDUTYTYPEINDEPENDENTMATERIALGROUP",
+									"ALCOHOLICSTRENGTH",
+									"VALIDFROM"
+									]
+							}, 
+		"column_mappings" : { 
+									"MATERIALNUMBER" :1,
+									"COMPANYCODE" :2,
+									"EXCISEDUTYTYPEID" :3,
+									"EXCISEDUTYPROCUREMENTINDICATOR" :4,
+									"TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT" :5,
+									"EXCISEDUTYNUMBERFORTAXWAREHOUSE" :6,
+									"EXCISEDUTYTYPEINDEPENDENTMATERIALGROUP" :7,
+									"ALCOHOLICSTRENGTH" :8,
+									"VALIDFROM" :9
+							} 
+	},
+	{
+		"target_table": "EXCISEDUTYMODEL_SHIPTOMASTEREXTENSION", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "ShipToMasterExtension.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"CUSTOMERNUMBER",
+									"VALIDFROM",
+									"VALIDTO",
+									"EXTERNALTAXWAREHOUSEREGISTRATION",
+									"EXTERNALEXCISEDUTYNUMBER",
+									"EXCISEDUTYSPECIALPARTNERTYPEID",
+									"THIRDCOUNTRYINDICATOR",
+									"REGISTEREDCONSIGNEE"
+									]
+							}, 
+		"column_mappings" : { 
+									"CUSTOMERNUMBER" :1,
+									"VALIDFROM" :2,
+									"VALIDTO" :3,
+									"EXTERNALTAXWAREHOUSEREGISTRATION" :4,
+									"EXTERNALEXCISEDUTYNUMBER" :5,
+									"EXCISEDUTYSPECIALPARTNERTYPEID" :6,
+									"THIRDCOUNTRYINDICATOR" :7,
+									"REGISTEREDCONSIGNEE" :8
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_MOVEMENTCATEGORY", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "MovementCategories.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"ID", 
+									"DESCRIPTION"
+									]
+							}, 
+		"column_mappings" : { 
+									"ID"                                   : 1, 
+									"DESCRIPTION"                          : 2
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_MOVEMENTTYPEMAPPING", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "MovementTypeMappings.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"ERPMOVEMENTTYPE",
+									"ERPMOVEMENTINDICATOR",
+									"EDMOVEMENTCATEGORYID"
+									]
+							}, 
+		"column_mappings" : { 
+									"ERPMOVEMENTTYPE" :1,
+									"ERPMOVEMENTINDICATOR" :2,
+									"EDMOVEMENTCATEGORYID" :3
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_STOCKLEDGERGROUP", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "StockLedgerGroups.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"ID", 
+									"DESCRIPTION",
+									"STOCKLEDGERDIVISION",
+									"STOCKLEDGERSUBDIVISION",
+									"MOVEMENTENTRYBEHAVIOR"
+									]
+							}, 
+		"column_mappings" : { 
+									"ID"  : 1, 
+									"DESCRIPTION" : 2,
+									"STOCKLEDGERDIVISION" :3,
+									"STOCKLEDGERSUBDIVISION" :4,
+									"MOVEMENTENTRYBEHAVIOR" :5
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_TAXWAREHOUSEASSIGNMENT", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "TaxWarehouseAssignments.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"PLANT",
+									"STORAGELOCATION",
+									"EXCISEDUTYTYPEID",
+									"VALIDFROM",
+									"VALIDTO",
+									"TAXWAREHOUSEREGISTRATION"
+									]
+							}, 
+		"column_mappings" : { 
+									"PLANT" :1,
+									"STORAGELOCATION" :2,
+									"EXCISEDUTYTYPEID" :3,
+									"VALIDFROM" :4,
+									"VALIDTO" :5,
+									"TAXWAREHOUSEREGISTRATION" :6
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_TAXRATE", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "TaxRates.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"COUNTRY",
+									"EXCISEDUTYTYPEID",
+									"BASEQUANTITYUNIT",
+									"VALIDFROM",
+									"ALCOHOLICSTRENGTHLOWERLIMIT",
+									"TAXRATE",
+									"CURRENCY"
+									]
+							}, 
+		"column_mappings" : { 
+									"COUNTRY": 1,
+									"EXCISEDUTYTYPEID": 2,
+									"BASEQUANTITYUNIT": 3,
+									"VALIDFROM": 4,
+									"ALCOHOLICSTRENGTHLOWERLIMIT": 5,
+									"TAXRATE": 6,
+									"CURRENCY": 7
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_EXTENSIONPOINT", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "ExtensionPoints.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"EXTENSIONPOINT",
+									"DESCRIPTION"
+									]
+							}, 
+		"column_mappings" : { 
+									"EXTENSIONPOINT": 1,
+									"DESCRIPTION": 2
+							} 
+	},
+	{ 
+		"target_table": "EXCISEDUTYMODEL_STOCKLEDGERLINEITEM", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "StockLedgerLineItem.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"MATERIALDOCUMENTYEAR",
+									"MATERIALDOCUMENTNUMBER",
+									"MATERIALDOCUMENTITEM",
+									"EXCISEDUTYPOSITIONNUMBER",
+									"EXCISEDUTYTYPEID",
+									"COMPANYCODE",
+									"TAXWAREHOUSEREGISTRATION",
+									"PLANT",
+									"STORAGELOCATION",
+									"MATERIALDOCUMENTPOSTINGDATE",
+									"STOCKLEDGERNUMBER",
+									"NOENTRYINEXTENDEDSTOCKLEDGER",
+									"MATERIALNUMBER",
+									"BATCHNUMBER",
+									"QUANTITY",
+									"BASEUNITOFMEASURE",
+									"EDMOVEMENTCATEGORYID",
+									"ERPMOVEMENTTYPE",
+									"STOCKLEDGERGROUPID",
+									"STOCKLEDGERDIVISION",
+									"STOCKLEDGERSUBDIVISION",
+									"ALCOHOLICSTRENGTH",
+									"TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT",
+									"EXCISEDUTYNUMBERFORTAXWAREHOUSE",
+									"EXTERNALTAXWAREHOUSEREGISTRATION",
+									"EXTERNALEXCISEDUTYNUMBER",
+									"SALESORDERNUMBER",
+									"SALESORDERITEM",
+									"EXCISEDUTYPROCUREMENTINDICATOR",
+									"ACCOUNTINGJOURNALREFERENCE",
+									"TAXVALUEAMOUNT",
+									"TAXVALUECURRENCY",
+									"CUSTOMERNUMBER"
+									]
+							}, 
+		"column_mappings" : { 
+									"MATERIALDOCUMENTYEAR": 1,
+									"MATERIALDOCUMENTNUMBER": 2,
+									"MATERIALDOCUMENTITEM": 3,
+									"EXCISEDUTYPOSITIONNUMBER": 4,
+									"EXCISEDUTYTYPEID": 5,
+									"COMPANYCODE": 6,
+									"TAXWAREHOUSEREGISTRATION": 7,
+									"PLANT": 8,
+									"STORAGELOCATION": 9,
+									"MATERIALDOCUMENTPOSTINGDATE": 10,
+									"STOCKLEDGERNUMBER": 11,
+									"NOENTRYINEXTENDEDSTOCKLEDGER": 12,
+									"MATERIALNUMBER": 13,
+									"BATCHNUMBER": 14,
+									"QUANTITY": 15,
+									"BASEUNITOFMEASURE": 16,
+									"EDMOVEMENTCATEGORYID": 17,
+									"ERPMOVEMENTTYPE": 18,
+									"STOCKLEDGERGROUPID": 19,
+									"STOCKLEDGERDIVISION": 20,
+									"STOCKLEDGERSUBDIVISION": 21,
+									"ALCOHOLICSTRENGTH": 22,
+									"TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT": 23,
+									"EXCISEDUTYNUMBERFORTAXWAREHOUSE": 24,
+									"EXTERNALTAXWAREHOUSEREGISTRATION": 25,
+									"EXTERNALEXCISEDUTYNUMBER": 26,
+									"SALESORDERNUMBER": 27,
+									"SALESORDERITEM": 28,
+									"EXCISEDUTYPROCUREMENTINDICATOR": 29,
+									"ACCOUNTINGJOURNALREFERENCE": 30,
+									"TAXVALUEAMOUNT": 31,
+									"TAXVALUECURRENCY": 32,
+									"CUSTOMERNUMBER": 33
+							} 
+	},
+	{
+		"target_table": "EXCISEDUTYMODEL_SHIPTOMASTEREXTENSIONEU", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "ShipToMasterExtensionEU.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"CUSTOMERNUMBER",
+									"TAXWAREHOUSEREGISTRATION",
+									"VALIDFROM",
+									"VALIDTO",
+									"OUTSIDEEUTAXTERRITORYINDICATOR",
+									"EUCOUNTRY1",
+									"EUCOUNTRY2"
+									]
+							}, 
+		"column_mappings" : { 
+									"CUSTOMERNUMBER" :1,
+									"TAXWAREHOUSEREGISTRATION" :2,
+									"VALIDFROM" :3,
+									"VALIDTO" :4,
+									"OUTSIDEEUTAXTERRITORYINDICATOR" :5,
+									"EUCOUNTRY1" :6,
+									"EUCOUNTRY2" :7
+							} 
+	}
+  ] 
+}

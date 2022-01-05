@@ -1,0 +1,29 @@
+{
+  "name": "cap-cave-router",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "ui5 build -a --config=ui5.yaml --clean-dest --include-task=generateManifestBundle generateCachebusterInfo",
+    "serve": "ui5 serve -o index.html",
+    "start": "node node_modules/@sap/approuter/approuter.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sap/approuter": "^8.3.1"
+  },
+  "devDependencies": {
+    "@sap/ui5-builder-webide-extension": "1.0.x",
+    "@ui5/cli": "^2.7.1",
+    "ui5-middleware-simpleproxy": "^0.3.2",
+    "ui5-task-cachebuster-indexing": "^1.0.2"
+  },
+  "ui5": {
+    "dependencies": [
+      "ui5-middleware-simpleproxy",
+      "@sap/ui5-builder-webide-extension",
+      "ui5-task-cachebuster-indexing"
+    ]
+  }
+}

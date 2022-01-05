@@ -1,0 +1,3 @@
+extensionPoint,description
+StockLedgerDet,Stock Ledger Determination Extension
+TaxCalc,Tax Calculation Extension

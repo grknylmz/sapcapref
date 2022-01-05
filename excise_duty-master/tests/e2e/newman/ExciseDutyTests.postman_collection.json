@@ -1,0 +1,1773 @@
+{
+	"info": {
+		"_postman_id": "15eee8ee-a695-4bb3-8b58-942a641cdbad",
+		"name": "ExciseDutyTests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Stock Ledger Line Item - $COUNT",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "120be617-d304-4344-977e-3ddd3c67d583",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\"), \"samlAttributes\": { \"Groups\": [\"EDA\"] } })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e53771ed-8931-408c-ac56-f8d58ad04aee",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 87;",
+							"",
+							"pm.test(\"Expect resutl to be \" + expectedCount, function(){",
+							"    pm.expect(responseBody).to.equal(expectedCount.toString());",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/StockLedgerService/StockLedgerLineItem/$count?sap-language=en",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"StockLedgerService",
+						"StockLedgerLineItem",
+						"$count"
+					],
+					"query": [
+						{
+							"key": "sap-language",
+							"value": "en"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stock Ledger Line Item - Verify Create is forbidden",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "54022649-bee4-4f39-998d-6eb9f7ac9eda",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\"), \"samlAttributes\": { \"Groups\": [\"EDA\"] }})",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b91d5fb-1005-40b5-85d4-f22905c69db5",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response code is 403\", function () {",
+							"    pm.response.to.be.forbidden;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"d\":{\"materialDocumentYear\":\"2018\",\"materialDocumentNumber\":\"5000007158\",\"materialDocumentItem\":\"0001\",\"exciseDutyPositionNumber\":1,\"exciseDutyTypeId\":\"BI\",\"companyCode\":\"M201\",\"taxWarehouseRegistration\":\"TS M201\",\"plant\":\"M201\",\"storageLocation\":\"M201\",\"materialDocumentPostingDate\":\"/Date(1507680000000)/\",\"stockLedgerNumber\":2,\"noEntryInExtendedStockLedger\":false,\"materialNumber\":\"EDBDI01\",\"batchNumber\":null,\"quantity\":\"20.000\",\"baseUnitOfMeasure\":\"PC\",\"edMovementCategoryId\":\"101\",\"erpMovementType\":\"601\",\"stockLedgerGroupId\":\"02010\",\"stockLedgerDivision\":\"2\",\"stockLedgerSubdivision\":\"0\",\"alcoholicStrength\":\"11.00\",\"taxWarehouseRegistrationOfManufacturingPlant\":\"DE123456\",\"exciseDutyNumberForTaxWarehouse\":null,\"externalTaxWarehouseRegistration\":null,\"externalExciseDutyNumber\":null,\"salesOrderNumber\":null,\"salesOrderItem\":\"000000\",\"exciseDutyProcurementIndicator\":\"E\",\"accountingJournalReference\":\"49000071582017\",\"taxValueAmount\":\"17.31400\",\"taxValueCurrency\":\"EUR\",\"customerNumber\":null}}"
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/StockLedgerService/StockLedgerLineItem",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"StockLedgerService",
+						"StockLedgerLineItem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stock Ledger Line Item - Verify Action \"ExciseDutyCalculation\" is forbidden",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "54022649-bee4-4f39-998d-6eb9f7ac9eda",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\"), \"samlAttributes\": { \"Groups\": [\"EDA\"] }})",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b91d5fb-1005-40b5-85d4-f22905c69db5",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"response code is 403\", function () {",
+							"    pm.response.to.be.forbidden;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"d\":{\"materialDocumentYear\":\"2018\",\"materialDocumentNumber\":\"5000007158\",\"materialDocumentItem\":\"0001\",\"exciseDutyPositionNumber\":1,\"exciseDutyTypeId\":\"BI\",\"companyCode\":\"M201\",\"taxWarehouseRegistration\":\"TS M201\",\"plant\":\"M201\",\"storageLocation\":\"M201\",\"materialDocumentPostingDate\":\"/Date(1507680000000)/\",\"stockLedgerNumber\":2,\"noEntryInExtendedStockLedger\":false,\"materialNumber\":\"EDBDI01\",\"batchNumber\":null,\"quantity\":\"20.000\",\"baseUnitOfMeasure\":\"PC\",\"edMovementCategoryId\":\"101\",\"erpMovementType\":\"601\",\"stockLedgerGroupId\":\"02010\",\"stockLedgerDivision\":\"2\",\"stockLedgerSubdivision\":\"0\",\"alcoholicStrength\":\"11.00\",\"taxWarehouseRegistrationOfManufacturingPlant\":\"DE123456\",\"exciseDutyNumberForTaxWarehouse\":null,\"externalTaxWarehouseRegistration\":null,\"externalExciseDutyNumber\":null,\"salesOrderNumber\":null,\"salesOrderItem\":\"000000\",\"exciseDutyProcurementIndicator\":\"E\",\"accountingJournalReference\":\"49000071582017\",\"taxValueAmount\":\"17.31400\",\"taxValueCurrency\":\"EUR\",\"customerNumber\":null}}"
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/StockLedgerService/ExciseDutyCalculation?materialNumber='EDBISM01'&companyCode='M201'&plant='M201'&storageLocation='M201'&customerNumber='0010151654'&quantity=100&baseUnitOfMeasure='HL'&postingDate=datetime'2017-08-21T00:00:00'",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"StockLedgerService",
+						"ExciseDutyCalculation"
+					],
+					"query": [
+						{
+							"key": "materialNumber",
+							"value": "'EDBISM01'"
+						},
+						{
+							"key": "companyCode",
+							"value": "'M201'"
+						},
+						{
+							"key": "plant",
+							"value": "'M201'"
+						},
+						{
+							"key": "storageLocation",
+							"value": "'M201'"
+						},
+						{
+							"key": "customerNumber",
+							"value": "'0010151654'"
+						},
+						{
+							"key": "quantity",
+							"value": "100"
+						},
+						{
+							"key": "baseUnitOfMeasure",
+							"value": "'HL'"
+						},
+						{
+							"key": "postingDate",
+							"value": "datetime'2017-08-21T00:00:00'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stock Ledger Error Processing - $COUNT",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bb530633-a5fe-4532-9f66-9a0f67cbe389",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\"), \"samlAttributes\": { \"Groups\": [\"EDA\"] } })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4f4b8b94-25fc-4064-969e-07a00ac811a1",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 0;",
+							"",
+							"pm.test(\"Expect resutl to be \" + expectedCount, function(){",
+							"    pm.expect(responseBody).to.equal(expectedCount.toString());",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/StockLedgerProcessingErrorService/StockLedgerProcessingError/$count?sap-language=en",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"StockLedgerProcessingErrorService",
+						"StockLedgerProcessingError",
+						"$count"
+					],
+					"query": [
+						{
+							"key": "sap-language",
+							"value": "en"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stock Ledger Line Item - Select",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d09fcbe6-ce14-4bcf-90da-f3a280a89c18",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\") , \"samlAttributes\": { \"Groups\": [\"EDA\"] } })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "16f64a75-49d4-4c31-980f-33b614a75d13",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 87;",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Expect count to be \" + expectedCount, function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.__count).to.equal(expectedCount.toString());",
+							"});",
+							"",
+							"pm.test(\"Expect \" + expectedCount + \" results\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.results.length).to.equal(expectedCount);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/StockLedgerService/StockLedgerLineItem?$select=materialDocumentYear,materialDocumentNumber,materialDocumentItem,exciseDutyTypeId,companyCode,taxWarehouseRegistration,plant,storageLocation,materialDocumentPostingDate,stockLedgerNumber,noEntryInExtendedStockLedger,materialNumber,quantity,baseUnitOfMeasure,edMovementCategoryId,erpMovementType,stockLedgerGroupId,stockLedgerDivision,stockLedgerSubdivision,alcoholicStrength,taxWarehouseRegistrationOfManufacturingPlant,exciseDutyNumberForTaxWarehouse,externalTaxWarehouseRegistration,externalExciseDutyNumber,taxValueAmount,taxValueCurrency,salesOrderNumber,salesOrderItem,exciseDutyPositionNumber,customerNumber&$top=140&$inlinecount=allpages",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"StockLedgerService",
+						"StockLedgerLineItem"
+					],
+					"query": [
+						{
+							"key": "$select",
+							"value": "materialDocumentYear,materialDocumentNumber,materialDocumentItem,exciseDutyTypeId,companyCode,taxWarehouseRegistration,plant,storageLocation,materialDocumentPostingDate,stockLedgerNumber,noEntryInExtendedStockLedger,materialNumber,quantity,baseUnitOfMeasure,edMovementCategoryId,erpMovementType,stockLedgerGroupId,stockLedgerDivision,stockLedgerSubdivision,alcoholicStrength,taxWarehouseRegistrationOfManufacturingPlant,exciseDutyNumberForTaxWarehouse,externalTaxWarehouseRegistration,externalExciseDutyNumber,taxValueAmount,taxValueCurrency,salesOrderNumber,salesOrderItem,exciseDutyPositionNumber,customerNumber"
+						},
+						{
+							"key": "$top",
+							"value": "140"
+						},
+						{
+							"key": "$inlinecount",
+							"value": "allpages"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stock Ledger Line Item ALP Service - Select Aggregated StockLedgerDivision",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a5605c5f-51fa-460e-b0b6-069034e2305a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\") })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4c29420f-44ac-4e3a-b614-fbeb3f93b074",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 2;",
+							"",
+							"// TODO: Fix to be provided by CAP - Based on conversation between Ingo and Sachin",
+							"//       Issue: Internal Server Error - ID__ not found",
+							"/*",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"// As we apply aggregation this has also to be refelected in the \"__count\"",
+							"pm.test(\"Expect count to be \" + expectedCount, function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.__count).to.equal(expectedCount.toString());",
+							"});",
+							"",
+							"pm.test(\"Expect \" + expectedCount + \" results\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.results.length).to.equal(expectedCount);",
+							"});",
+							"*/"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/StockLedgerAlpService/StockLedgerLineItem?$skip=0&$top=100&$orderby=stockLedgerDivision%20asc&$select=stockLedgerDivision%2ctaxValueAmount%2ctaxValueCurrency&$inlinecount=allpages",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"StockLedgerAlpService",
+						"StockLedgerLineItem"
+					],
+					"query": [
+						{
+							"key": "$skip",
+							"value": "0"
+						},
+						{
+							"key": "$top",
+							"value": "100"
+						},
+						{
+							"key": "$orderby",
+							"value": "stockLedgerDivision%20asc"
+						},
+						{
+							"key": "$select",
+							"value": "stockLedgerDivision%2ctaxValueAmount%2ctaxValueCurrency"
+						},
+						{
+							"key": "$inlinecount",
+							"value": "allpages"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stock Ledger Line Item ALP Service - Select Aggregated StockLedgerDivision with TOP 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a5605c5f-51fa-460e-b0b6-069034e2305a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\") })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1416aea6-ed03-4942-b337-377c0a1ec11f",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 1;",
+							"",
+							"// TODO: Fix to be provided by CAP - Based on conversation between Ingo and Sachin",
+							"//       Issue: Internal Server Error - ID__ not found",
+							"/*",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"// As we apply aggregation this has also to be refelected in the \"__count\"",
+							"pm.test(\"Expect count to be \" + expectedCount, function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.__count).to.equal(expectedCount.toString());",
+							"});",
+							"",
+							"pm.test(\"Expect \" + expectedCount + \" results\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.results.length).to.equal(expectedCount);",
+							"});",
+							"*/"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/StockLedgerAlpService/StockLedgerLineItem?$skip=0&$top=1&$orderby=stockLedgerDivision%20asc&$select=taxValueAmount%2ctaxValueCurrency%2cstockLedgerDivision&$inlinecount=allpages",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"StockLedgerAlpService",
+						"StockLedgerLineItem"
+					],
+					"query": [
+						{
+							"key": "$skip",
+							"value": "0"
+						},
+						{
+							"key": "$top",
+							"value": "1"
+						},
+						{
+							"key": "$orderby",
+							"value": "stockLedgerDivision%20asc"
+						},
+						{
+							"key": "$select",
+							"value": "taxValueAmount%2ctaxValueCurrency%2cstockLedgerDivision"
+						},
+						{
+							"key": "$inlinecount",
+							"value": "allpages "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stock Ledger Line Item ALP Service - Select Aggregated taxValueAmount",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a5605c5f-51fa-460e-b0b6-069034e2305a",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\") })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ba5f352c-3e5d-4310-8940-87063cb0f197",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 1;",
+							"",
+							"// TODO: Fix to be provided by CAP - Based on conversation between Ingo and Sachin",
+							"//       Issue: Internal Server Error - ID__ not found",
+							"/*",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"// As we apply aggregation this has also to be refelected in the \"__count\"",
+							"pm.test(\"Expect count to be \" + expectedCount, function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.__count).to.equal(expectedCount.toString());",
+							"});",
+							"",
+							"pm.test(\"Expect \" + expectedCount + \" results\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.results.length).to.equal(expectedCount);",
+							"});",
+							"*/"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/StockLedgerAlpService/StockLedgerLineItem?$skip=0&$top=1&$select=taxValueAmount%2ctaxValueCurrency&$inlinecount=allpages",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"StockLedgerAlpService",
+						"StockLedgerLineItem"
+					],
+					"query": [
+						{
+							"key": "$skip",
+							"value": "0"
+						},
+						{
+							"key": "$top",
+							"value": "1"
+						},
+						{
+							"key": "$select",
+							"value": "taxValueAmount%2ctaxValueCurrency"
+						},
+						{
+							"key": "$inlinecount",
+							"value": "allpages"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ExciseDutyType - Select",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3f7c32ee-feb2-433d-804b-1a4d265537a8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\") , \"samlAttributes\": { \"Groups\": [\"EDA\"] } })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c4e0ac1b-25b1-42eb-ba4f-6636c59203ef",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 2;",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Expect count to be \" + expectedCount, function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.__count).to.equal(expectedCount.toString());",
+							"});",
+							"",
+							"pm.test(\"Expect \" + expectedCount + \" results\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.results.length).to.equal(expectedCount);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/ExciseDutyTypeService/ExciseDutyType?$skip=0&$top=25&$select=id%2cdescription%2ccontainerContentCalculationIndicator%2ccontainerContentUnit%2ccontainerContentDecimalPlaces&$inlinecount=allpages",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"ExciseDutyTypeService",
+						"ExciseDutyType"
+					],
+					"query": [
+						{
+							"key": "$skip",
+							"value": "0"
+						},
+						{
+							"key": "$top",
+							"value": "25"
+						},
+						{
+							"key": "$select",
+							"value": "id%2cdescription%2ccontainerContentCalculationIndicator%2ccontainerContentUnit%2ccontainerContentDecimalPlaces"
+						},
+						{
+							"key": "$inlinecount",
+							"value": "allpages"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TaxWarehouse - Select",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2f3242ac-b7aa-4a42-836c-08d1e122d105",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\") , \"samlAttributes\": { \"Groups\": [\"EDA\"] } })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7ebaf207-661d-4252-9a11-7c69d47c56ab",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 1;",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Expect count to be \" + expectedCount, function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.__count).to.equal(expectedCount.toString());",
+							"});",
+							"",
+							"pm.test(\"Expect \" + expectedCount + \" results\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.results.length).to.equal(expectedCount);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/TaxWarehouseService/TaxWarehouse?$skip=0&$top=25&$select=exciseDutyTypeId%2ctaxWarehouseRegistration%2cvalidFrom%2cvalidTo%2ccompanyCode%2cuseStockLedgerSubdivisions%2cstockLedgerType&$inlinecount=allpages",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"TaxWarehouseService",
+						"TaxWarehouse"
+					],
+					"query": [
+						{
+							"key": "$skip",
+							"value": "0"
+						},
+						{
+							"key": "$top",
+							"value": "25"
+						},
+						{
+							"key": "$select",
+							"value": "exciseDutyTypeId%2ctaxWarehouseRegistration%2cvalidFrom%2cvalidTo%2ccompanyCode%2cuseStockLedgerSubdivisions%2cstockLedgerType"
+						},
+						{
+							"key": "$inlinecount",
+							"value": "allpages"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TaxWarehouse - Select Single",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1a354ae0-e8c1-468a-ae14-2c5eadb0d75f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\"), \"samlAttributes\": { \"Groups\": [\"EDA\"] } })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9b5014d8-b9ca-4df4-ae76-489c0545e764",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 1;",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Expect ExciseDutyTypeId to be BI\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.exciseDutyTypeId).to.equal(\"BI\");",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/TaxWarehouseService/TaxWarehouse(exciseDutyTypeId='BI',taxWarehouseRegistration='TS%20M201')",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"TaxWarehouseService",
+						"TaxWarehouse(exciseDutyTypeId='BI',taxWarehouseRegistration='TS%20M201')"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Movement Categories - Select",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1dac9aa4-7632-450e-8db6-fe41c354b196",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\"), \"samlAttributes\": { \"Groups\": [\"EDA\"] } })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "14d22d66-4c12-46f3-913d-ea8cf0453b80",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 2;",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Expect count to be \" + expectedCount, function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.__count).to.equal(expectedCount.toString());",
+							"});",
+							"",
+							"pm.test(\"Expect \" + expectedCount + \" results\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.results.length).to.equal(expectedCount);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/MovementCategoryService/MovementCategory?$skip=0&$top=25&$select=id%2cdescription&$inlinecount=allpages",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"MovementCategoryService",
+						"MovementCategory"
+					],
+					"query": [
+						{
+							"key": "$skip",
+							"value": "0"
+						},
+						{
+							"key": "$top",
+							"value": "25"
+						},
+						{
+							"key": "$select",
+							"value": "id%2cdescription"
+						},
+						{
+							"key": "$inlinecount",
+							"value": "allpages"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tax Rate Service - Select",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7402935b-d949-4df6-8884-1cbe539bd1d4",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\"), \"samlAttributes\": { \"Groups\": [\"EDA\"] } })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "96d3f9b7-4077-4e21-95b2-420759802088",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 1;",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Expect count to be \" + expectedCount, function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.__count).to.equal(expectedCount.toString());",
+							"});",
+							"",
+							"pm.test(\"Expect \" + expectedCount + \" results\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.results.length).to.equal(expectedCount);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/TaxRateService/TaxRate?$skip=0&$top=25&$select=country%2cexciseDutyTypeId%2cbaseQuantityUnit%2cvalidFrom%2calcoholicStrengthLowerLimit%2ctaxRate%2ccurrency&$inlinecount=allpages",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"TaxRateService",
+						"TaxRate"
+					],
+					"query": [
+						{
+							"key": "$skip",
+							"value": "0"
+						},
+						{
+							"key": "$top",
+							"value": "25"
+						},
+						{
+							"key": "$select",
+							"value": "country%2cexciseDutyTypeId%2cbaseQuantityUnit%2cvalidFrom%2calcoholicStrengthLowerLimit%2ctaxRate%2ccurrency"
+						},
+						{
+							"key": "$inlinecount",
+							"value": "allpages"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stock Ledger Characteristics Service - Select",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bdacce2f-d4da-4870-896e-264c0232431e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\"), \"samlAttributes\": { \"Groups\": [\"EDA\"] } })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ef5c93c9-a505-424e-aefb-42ca2f7c353a",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 6;",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Expect count to be \" + expectedCount, function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.__count).to.equal(expectedCount.toString());",
+							"});",
+							"",
+							"pm.test(\"Expect \" + expectedCount + \" results\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.results.length).to.equal(expectedCount);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/StockLedgerCharacteristicsService/StockLedgerGroup?$skip=0&$top=25&$select=id%2cdescription%2cstockLedgerDivision%2cstockLedgerDivisionValueHelp%2fdescription%2cstockLedgerSubdivision%2cstockLedgerSubdivisionValueHelp%2fdescription%2cmovementEntryBehavior%2cmovementEntryBehaviorValueHelp%2fdescription&$expand=stockLedgerDivisionValueHelp%2cstockLedgerSubdivisionValueHelp%2cmovementEntryBehaviorValueHelp&$inlinecount=allpages",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"StockLedgerCharacteristicsService",
+						"StockLedgerGroup"
+					],
+					"query": [
+						{
+							"key": "$skip",
+							"value": "0"
+						},
+						{
+							"key": "$top",
+							"value": "25"
+						},
+						{
+							"key": "$select",
+							"value": "id%2cdescription%2cstockLedgerDivision%2cstockLedgerDivisionValueHelp%2fdescription%2cstockLedgerSubdivision%2cstockLedgerSubdivisionValueHelp%2fdescription%2cmovementEntryBehavior%2cmovementEntryBehaviorValueHelp%2fdescription"
+						},
+						{
+							"key": "$expand",
+							"value": "stockLedgerDivisionValueHelp%2cstockLedgerSubdivisionValueHelp%2cmovementEntryBehaviorValueHelp"
+						},
+						{
+							"key": "$inlinecount",
+							"value": "allpages"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Material Master Service - Select",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f367ee77-9805-496b-978e-11e8726ffa08",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\"), \"samlAttributes\": { \"Groups\": [\"EDA\"] } })",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bba779e2-39b8-4814-b57c-20d78ff63b12",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 3;",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Expect count to be \" + expectedCount, function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.__count).to.equal(expectedCount.toString());",
+							"});",
+							"",
+							"pm.test(\"Expect \" + expectedCount + \" results\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.results.length).to.equal(expectedCount);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/MaterialMasterService/MaterialMasterExtension?$skip=0&$top=25&$select=materialNumber%2cmaterialDescription%2fdescription%2ccompanyCode%2cexciseDutyTypeId%2cexciseDutyType%2fdescription%2cexciseDutyProcurementIndicator%2ctaxWarehouseRegistrationOfManufacturingPlant%2cexciseDutyNumberForTaxWarehouse%2cexciseDutyTypeIndependentMaterialGroup%2calcoholicStrength%2cvalidFrom&$expand=materialDescription%2cexciseDutyType&$inlinecount=allpages",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"MaterialMasterService",
+						"MaterialMasterExtension"
+					],
+					"query": [
+						{
+							"key": "$skip",
+							"value": "0"
+						},
+						{
+							"key": "$top",
+							"value": "25"
+						},
+						{
+							"key": "$select",
+							"value": "materialNumber%2cmaterialDescription%2fdescription%2ccompanyCode%2cexciseDutyTypeId%2cexciseDutyType%2fdescription%2cexciseDutyProcurementIndicator%2ctaxWarehouseRegistrationOfManufacturingPlant%2cexciseDutyNumberForTaxWarehouse%2cexciseDutyTypeIndependentMaterialGroup%2calcoholicStrength%2cvalidFrom"
+						},
+						{
+							"key": "$expand",
+							"value": "materialDescription%2cexciseDutyType"
+						},
+						{
+							"key": "$inlinecount",
+							"value": "allpages"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ship To Master Extension Service - Select",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b930bde3-b9d9-4538-8e30-14d1edb4569d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\") , \"samlAttributes\": { \"Groups\": [\"EDA\"] }})",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ed93a162-f89c-4a02-9bcd-b1604cee5b8c",
+						"type": "text/javascript",
+						"exec": [
+							"var expectedCount = 3;",
+							"",
+							"pm.test(\"response code is 200\", function () {",
+							"    pm.response.to.be.ok;",
+							"});",
+							"",
+							"pm.test(\"Expect count to be \" + expectedCount, function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.__count).to.equal(expectedCount.toString());",
+							"});",
+							"",
+							"pm.test(\"Expect \" + expectedCount + \" results\", function(){",
+							"    var jsonResponse = pm.response.json();",
+							"    pm.expect(jsonResponse.d.results.length).to.equal(expectedCount);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/ShipToMasterService/ShipToMasterExtension?$skip=0&$top=25&$select=customerNumber%2ccustomerData%2fname%2ccustomerData%2fcountryKey%2cvalidFrom%2cvalidTo%2cexternalTaxWarehouseRegistration%2cexternalExciseDutyNumber%2cexciseDutySpecialPartnerTypeId%2cthirdCountryIndicator&$expand=customerData&$inlinecount=allpages",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"ShipToMasterService",
+						"ShipToMasterExtension"
+					],
+					"query": [
+						{
+							"key": "$skip",
+							"value": "0"
+						},
+						{
+							"key": "$top",
+							"value": "25"
+						},
+						{
+							"key": "$select",
+							"value": "customerNumber%2ccustomerData%2fname%2ccustomerData%2fcountryKey%2cvalidFrom%2cvalidTo%2cexternalTaxWarehouseRegistration%2cexternalExciseDutyNumber%2cexciseDutySpecialPartnerTypeId%2cthirdCountryIndicator"
+						},
+						{
+							"key": "$expand",
+							"value": "customerData"
+						},
+						{
+							"key": "$inlinecount",
+							"value": "allpages"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MaterialMasterService query in batch request",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0de401b3-8e17-4d81-a558-61cb600b030e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: \"https://xsuaa-monitoring-idp.cfapps.sap.hana.ondemand.com/gettoken\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({ uaaURL: pm.environment.get(\"uaa_url\"), clientID: pm.environment.get(\"uaa_clientId\"), clientSecret: pm.environment.get(\"uaa_clientSecret\"),  \"username\": pm.environment.get(\"uaa_user\") , \"samlAttributes\": { \"Groups\": [\"EDA\"] }})",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().token.access_token);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "multipart/mixed"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/mixed;boundary=batch_db32-ffb0-803e"
+					},
+					{
+						"key": "DataServiceVersion",
+						"value": "2.0"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "--batch_db32-ffb0-803e\r\nContent-Type: application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nGET ExciseDutyType?$skip=0&$top=100&$orderby=id%20asc&$select=id%2cdescription&$inlinecount=allpages HTTP/1.1\r\nsap-contextid-accept: header\r\nAccept: application/json\r\nAccept-Language: en-US\r\nDataServiceVersion: 2.0\r\nMaxDataServiceVersion: 2.0\r\nsap-cancel-on-close: true\r\n\r\n\r\n--batch_db32-ffb0-803e--"
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/MaterialMasterService/$batch",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"MaterialMasterService",
+						"$batch"
+					]
+				},
+				"description": "This query should be working but is causing a 500 error currently when executed as a batch request. It works as a single GET Request."
+			},
+			"response": []
+		},
+		{
+			"name": "Tax Calculation Action",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "459a1822-dcda-493f-9ea5-e22fea4393d3",
+						"type": "text/javascript",
+						"exec": [
+							"pm.sendRequest({",
+							"    url: pm.environment.get(\"uaa_url\") + \"/oauth/token\",",
+							"    method: 'POST',",
+							"    header: {",
+							"        'content-type': 'application/x-www-form-urlencoded'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: 'client_id=' + pm.environment.get(\"sb_uaa_clientId\") ",
+							"             + '&client_secret=' + pm.environment.get(\"sb_uaa_clientSecret\") ",
+							"             + '&grant_type=client_credentials&response_type=token'",
+							"    }",
+							"}, function (err, res) {",
+							"    pm.environment.set(\"access_token\", res.json().access_token);",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b7a1c651-2928-4474-8e10-cd86cd4e767a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImtleS1pZC0xIn0.eyJqdGkiOiJmZGZkYzdhZGU1Yjk0OTczOTI3OWM1Y2NhZmZhYzk0YSIsImV4dF9hdHRyIjp7ImVuaGFuY2VyIjoiWFNVQUEiLCJ6ZG4iOiJzYXAtaWNmIn0sInN1YiI6InNiLWVkLXNiLWV4Y2lzZV9kdXR5X3Rlc3QhYjM1IiwiYXV0aG9yaXRpZXMiOlsidWFhLnJlc291cmNlIiwiZWQtc2ItZXhjaXNlX2R1dHlfdGVzdCFiMzUuRXhlY3V0ZVRheENhbGMiXSwic2NvcGUiOlsidWFhLnJlc291cmNlIiwiZWQtc2ItZXhjaXNlX2R1dHlfdGVzdCFiMzUuRXhlY3V0ZVRheENhbGMiXSwiY2xpZW50X2lkIjoic2ItZWQtc2ItZXhjaXNlX2R1dHlfdGVzdCFiMzUiLCJjaWQiOiJzYi1lZC1zYi1leGNpc2VfZHV0eV90ZXN0IWIzNSIsImF6cCI6InNiLWVkLXNiLWV4Y2lzZV9kdXR5X3Rlc3QhYjM1IiwiZ3JhbnRfdHlwZSI6ImNsaWVudF9jcmVkZW50aWFscyIsInJldl9zaWciOiIxODU2ZTU3YyIsImlhdCI6MTUzMTg5Njg1NSwiZXhwIjoxNTMxOTQwMDU1LCJpc3MiOiJodHRwOi8vc2FwLWljZi5sb2NhbGhvc3Q6ODA4MC91YWEvb2F1dGgvdG9rZW4iLCJ6aWQiOiJzYXAtaWNmIiwiYXVkIjpbImVkLXNiLWV4Y2lzZV9kdXR5X3Rlc3QhYjM1IiwidWFhIiwic2ItZWQtc2ItZXhjaXNlX2R1dHlfdGVzdCFiMzUiXX0.N4MuJrOunty7yQ-CF_lbr6x_KPkOSWJFGIDVKL0VSLe0OENfOiKEjHONSzOTkW7LaZyRnARD6H8Pu4ilrIFgfKMtKS0BdPAYP0gmYQaPRMhKccEEPNQAbJBswcXNrHWAWt79zh6VTs1R4uEV9YB-OZQwGn293OxM-KWnisBunLoOzhvPj1I45Sazy3wsCgtcT5vfYA42TThmGJZJuF7m64VQuk94NpgpbaUWaoxXfz9AEyNyqmY8I1-b3c4GCIABdL9lCMNmSSYEHYoAerq-PRpKT00IjM9SlesYTWf8-VbQAqeLbFn9JlhUNm3YKxvjI6PAinqBPWsEiHrdeTY14g"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{env_path}}/odata/v2/StockLedgerService/ExciseDutyCalculation?materialNumber=%27EDBDI01%27&companyCode=%27M201%27&plant=%27M201%27&customerNumber=%27FLORIAN%27&quantity=0&baseUnitOfMeasure=%27ST%27&postingDate=datetime%272017-08-21T00:00:00%27",
+					"host": [
+						"{{env_path}}"
+					],
+					"path": [
+						"odata",
+						"v2",
+						"StockLedgerService",
+						"ExciseDutyCalculation"
+					],
+					"query": [
+						{
+							"key": "materialNumber",
+							"value": "%27EDBDI01%27"
+						},
+						{
+							"key": "companyCode",
+							"value": "%27M201%27"
+						},
+						{
+							"key": "plant",
+							"value": "%27M201%27"
+						},
+						{
+							"key": "customerNumber",
+							"value": "%27FLORIAN%27"
+						},
+						{
+							"key": "quantity",
+							"value": "0"
+						},
+						{
+							"key": "baseUnitOfMeasure",
+							"value": "%27ST%27"
+						},
+						{
+							"key": "postingDate",
+							"value": "datetime%272017-08-21T00:00:00%27"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

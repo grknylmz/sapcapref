@@ -1,0 +1,96 @@
+### Read Entities
+GET http://localhost:4004/reporting
+
+###
+GET http://localhost:4004/reporting/$metadata
+
+###
+POST http://localhost:4004/reporting/loadDataFromMock
+Content-Type: application/json
+
+{}
+
+###
+POST https://sap-support-message-reporting.d423983.kyma.shoot.live.k8s-hana.ondemand.com/reporting/loadDataFromMock
+Content-Type: application/json
+
+{}
+
+###
+POST https://07fc19abtrial-dev-sap-support-message-reporting-srv.cfapps.eu10.hana.ondemand.com/reporting/loadDataFromMock
+Content-Type: application/json
+
+{}
+###
+POST http://localhost:4004/reporting/loadDataFromSAP
+Content-Type: application/json
+
+{}
+
+###
+GET http://localhost:4004/reporting/MessageHeaderSet
+    ?$top=2
+    &$select=Pointer
+    &$count=true
+    &$expand=to_MessageAlogSet($select=ActionTxt)
+
+###
+GET http://localhost:4004/reporting/MessageHeaderSet
+    ?$top=2
+    &$expand=to_MessageAlogSet($apply=groupby((Pointer),aggregate(numberOfLogs with sum as TotalNumberOfLogs)))
+### Returns
+# Allowed query option expected
+
+###
+GET http://localhost:4004/reporting/MessageHeaderSet/$count
+###
+GET http://localhost:4004/reporting/MessageAlogSet
+    ?$top=2
+
+###
+GET http://localhost:4004/reporting/MessageAlogSet
+    ?$filter=(Pointer eq '002075129400001469512021')
+    &$orderby=Aetstmp
+
+###
+GET http://localhost:4004/reporting/MessageAlogSet/$count
+
+###
+GET http://localhost:4004/reporting/MessageHeaderSet
+    ?$apply=groupby((PriorityTxt),aggregate(numberOfMessages with sum as numberOfMessagesTotal))
+
+###
+GET http://localhost:4004/reporting/MessageHeaderSet
+    ?$apply=groupby((StatusTxt),aggregate(numberOfMessages with sum as numberOfMessagesTotal))
+
+###
+GET http://localhost:4004/reporting/MessageAlogSet
+    ?$apply=groupby((NameTxt),aggregate(numberOfLogs with sum as TotalNumberOfLogs))
+
+###
+GET http://localhost:4004/reporting/MessageAlogSet
+    ?$apply=groupby((Pointer),aggregate(numberOfLogs with sum as TotalNumberOfLogs))
+
+###
+GET http://localhost:4004/reporting/MessageContactsSet
+
+###
+GET http://localhost:4004/reporting/MessageAlogView
+
+###
+GET http://localhost:4004/reporting/PriorityTxtVH
+###
+GET http://localhost:4004/reporting/StatusTxtVH
+###
+GET http://localhost:4004/reporting/StatusVH
+
+###
+GET http://localhost:4004/reporting/SystemIdVH
+###
+GET http://localhost:4004/services/odata/reporting/MessageHeaderSet?$select=numberOfMessages&$inlinecount=allpages
+
+###
+GET http://localhost:4004/services/odata/reporting/MessageHeaderSet?$select=Status,numberOfMessages&$inlinecount=allpages
+
+###
+GET http://localhost:4004/services/odata/reporting/MessageHeaderSet(aggregation'{"key":{"StatusTxt":"Not%20Sent%20to%20SAP","PriorityTxt":"Very%20High"},"value":["StatusTxt","PriorityTxt","numberOfMessages"],"filter":"((((StatusTxt%20eq%20'Not%20Sent%20to%20SAP'))))"}')

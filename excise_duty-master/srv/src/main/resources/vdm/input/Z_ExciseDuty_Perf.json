@@ -1,0 +1,16 @@
+{
+  "basePath": "/sap/opu/odata/sap/Z_ED_PERFORMANCE_SRV",
+  "paths": {
+    "/Z_ED_PERF_CDS": {
+      "get": {}
+    },
+    "/Z_ED_PERF_CDS()": {
+      "get": {}
+    }
+  },
+  "info": {
+    "title": "Custom OData service (Performance) for the Excise Duty Project adssad",
+    "description": "Performance",
+    "version": "1"
+  }
+}

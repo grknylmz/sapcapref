@@ -1,0 +1,25 @@
+{
+    "name": "exciseduty",
+    "version": "0.2.0",
+    "description": "cds-auto-generated project",
+    "author": "D030625",
+    "repository": "https://github.wdf.sap.corp/ICDCloudArchitcture/excise_duty",
+    "dependencies": {
+        "@sap/cds": "2.8.1"
+    },
+    "scripts": {
+        "build": "cds build --clean"
+    },
+    "cds": {
+        "data": {
+            "model": "db"
+        },
+        "service": {
+            "model": "srv"
+        }
+    },
+    "license": "ISC",
+    "devDependencies": {
+        "mocha": "^5.2.0"
+    }
+}

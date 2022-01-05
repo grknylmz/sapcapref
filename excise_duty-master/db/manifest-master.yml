@@ -1,0 +1,32 @@
+---
+buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.24
+name: exciseDuty-db
+no-route: true
+path: ./
+memory: 256M
+disk_quota: 1024M
+instances: 1
+env:
+  DEPLOY_ATTRIBUTES: '{
+    "app-content-digest": "51CB94583D287FB4DEBB46571941DE26",
+    "check-deploy-id": true,
+    "dependency-type": "soft",
+    "descriptor-defined-uris": [],
+    "execute-app": true,
+    "failure-marker": "STDERR:Deployment to container .* failed.*",
+    "stop-app": true,
+    "success-marker": "STDOUT:Deployment to container .* done.*"
+  }'
+  DEPLOY_ID: deploy-9559820
+  MTA_METADATA: '{
+    "id": "com.sap.xs2.samples.odata.exciseDuty",
+    "version": "0.1.0"
+  }'
+  MTA_MODULE_METADATA: '{
+    "name": "exciseDuty-db"
+  }'
+  MTA_MODULE_PROVIDED_DEPENDENCIES: '[]'
+  MTA_SERVICES: '[
+    "ed-hdi"
+  ]'
+

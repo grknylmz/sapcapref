@@ -1,0 +1,35 @@
+{
+	"fileName": "id_1517238046907_107_propertyChange",
+	"fileType": "change",
+	"changeType": "propertyChange",
+	"reference": "com.sap.icd.edpoc.ExciseDutyStockLedgerLineItem.Component",
+	"packageName": "$TMP",
+	"content": {
+		"property": "width",
+		"newValue": "7em"
+	},
+	"selector": {
+		"id": "com.sap.icd.edpoc.ExciseDutyStockLedgerLineItem::sap.suite.ui.generic.template.ListReport.view.ListReport::StockLedgerLineItem--listReport-taxWarehouseRegistrationOfManufacturingPlant",
+		"type": "sap.ui.table.AnalyticalColumn",
+		"idIsLocal": false
+	},
+	"layer": "VENDOR",
+	"texts": {},
+	"namespace": "apps/com.sap.icd.edpoc.ExciseDutyStockLedgerLineItem/changes/",
+	"creation": "2018-01-29T15:03:14.771Z",
+	"originalLanguage": "EN",
+	"conditions": {},
+	"context": "",
+	"support": {
+		"generator": "Change.createInitialFileContent",
+		"service": "",
+		"user": "",
+		"sapui5Version": "1.52.4"
+	},
+	"dependentSelector": {},
+	"validAppVersions": {
+		"creation": "${project.version}",
+		"from": "${project.version}",
+		"to": "${project.version}"
+	}
+}

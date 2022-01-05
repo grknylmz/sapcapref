@@ -1,0 +1,16 @@
+{
+  "basePath": "/sap/opu/odata/sap/Z_EXCISEDUTY_ODATA_COMPLEX_SRV",
+  "paths": {
+    "/Z_ExciseDutyComplexTypeSet": {
+      "get": {}
+    },
+    "/Z_ExciseDutyComplexTypeSet(Mblnr='{Mblnr}',Mjahr='{Mjahr}',Zeile='{Zeile}',Stlkn='{Stlkn}')": {
+      "get": {}
+    }
+  },
+  "info": {
+    "title": "Custom OData service for the Excise Duty Project",
+    "description": "This custom OData service enables you to read data related to the Excise Duty from the SAP S/4HANA system.",
+    "version": "1"
+  }
+}

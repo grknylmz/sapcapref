@@ -1,0 +1,109 @@
+{
+  "name": "cap-cave",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^5",
+    "axios": "^0.24.0",
+    "chartjs": "^0.3.24",
+    "chartjs-chart-matrix": "^1.1.0",
+    "cors": "^2.8.5",
+    "express": "^4",
+    "passport": "^0.5.0",
+    "winston": "^3.3.3",
+    "hdb": "^0.18.3"
+  },
+  "devDependencies": {
+    "@sap/eslint-plugin-ui5-jsdocs": "^2.0.5",
+    "@sap/ux-specification": "^1.90.10",
+    "@sapui5/ts-types": "^1.92.2",
+    "cds-swagger-ui-express": "^0.3.0",
+    "eslint": "^7.32.0",
+    "sqlite3": "^5.0.2"
+  },
+  "scripts": {
+    "start": "cds run",
+    "watch-customer": "cds watch --open customer-apps/launchpad.html",
+    "watch-retailer": "cds watch --open retailer-apps/launchpad.html",
+    "deploy:sql": "cds deploy -2 sqlite:cave.db"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
+    },
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
+    },
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "i18n": {
+      "folders": [
+        "_i18n",
+        "i18n"
+      ]
+    },
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "model": "*",
+        "credentials": {
+          "database": "cave.db"
+        }
+      },
+      "auth": {
+        "kind": "dummy-auth",
+        "users": {
+          "vigneronne": {
+            "password": "vigneronne",
+            "roles": [
+              "admin"
+            ]
+          },
+          "customer": {
+            "password": "customer",
+            "roles": [
+              "customer"
+            ]
+          },
+          "customer1": {
+            "password": "customer1",
+            "roles": [
+              "customer"
+            ]
+          }
+        }
+      },
+      "messaging": {
+        "kind": "file-based-messaging"
+      }
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    }
+  },
+  "sapux": [
+    "app/list-vins",
+    "app/list-vins",
+    "app/list-cepages"
+  ]
+}

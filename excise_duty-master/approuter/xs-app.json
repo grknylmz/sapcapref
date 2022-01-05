@@ -1,0 +1,59 @@
+{
+    "welcomeFile": "/cp.portal",
+    "authenticationMethod": "route",
+    "routes": [
+        {
+            "source": "^(/applications/.*)$",
+            "target": "$1",
+            "service": "html5-apps-repo-rt",
+            "authenticationType": "xsuaa"
+        },
+        {
+            "source": "^/sap/bc/ina/(.*)$",
+            "destination": "XSAHAA_BACKEND",
+            "httpMethods": [
+                "POST",
+                "GET"
+            ],
+            "authenticationType": "xsuaa",
+            "csrfProtection": false
+        },
+        {
+            "source": "^/sap/bc/ina/(.*)$",
+            "destination": "XSAHAA_BACKEND",
+            "httpMethods": [
+                "OPTIONS"
+            ],
+            "authenticationType": "none",
+            "csrfProtection": false
+        },
+        {
+            "source": "^/sap/fpa/remote/qbuilder/(.*)$",
+            "destination": "orca-remote-qbuilder-hdi",
+            "target": "/sap/fpa/remote/qbuilder/$1",
+            "authenticationType": "xsuaa",
+            "csrfProtection": false
+        },
+        {
+            "source": "^/copilot/(.*)$",
+            "target": "$1",
+            "destination": "coPilot",
+            "csrfProtection": false,   
+            "authenticationType": "xsuaa"
+        },
+        {
+            "source": "^/resources/sap/dfa/help/(.*)$",
+            "target": "$1",
+            "destination": "xray",
+            "csrfProtection": false,   
+            "authenticationType": "none"
+        },
+        {
+            "source": "^/sap/dfa/help/(.*)$",
+            "target": "$1",
+            "destination": "xray_data",
+            "csrfProtection": false,   
+            "authenticationType": "none"
+        }
+    ]
+}

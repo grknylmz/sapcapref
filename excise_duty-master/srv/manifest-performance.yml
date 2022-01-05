@@ -1,0 +1,27 @@
+---
+applications:
+- name: exciseDuty-producer
+  buildpack: sap_java_buildpack
+  path: target/exciseDuty-java-0.0.1-SNAPSHOT.war
+  routes:
+  - route: icf-ed-playground-exciseduty-producer.cfapps.sap.hana.ondemand.com
+  memory: 1024M
+  disk_quota: 1024M
+  instances: 1
+  env:
+    JBP_CONFIG_JAVA_OPTS: "[from_environment: false, java_opts: '-Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,suspend=n']"
+    JBP_CONFIG_RESOURCE_CONFIGURATION: '[tomcat/webapps/ROOT/META-INF/context.xml: {"service_name_for_DefaultDB" : "ed-hdi"}]'
+    TARGET_RUNTIME: tomcat
+    NO_RABBIT_CONSUMER: X
+    IS_PERFORMANCE: X
+    S4_WORKLIST_PAGE_SIZE: 100
+    SERVICE_PATH_S4_WORKLIST: /sap/opu/odata/sap/Z_ED_PERFORMANCE_SRV/Z_ED_PERF_CDS
+    SERVICE_PATH_S4_WORKLIST_STATUS_UPDATE: /sap/opu/odata/sap/Z_ED_UPDATE_PERFORMANCE_SRV/IS_ED_UPDATE
+  services:
+    - dynatrace-service
+    - ed-rabbit
+    - ed-con
+    - ed-dest
+    - ed-uaa
+    - ed-hdi
+    - ed-sb-uaa

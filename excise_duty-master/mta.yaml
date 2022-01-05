@@ -1,0 +1,539 @@
+_schema-version: '3.1'
+ID: com.sap.xs2.samples.odata.exciseDuty
+version: 0.3.0
+
+parameters:
+  deploy_mode: html5-repo
+
+modules:
+
+  - name: exciseDuty-java
+    type: java
+    path: srv
+    requires:
+      - name: ed-hdi
+        properties:
+          JBP_CONFIG_RESOURCE_CONFIGURATION: '[tomcat/webapps/ROOT/META-INF/context.xml: {"service_name_for_DefaultDB" : "~{hdi-container-name}"}]'        
+      - name: ed-uaa
+      - name: ed-con
+      - name: ed-dest
+      - name: ed-sb-uaa
+      - name: ed-job-scheduler
+        parameters:
+          buildpack: sap_java_buildpack    
+          config:
+            xsuaa_instance_name: ed-uaa
+      - name: ed-rabbit
+      - name: dynatrace-service
+      - name: exciseDuty-db
+    parameters:
+      health-check-type: http
+      health-check-http-endpoint: /health
+      health-check-timeout: 180
+      memory: 2G
+    properties:
+      JBP_CONFIG_SAPJVM: '[ memory_calculator: { memory_sizes: { heap: 1000m, stack: 1m, metaspace: 150m } } ]'
+    provides:
+      - name: java
+        properties: 
+          url: '${default-url}'
+
+  - name: exciseDuty-db
+    type: hdb
+    path: db
+    requires:
+      - name: ed-hdi
+#    parameters:
+#      buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.24      
+
+
+### UI related artifacts
+
+  - name: exciseDuty-uideployer
+    type: com.sap.html5.application-content
+    path: uideployer
+    requires:
+      - name: ed-apprepo-dt
+    build-parameters:
+      builder: grunt
+      type: com.sap.html5.application-content
+      requires:
+        - name: exciseDuty-ui-conf-exciseduty
+          artifacts:
+            - './*'
+          target-path: resources/ui-conf-exciseduty
+        - name: exciseDuty-ui-conf-extensionfunction
+          artifacts:
+            - './*'
+          target-path: resources/ui-conf-extensionfunction
+        - name: exciseDuty-ui-conf-movementcategory
+          artifacts:
+            - './*'
+          target-path: resources/ui-conf-movementcategory
+        - name: exciseDuty-ui-conf-stockledgercharacteristic
+          artifacts:
+            - './*'
+          target-path: resources/ui-conf-stockledgercharacteristic
+        - name: exciseDuty-ui-conf-taxrate
+          artifacts:
+            - './*'
+          target-path: resources/ui-conf-taxrate
+        - name: exciseDuty-ui-conf-taxwarehouse
+          artifacts:
+            - './*'
+          target-path: resources/ui-conf-taxwarehouse
+        - name: exciseDuty-ui-stockledgerlineitem
+          artifacts:
+            - './*'
+          target-path: resources/ui-stockledgerlineitem
+        - name: exciseDuty-ui-stockledgerlineitem-alp
+          artifacts:
+            - './*'
+          target-path: resources/ui-stockledgerlineitem-alp
+        - name: exciseDuty-ui-stockledgerprocessingerror
+          artifacts:
+            - './*'
+          target-path: resources/ui-stockledgerprocessingerror
+        - name: exciseDuty-ui-md-shiptomaster
+          artifacts:
+            - './*'
+          target-path: resources/ui-md-shiptomaster
+        - name: exciseDuty-ui-md-materialmaster
+          artifacts:
+            - './*'
+          target-path: resources/ui-md-materialmaster
+            
+  - name: exciseDuty-ui-conf-exciseduty
+    type: html5
+    path: /ui/conf-exciseduty
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-conf-extensionfunction
+    type: html5
+    path: ui/conf-extensionfunction
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+    
+  - name: exciseDuty-ui-conf-movementcategory
+    type: html5
+    path: ui/conf-movementcategory
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-conf-stockledgercharacteristic
+    type: html5
+    path: ui/conf-stockledgercharacteristic
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-conf-taxrate
+    type: html5
+    path: ui/conf-taxrate
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-conf-taxwarehouse
+    type: html5
+    path: ui/conf-taxwarehouse
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-md-materialmaster
+    type: html5
+    path: ui/md-materialmaster
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-md-shiptomaster
+    type: html5
+    path: ui/md-shiptomaster
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-stockledgerlineitem
+    type: html5
+    path: ui/stockledgerlineitem
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-stockledgerlineitem-alp
+    type: html5
+    path: ui/stockledgerlineitem-alp
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-stockledgerprocessingerror
+    type: html5
+    path: ui/stockledgerprocessingerror
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-approuter
+    type: approuter.nodejs
+    path: approuter
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: dynatrace-service  
+      - name: ed-uaa
+      - name: ed-apprepo-rt
+      - name: ed-portal
+      - name: ed-dest
+      - name: ed-con
+      - name: java
+        group: destinations
+        properties:
+          name: ed-backend
+          url: ~{url}
+          forwardAuthToken: true 
+      - name: exciseDuty-xsahaa
+        group: destinations
+        properties:
+          name: XSAHAA_BACKEND
+          url: ~{url}
+          forwardAuthToken: true
+      - name: orca-remote-qbuilder-hdi
+        group: destinations
+        properties:
+          name: orca-remote-qbuilder-hdi
+          url: ~{url}
+          forwardAuthToken: true
+      - name: xray
+        group: destinations
+        properties:
+          name: xray
+          url: ~{xrayurl}
+      - name: xray_data
+        group: destinations
+        properties:
+          name: xray_data
+          url: ~{xraydataurl}           
+    properties:
+      CORS: >
+        [
+          {
+            "uriPattern": "^/sap/bc/ina/(.*)$",
+            "allowedOrigin": [ { "host": "*.sapanalytics.cloud", "protocol": "https" },
+                               { "host": "*.sapanalytics.cloud", "protocol": "http" }
+            ],
+            "allowedMethods": ["GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE"],
+            "allowedHeaders": ["Origin", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization", "X-Sap-Cid", "X-Csrf-Token"],
+            "exposeHeaders": ["Accept", "Authorization", "X-Requested-With", "X-Sap-Cid", "Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "X-Csrf-Token", "Content-Type"]
+          }
+        ]
+
+  - name: exciseDuty-flp-content
+    type: com.sap.portal.site-content
+    path: flp-content
+    parameters:
+      memory: 128M
+      buildpack: https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.6.21/nodejs-buildpack-v1.6.21.zip
+    requires:
+     - name: ed-portal
+     - name: ed-uaa
+     - name: ed-apprepo-dt
+     - name: exciseDuty-uideployer
+
+### Supporting artifacts
+
+  - name: exciseDuty-sb
+    type: nodejs
+    path: service-broker/
+    properties:
+      SBF_BROKER_CREDENTIALS: >
+        {
+          "${generated-user}": "${generated-password}"
+        }
+    requires:
+      - name: java
+        properties:
+          SBF_SERVICE_CONFIG:
+              ExciseDuty-ServiceBroker:
+                extend_credentials:
+                  shared:
+                    url: ~{url}
+      - name: ed-sb-uaa
+    parameters:
+      memory: 128M
+
+  - name: exciseDuty-xsahaa
+    type: java
+    path: xsahaa
+    parameters:
+      memory: 512M
+      buildpack: sap_java_buildpack
+      health-check-timeout: 180
+    properties:
+      TARGET_RUNTIME: tomee
+      JBP_CONFIG_RESOURCE_CONFIGURATION: "['tomee/webapps/ROOT/WEB-INF/resources.xml': {'xsahaa-hdi-container':'ed-hdi'}]"
+      SAP_JWT_TRUST_ACL: >
+        [
+          {"clientid":"*","identityzone":"*"}
+        ]
+    provides:
+      - name: exciseDuty-xsahaa
+        properties:
+          url: "${default-url}"
+    requires:
+      - name: ed-uaa
+      - name: ed-hdi
+    build-parameters:
+      build-result: target/*.war
+
+resources:
+  - name: ed-hdi
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-container-name: '${service-name}'
+
+  - name: ed-uaa
+    type: com.sap.xs.uaa
+    parameters:
+      service-name: ed-uaa
+      config:
+        xsappname: 'ed-${space}'
+        tenant-mode: dedicated
+        scopes:
+          - name: $XSAPPNAME.ConfDisp
+            description: Display configuration
+          - name: $XSAPPNAME.ConfEdit
+            description: Edit configuration
+          - name: $XSAPPNAME.MDDisp
+            description: Display master data
+          - name: $XSAPPNAME.MDEdit
+            description: Edit master data           
+          - name: $XSAPPNAME.SLDisp
+            description: Display stock ledger
+          - name: $XSAPPNAME.SLEdit
+            description: Reprocess stock ledger           
+          - name: $XSAPPNAME.Ext
+            description: Extension functions 
+          - name: $XSAPPNAME.JOBSCHEDULER
+            description: "Job Scheduler Scope"
+            grant-as-authority-to-apps: ["jobscheduler"]
+        authorities:
+          - $XSAPPNAME.ConfDisp
+          - $XSAPPNAME.MDDisp
+          - $XSAPPNAME.SLDisp
+          - $XSAPPNAME.SLEdit
+          - $XSAPPNAME.Ext
+        role-templates:
+          - name: DisplayConfiguration
+            description: Display configuration
+            scope-references:
+              - $XSAPPNAME.ConfDisp
+              - uaa.user
+          - name: EditConfiguration
+            description: Edit configuration
+            scope-references:
+              - $XSAPPNAME.ConfDisp
+              - $XSAPPNAME.ConfEdit
+              - uaa.user          
+          - name: DisplayMasterData
+            description: Display master data        
+            scope-references:
+              - $XSAPPNAME.MDDisp
+              - uaa.user
+          - name: EditMasterData
+            description: Edit master data
+            scope-references:
+              - $XSAPPNAME.MDDisp
+              - $XSAPPNAME.MDEdit
+              - uaa.user
+          - name: DisplayStockLedger
+            description: Display stock ledger
+            scope-references:
+              - $XSAPPNAME.SLDisp
+              - uaa.user
+          - name: ReprocessStockLedger
+            description: Reprocess stock ledger
+            scope-references:
+              - $XSAPPNAME.SLDisp
+              - $XSAPPNAME.SLEdit
+              - uaa.user  
+          - name: ExtendExciseDuty
+            description: Extension functions
+            scope-references:
+              - $XSAPPNAME.Ext
+              - uaa.user
+        oauth2-configuration:
+          token-validity: 31536000
+
+  - name: ed-sb-uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: broker
+      config:
+        xsappname: 'ed-sb-${space}'
+        tenant-mode: dedicated
+        scopes:
+         - name: $XSAPPNAME.ExecuteTaxCalc
+           description: execute tax calculation 
+        authorities:
+        - $XSAPPNAME.ExecuteTaxCalc
+
+  - name: ed-job-scheduler
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: jobscheduler
+      service-plan: lite
+
+  - name: ed-con
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
+      service-plan: lite
+
+  - name: ed-dest
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+
+  # - name: ed-faas-beta 
+  #   type: org.cloudfoundry.managed-service
+  #   parameters:
+  #     service: functions
+  #     service-plan: beta      
+
+  - name: ed-apprepo-rt
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo 
+      service-plan: app-runtime
+
+  - name: ed-apprepo-dt
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo 
+      service-plan: app-host
+
+  - name: ed-portal
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: standard
+      service: portal
+
+  - name: orca-remote-qbuilder-hdi
+    properties:
+      url: 'https://sap.com/'
+
+  - name: ed-rabbit
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: rabbitmq
+      service-plan: v3.6-dev
+
+  - name: dynatrace-service
+    type: org.cloudfoundry.existing-service
+
+  - name: xray
+    properties:
+      xrayurl: 'https://xraycontrolstebofwk.int.sap.hana.ondemand.com/xRayControls/resources/sap/dfa/help'
+
+  - name: xray_data
+    properties:
+      xraydataurl: 'https://cp1canary.int.sap.hana.ondemand.com/dps' #Canary
+      #xraydataurl: 'https://cp.hana.ondemand.com/dps/' #Production

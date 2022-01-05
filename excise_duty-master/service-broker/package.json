@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@sap/sbf": "1.3.*"
+  },
+  "files": [],
+  "name": "ServiceBroker",
+  "scripts": {
+    "start": "start-broker"
+  },
+  "engines": {
+    "node": "6.x"
+  },
+  "version": "1.0.0"
+}

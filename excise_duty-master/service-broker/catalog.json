@@ -1,0 +1,13 @@
+{
+    "services": [{
+      "name": "ExciseDuty-ServiceBroker",
+      "id": "6f9e509d-5e63-4555-b275-f1ee64997750",
+      "description": "A simple service for ClientCredentials Flow",
+      "bindable": true,
+      "plans": [{
+        "name": "default",
+        "id": "641dceb7-482f-4a89-8a61-f35c741f45d1",
+        "description": "The one and only service plan for client credentials flow"
+      }]
+    }]
+  }

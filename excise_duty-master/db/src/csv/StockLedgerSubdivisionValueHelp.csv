@@ -1,0 +1,9 @@
+id,stockLedgerDivision,description
+1,1,Untaxed Goods
+2,1,Taxed Goods
+3,2,Untaxed Sales Returns
+4,2,Untaxed Goods External Production
+5,3,Tax Warehouse in Tax Territory
+6,3,Tax Warehouse and auth. recipient (EU)
+7,3,Other External
+8,3,Other Internal

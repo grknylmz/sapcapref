@@ -1,0 +1,10 @@
+entity MetadataRepository {
+  key customer_tenant_id : String(256);
+  key document_id : String(256);
+  key document_type : String(256);
+      created_by : String(256);
+      created_at : UTCTimestamp;
+      last_modified_by : String(256);
+      last_modified_at : UTCTimestamp;
+      document_content : hana.CLOB;
+};

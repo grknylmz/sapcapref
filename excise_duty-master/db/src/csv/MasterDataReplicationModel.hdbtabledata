@@ -1,0 +1,84 @@
+{ 
+  "format_version": 1, 
+  "imports": 
+  [ 
+	{ 
+		"target_table": "MASTERDATAREPLICATIONMODEL_UNITSOFMEASUREFORMATERIAL", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "UnitsOfMeasureForMaterial.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"MATERIALNUMBER", 
+									"ALTERNATIVEUNITOFMEASURE",
+									"NUMERATORFORCONVERSIONTOBASEUNITSOFMEASURE",
+									"DENOMINATORFORCONVERSIONTOBASEUNITSOFMEASURE"
+									]
+							}, 
+		"column_mappings" : { 
+									"MATERIALNUMBER"                                : 1, 
+									"ALTERNATIVEUNITOFMEASURE"                      : 2,
+									"NUMERATORFORCONVERSIONTOBASEUNITSOFMEASURE" 	: 3,
+									"DENOMINATORFORCONVERSIONTOBASEUNITSOFMEASURE"	: 4
+							} 
+	},
+	{ 
+		"target_table": "MASTERDATAREPLICATIONMODEL_CUSTOMER", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "Customer.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"CUSTOMERNUMBER", 
+									"COUNTRYKEY",
+									"NAME"
+									]
+							}, 
+		"column_mappings" : { 
+									"CUSTOMERNUMBER" : 1, 
+									"COUNTRYKEY"     : 2,
+									"NAME" 	         : 3
+							} 
+	},
+	{ 
+		"target_table": "MASTERDATAREPLICATIONMODEL_MATERIALDESCRIPTION", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "MaterialDescription.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"MATERIALNUMBER", 
+									"DESCRIPTION"
+									]
+							}, 
+		"column_mappings" : { 
+									"MATERIALNUMBER"      : 1, 
+									"DESCRIPTION" : 2
+							} 
+	},
+	{ 
+		"target_table": "MASTERDATAREPLICATIONMODEL_COUNTRIES", 
+		"source_data" : { 
+							"data_type" : "CSV", 
+							"file_name" : "Countries.csv", 
+							"has_header" : true
+		}, 
+		"import_settings" : { 
+								"import_columns" : [ 
+									"COUNTRYKEY", 
+									"EUROPEANUNIONINDICATOR"
+									]
+							}, 
+		"column_mappings" : { 
+									"COUNTRYKEY"                                   : 1, 
+									"EUROPEANUNIONINDICATOR"                       : 2
+							} 
+	}
+  ] 
+}

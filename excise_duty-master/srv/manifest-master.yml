@@ -1,0 +1,43 @@
+---
+  applications:
+  - name: exciseDuty-java
+    buildpack: sap_java_buildpack
+    path: target/exciseDuty-java-0.0.1-SNAPSHOT.war
+    routes:
+    - route: icf-excise-duty-exciseduty-java.cfapps.sap.hana.ondemand.com
+    memory: 2024M
+    disk_quota: 1024M
+    instances: 1
+    health-check-type: http
+    health-check-http-endpoint: /health
+    env:
+      JBP_CONFIG_JAVA_OPTS: "[from_environment: false, java_opts: '-Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8000,suspend=n']"
+      JBP_CONFIG_SAPJVM: "[ memory_calculator: { memory_sizes: { heap: 1000m, stack: 1m, metaspace: 150m } } ]"
+      JBP_CONFIG_RESOURCE_CONFIGURATION: '[tomcat/webapps/ROOT/META-INF/context.xml: {"service_name_for_DefaultDB" : "ed-hdi"}]'
+      DEPLOY_ATTRIBUTES: '{
+      "app-content-digest": "DC810F0A19899FFCD965F3875B5607FE",
+      "dependency-type": "soft",
+      "descriptor-defined-uris": [
+        "icf-exciseduty-exciseduty-java.cfapps.sap.hana.ondemand.com"
+        ]
+      }'
+      MTA_METADATA: '{
+        "id": "com.sap.xs2.samples.odata.exciseDuty",
+        "version": "0.1.0"
+      }'
+      MTA_MODULE_METADATA: '{"name": "exciseDuty-java"}'
+      MTA_MODULE_PROVIDED_DEPENDENCIES: '[]'
+      MTA_SERVICES: '[
+        "ed-hdi",
+        "ed-uaa",
+        "ed-con"
+      ]'
+      TARGET_RUNTIME: tomcat
+    services:
+      - dynatrace-service
+      - ed-rabbit
+      - ed-con
+      - ed-dest
+      - ed-uaa
+      - ed-hdi
+      - ed-sb-uaa

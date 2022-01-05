@@ -1,0 +1,161 @@
+{
+	"_version": "1.7.0",
+	"sap.app": {
+		"id": "com.sap.icd.edpoc.ExciseDutyConfigStockLedgerCharacteristic",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "0.2.1"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"tags": {
+			"keywords": []
+		},
+		"ach": "xx",
+		"resources": "resources.json",
+		"dataSources": {
+			"mainService": {
+				"uri": "odata/v2/StockLedgerCharacteristicsService/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/metadata.xml",
+					"annotations": ["LocalAnnotations"]
+				}
+			},
+			"LocalAnnotations": {
+				"uri": "annotations/annotations.xml",
+				"type": "ODataAnnotation",
+				"settings": {
+					"localUri": "annotations/annotations.xml"
+				}
+			}
+		},
+		"offline": false,
+		"sourceTemplate": {
+			"id": "ui5template.smartTemplate",
+			"version": "1.40.12"
+		},
+		"crossNavigation": {
+			"inbounds": {
+				"ExciseDutyStockLedgerCharacteristic-configure": {
+					"semanticObject": "ExciseDutyStockLedgerCharacteristic",
+					"action": "configure",
+					"icon": "sap-icon://Fiori2/F0576",
+					"title": "{{appTitle}}",
+					"subTitle": "{{appDescription}}",
+					"deviceTypes": {
+						"desktop": true,
+						"tablet": true,
+						"phone": true
+					}
+				}
+			},
+			"outbounds": {}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": ["sap_hcb", "sap_belize"]
+	},
+	"sap.ui5": {
+		"resources": {
+			"js": [],
+			"css": []
+		},
+		"dependencies": {
+			"minUI5Version": "1.54.6",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.comp": {},
+				"sap.uxap": {},
+				"sap.suite.ui.generic.template": {},
+				"sap.ui.layout": {},
+				"sap.ushell": {},
+				"sap.collaboration": {}
+			},
+			"components": {}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"@i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"i18n|sap.suite.ui.generic.template.ListReport|StockLedgerGroup": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/ListReport/StockLedgerGroup/i18n.properties"
+			},
+			"i18n|sap.suite.ui.generic.template.ObjectPage|StockLedgerGroup": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/ObjectPage/StockLedgerGroup/i18n.properties"
+			},
+			"": {
+				"dataSource": "mainService",
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Inline",
+					"refreshAfterChange": false
+				}
+			}
+		},
+		"extends": {
+			"extensions": {}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		}
+	},
+	"sap.ui.generic.app": {
+		"pages": [{
+			"entitySet": "StockLedgerGroup",
+			"component": {
+				"name": "sap.suite.ui.generic.template.ListReport",
+				"list": true
+			},
+			"pages": [{
+				"entitySet": "StockLedgerGroup",
+				"component": {
+					"name": "sap.suite.ui.generic.template.ObjectPage"
+				}
+			}]
+		}]
+	},
+	"sap.fiori": {
+		"registrationIds": [],
+		"archeType": "transactional"
+	},
+	"sap.platform.hcp": {
+		"uri": ""
+	},
+	"sap.platform.cf": {
+		"oAuthScopes": [
+			"ed-excise_duty!t35.ConfDisp",
+			"ed-excise_duty!t35.ConfEdit",
+			"ed-excise_duty_demo!t35.ConfDisp",
+			"ed-excise_duty_demo!t35.ConfEdit",
+			"ed-excise_duty_test!t35.ConfDisp",
+			"ed-excise_duty_test!t35.ConfEdit",			
+			"ed-excise_duty_playground!t35.ConfDisp",
+			"ed-excise_duty_playground!t35.ConfEdit"
+		  ]
+	}
+}

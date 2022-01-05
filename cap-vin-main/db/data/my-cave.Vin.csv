@@ -1,0 +1,9 @@
+ID;reference;name;annee;color_code;igp;aoc;prix;devise_code;garde;degre;type;inStockQty
+80ce006c-553c-401f-ab38-ea3bb7c7ce3f;2018-ROU-Sainte Colombe;Sainte Colombe;2018;Rouge;false;true;6.2;EUR;5;15.2;Vin;150
+76d593b7-b497-41da-a444-246eba0e4653;2019-ROS-Sainte Colombe;Sainte Colombe;2019;Rouge;false;true;6.2;EUR;5;15.2;Vin;150
+b41f6e83-19c0-49a7-b43f-bd5320247d69;2020-ROU-Sainte Colombe;Sainte Colombe;2020;Rouge;false;true;6.2;EUR;;15.2;Vin;150
+ce87f7f5-063a-48ec-8853-5263f9790eef;1967-ROU-Sainte Colombe;Sainte Colombe;1967;Rouge;false;true;6.2;EUR;5;15.2;Vin;150
+581c43bc-796d-4d95-a05c-f0225f0e57e3;2018-ROS-Tsarine;Tsarine;2018;Rosé;false;true;14;EUR;5;13;Champagne;150
+1eb5078a-bf85-4a35-9277-a7fe0601d4a7;2019-ROS-Tsarine;Tsarine;2019;Rosé;false;true;14;EUR;5;13;Champagne;150
+fd33dc00-a663-4f4e-8404-b1e6d9e6463d;2018-BLA-Tsarine;Tsarine;2018;Blanc;false;true;15;EUR;5;13;Champagne;150
+d81ad407-b53f-4e6f-a69e-1672d3231c2e;2019-BLA-Tsarine;Tsarine;2019;Blanc;false;true;15;EUR;5;13;Champagne;150

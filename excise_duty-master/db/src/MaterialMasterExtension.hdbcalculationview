@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="MaterialMasterExtension" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="MaterialMasterExtensionCV"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="EXCISEDUTYMODEL_MATERIALMASTEREXTENSION">
+    <resourceUri>EXCISEDUTYMODEL_MATERIALMASTEREXTENSION</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="EXCISEDUTYMODEL_MATERIALMASTEREXTENSION">
+  <attributes>
+    <attribute id="MATERIALNUMBER" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATERIALNUMBER"/>
+      <keyMapping columnObjectName="EXCISEDUTYMODEL_MATERIALMASTEREXTENSION" columnName="MATERIALNUMBER"/>
+    </attribute>
+    <attribute id="companyCode" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="companyCode"/>
+      <keyMapping columnObjectName="EXCISEDUTYMODEL_MATERIALMASTEREXTENSION" columnName="COMPANYCODE"/>
+    </attribute>
+    <attribute id="exciseDutyTypeId" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="exciseDutyTypeId"/>
+      <keyMapping columnObjectName="EXCISEDUTYMODEL_MATERIALMASTEREXTENSION" columnName="EXCISEDUTYTYPEID"/>
+    </attribute>
+    <attribute id="exciseDutyProcurementIndicator" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="exciseDutyProcurementIndicator"/>
+      <keyMapping columnObjectName="EXCISEDUTYMODEL_MATERIALMASTEREXTENSION" columnName="EXCISEDUTYPROCUREMENTINDICATOR"/>
+    </attribute>
+    <attribute id="taxWarehouseRegistrationOfManufacturingPlant" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="taxWarehouseRegistrationOfManufacturingPlant"/>
+      <keyMapping columnObjectName="EXCISEDUTYMODEL_MATERIALMASTEREXTENSION" columnName="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT"/>
+    </attribute>
+    <attribute id="exciseDutyNumberForTaxWarehouse" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="exciseDutyNumberForTaxWarehouse"/>
+      <keyMapping columnObjectName="EXCISEDUTYMODEL_MATERIALMASTEREXTENSION" columnName="EXCISEDUTYNUMBERFORTAXWAREHOUSE"/>
+    </attribute>
+    <attribute id="exciseDutyTypeIndependentMaterialGroup" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="exciseDutyTypeIndependentMaterialGroup"/>
+      <keyMapping columnObjectName="EXCISEDUTYMODEL_MATERIALMASTEREXTENSION" columnName="EXCISEDUTYTYPEINDEPENDENTMATERIALGROUP"/>
+    </attribute>
+    <attribute id="alcoholicStrength" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="alcoholicStrength"/>
+      <keyMapping columnObjectName="EXCISEDUTYMODEL_MATERIALMASTEREXTENSION" columnName="ALCOHOLICSTRENGTH"/>
+    </attribute>
+    <attribute id="validFrom" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="validFrom"/>
+      <keyMapping columnObjectName="EXCISEDUTYMODEL_MATERIALMASTEREXTENSION" columnName="VALIDFROM"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures>
+    <measure id="COUNT" order="10" aggregationType="sum" measureType="simple" calculatedMeasureType="counter" aggregatable="true" datatype="INTEGER">
+      <descriptions defaultDescription="COUNT"/>
+      <exceptionAggregation>
+        <attribute attributeName="MATERIALNUMBER"/>
+      </exceptionAggregation>
+      <formula>1</formula>
+      </measure>
+  </calculatedMeasures>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

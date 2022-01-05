@@ -1,0 +1,62 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://ldcier8.wdf.sap.corp:44320/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Uri="https://ldcier8.wdf.sap.corp:44320/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="Z_ED_PERFORMANCE_SRV" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="Z_ED_PERF_CDSType" sap:label="ED CDS view for Performance Measurements" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="mblnr"/>
+                    <PropertyRef Name="mjahr"/>
+                    <PropertyRef Name="zeile"/>
+                    <PropertyRef Name="stlkn"/>
+                </Key>
+                <Property Name="mblnr" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Material Document" sap:quickinfo="Number of Material Document"/>
+                <Property Name="mjahr" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Material Doc. Year" sap:quickinfo="Material Document Year"/>
+                <Property Name="zeile" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="NonNegative" sap:label="Material Doc.Item" sap:quickinfo="Item in Material Document"/>
+                <Property Name="stlkn" Type="Edm.String" Nullable="false" MaxLength="8" sap:display-format="NonNegative" sap:label="Item node" sap:quickinfo="BOM item node number"/>
+                <Property Name="matnr" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="stats" Type="Edm.String" MaxLength="20" sap:label="Status" sap:quickinfo="Document status"/>
+                <Property Name="bwart" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Movement Type" sap:quickinfo="Movement Type (Inventory Management)"/>
+                <Property Name="xauto" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Auto. created" sap:quickinfo="Item automatically created"/>
+                <Property Name="werks" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Plant"/>
+                <Property Name="bukrs" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Company Code"/>
+                <Property Name="lgort" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Storage Location"/>
+                <Property Name="charg" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Batch" sap:quickinfo="Batch Number"/>
+                <Property Name="sobkz" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Special Stock" sap:quickinfo="Special Stock Indicator"/>
+                <Property Name="aufnr" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="Order" sap:quickinfo="Order Number"/>
+                <Property Name="kzbew" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Movement indicator" sap:quickinfo="Movement Indicator"/>
+                <Property Name="lifnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Vendor" sap:quickinfo="Vendor Account Number"/>
+                <Property Name="kunnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Customer" sap:quickinfo="Account Number of Customer"/>
+                <Property Name="kdauf" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Sales Order" sap:quickinfo="Sales Order Number"/>
+                <Property Name="kdpos" Type="Edm.String" MaxLength="6" sap:display-format="NonNegative" sap:label="Sales Order Item" sap:quickinfo="Item Number in Sales Order"/>
+                <Property Name="vbeln" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Sales Document"/>
+                <Property Name="auart" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Sales Document Type"/>
+                <Property Name="augru" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Order Reason" sap:quickinfo="Order Reason (Reason for the Business Transaction)"/>
+                <Property Name="pstyv" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Item category" sap:quickinfo="Sales document item category"/>
+                <Property Name="kunag" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Sold-to party"/>
+                <Property Name="kuniv" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Cust.inter-co.bill." sap:quickinfo="Customer number for intercompany billing"/>
+                <Property Name="shkzg" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Debit/Credit Ind." sap:quickinfo="Debit/Credit Indicator"/>
+                <Property Name="menge" Type="Edm.Decimal" Precision="13" Scale="3" sap:unit="meins" sap:label="Quantity"/>
+                <Property Name="meins" Type="Edm.String" MaxLength="3" sap:label="Base Unit of Measure" sap:semantics="unit-of-measure"/>
+                <Property Name="ebeln" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Purchase Order" sap:quickinfo="Purchase Order Number"/>
+                <Property Name="ebelp" Type="Edm.String" MaxLength="5" sap:display-format="NonNegative" sap:label="Item" sap:quickinfo="Item Number of Purchasing Document"/>
+                <Property Name="vgabe" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Trans./event type" sap:quickinfo="Transaction/event type, purchase order history"/>
+                <Property Name="belnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Material Document" sap:quickinfo="Number of Material Document"/>
+                <Property Name="pstyp" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="Item Category" sap:quickinfo="Item Category in Purchasing Document"/>
+                <Property Name="sgtxt" Type="Edm.String" MaxLength="50" sap:label="Text" sap:quickinfo="Item Text"/>
+                <Property Name="wempf" Type="Edm.String" MaxLength="12" sap:label="Goods recipient" sap:quickinfo="Goods Recipient/Ship-To Party"/>
+                <Property Name="kostl" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Cost Center"/>
+                <Property Name="budat" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Posting Date" sap:quickinfo="Posting Date in the Document"/>
+            </EntityType>
+            <EntityContainer Name="Z_ED_PERFORMANCE_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="Z_ED_PERF_CDS" EntityType="Z_ED_PERFORMANCE_SRV.Z_ED_PERF_CDSType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="https://ldcier8.wdf.sap.corp:44320/sap/opu/odata/sap/Z_ED_PERFORMANCE_SRV/$metadata"/>
+            <atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="https://ldcier8.wdf.sap.corp:44320/sap/opu/odata/sap/Z_ED_PERFORMANCE_SRV/$metadata"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

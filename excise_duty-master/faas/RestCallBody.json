@@ -1,0 +1,135 @@
+{
+  "S4WorklistItem": {
+    "mblnr": null,
+    "mjahr": null,
+    "zeile": null,
+    "stlkn": null,
+    "matnr": null,
+    "stats": null,
+    "bwart": null,
+    "xauto": null,
+    "werks": null,
+    "bukrs": null,
+    "lgort": null,
+    "charg": null,
+    "sobkz": null,
+    "aufnr": null,
+    "kzbew": null,
+    "lifnr": null,
+    "kunnr": null,
+    "kdauf": null,
+    "kdpos": null,
+    "vbeln": null,
+    "auart": null,
+    "augru": null,
+    "pstyv": null,
+    "kunag": null,
+    "kuniv": null,
+    "shkzg": null,
+    "menge": null,
+    "meins": null,
+    "ebeln": null,
+    "ebelp": null,
+    "vgabe": null,
+    "belnr": null,
+    "pstyp": null,
+    "sgtxt": null,
+    "wempf": null,
+    "kostl": null,
+    "budat": "",
+    "zz_kdgrp": "",
+    "zz_kun_land1": "",
+    "zz_kun_land1_xegld": ""
+  },
+  "StockLedgerLineItem": {
+    "materialDocumentYear": null,
+    "materialDocumentNumber": null,
+    "materialDocumentItem": null,
+    "exciseDutyPositionNumber": 0,
+    "exciseDutyTypeId": null,
+    "companyCode": null,
+    "taxWarehouseRegistration": null,
+    "plant": null,
+    "storageLocation": null,
+    "materialDocumentPostingDate": null,
+    "stockLedgerNumber": null,
+    "noEntryInExtendedStockLedger": null,
+    "materialNumber": null,
+    "batchNumber": null,
+    "quantity": null,
+    "baseUnitOfMeasure": null,
+    "edMovementCategoryId": null,
+    "erpMovementType": null,
+    "stockLedgerGroupId": null,
+    "stockLedgerDivision": null,
+    "stockLedgerSubdivision": null,
+    "alcoholicStrength": null,
+    "taxWarehouseRegistrationOfManufacturingPlant": null,
+    "exciseDutyNumberForTaxWarehouse": null,
+    "externalTaxWarehouseRegistration": null,
+    "externalExciseDutyNumber": null,
+    "salesOrderNumber": null,
+    "salesOrderItem": null,
+    "exciseDutyProcurementIndicator": null,
+    "accountingJournalReference": null,
+    "taxValueAmount": null,
+    "taxValueCurrency": null,
+    "customerNumber": null
+  },
+  "ShipToMasterExtension": {
+    "customerNumber": null,
+    "validFrom": null,
+    "validTo": null,
+    "externalTaxWarehouseRegistration": null,
+    "externalExciseDutyNumber": null,
+    "exciseDutySpecialPartnerTypeId": null,
+    "thirdCountryIndicator": false,
+    "registeredConsignee": null,
+    "exciseDutySpecialPartnerType": {
+      "id": null,
+      "taxationRelevantIndicator": null,
+      "description": null
+    },
+    "customerData": {
+      "countryKey": null,
+      "europeanUnionIndicator": null
+    }
+  },
+  "ShipToMasterExtensionEU": {
+    "customerNumber": null,
+    "taxWarehouseRegistration": null,
+    "validFrom": null,
+    "validTo": null,
+    "outsideEUTaxTerritoryIndicator": null,
+    "euCountry1": {
+      "countryKey": null,
+      "europeanUnionIndicator": null
+    },
+    "euCountry2": {
+      "countryKey": null,
+      "europeanUnionIndicator": null
+    }
+  },
+  "TaxWarehouse": {
+    "exciseDutyTypeId": null,
+    "taxWarehouseRegistration": null,
+    "validFrom": null,
+    "validTo": null,
+    "description": null,
+    "companyCode": null,
+    "useStockLedgerSubdivisions": false,
+    "stockLedgerType": null,
+    "country": {
+      "countryKey": null,
+      "europeanUnionIndicator": null
+    }
+  },
+  "CustomerGroupSpecialPartnerAssignment": {
+    "customerGroup": null,
+    "specialPartnerType": {
+      "id": null,
+      "taxationRelevantIndicator": null,
+      "description": null
+    }
+  }
+}

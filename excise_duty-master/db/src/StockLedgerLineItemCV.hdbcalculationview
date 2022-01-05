@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="StockLedgerLineItemCV" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false" defaultClient="$$client$$">
+<descriptions defaultDescription="StockLedgerLineItemCV"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="EXCISEDUTYMODEL_STOCKLEDGERLINEITEM">
+    <resourceUri>EXCISEDUTYMODEL_STOCKLEDGERLINEITEM</resourceUri>
+  </DataSource>
+  <DataSource id="EXCISEDUTYMODEL_STOCKLEDGERDIVISIONVALUEHELP">
+    <resourceUri>EXCISEDUTYMODEL_STOCKLEDGERDIVISIONVALUEHELP</resourceUri>
+  </DataSource>
+  <DataSource id="EXCISEDUTYMODEL_STOCKLEDGERSUBDIVISIONVALUEHELP">
+    <resourceUri>EXCISEDUTYMODEL_STOCKLEDGERSUBDIVISIONVALUEHELP</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:AggregationView" id="STOCKLEDGERLINEITEM">
+    <viewAttributes>
+      <viewAttribute id="MATERIALDOCUMENTYEAR">
+        <descriptions defaultDescription="materialDocumentYear"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALDOCUMENTNUMBER">
+        <descriptions defaultDescription="materialDocumentNumber"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALDOCUMENTITEM">
+        <descriptions defaultDescription="materialDocumentItem"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYPOSITIONNUMBER" aggregationType="sum">
+        <descriptions defaultDescription="exciseDutyPositionNumber"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYTYPEID">
+        <descriptions defaultDescription="exciseDutyTypeId"/>
+      </viewAttribute>
+      <viewAttribute id="COMPANYCODE">
+        <descriptions defaultDescription="companyCode"/>
+      </viewAttribute>
+      <viewAttribute id="TAXWAREHOUSEREGISTRATION">
+        <descriptions defaultDescription="taxWarehouseRegistration"/>
+      </viewAttribute>
+      <viewAttribute id="PLANT">
+        <descriptions defaultDescription="plant"/>
+      </viewAttribute>
+      <viewAttribute id="STORAGELOCATION">
+        <descriptions defaultDescription="storageLocation"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALDOCUMENTPOSTINGDATE">
+        <descriptions defaultDescription="materialDocumentPostingDate"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERNUMBER" aggregationType="sum">
+        <descriptions defaultDescription="stockLedgerNumber"/>
+      </viewAttribute>
+      <viewAttribute id="NOENTRYINEXTENDEDSTOCKLEDGER">
+        <descriptions defaultDescription="noEntryInExtendedStockLedger"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALNUMBER">
+        <descriptions defaultDescription="materialNumber"/>
+      </viewAttribute>
+      <viewAttribute id="BATCHNUMBER">
+        <descriptions defaultDescription="batchNumber"/>
+      </viewAttribute>
+      <viewAttribute id="BASEUNITOFMEASURE">
+        <descriptions defaultDescription="baseUnitOfMeasure"/>
+      </viewAttribute>
+      <viewAttribute id="EDMOVEMENTCATEGORYID">
+        <descriptions defaultDescription="edMovementCategoryId"/>
+      </viewAttribute>
+      <viewAttribute id="ERPMOVEMENTTYPE">
+        <descriptions defaultDescription="erpMovementType"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERGROUPID">
+        <descriptions defaultDescription="stockLedgerGroupId"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERDIVISION">
+        <descriptions defaultDescription="stockLedgerDivision"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERSUBDIVISION">
+        <descriptions defaultDescription="stockLedgerSubdivision"/>
+      </viewAttribute>
+      <viewAttribute id="ALCOHOLICSTRENGTH" aggregationType="sum">
+        <descriptions defaultDescription="alcoholicStrength"/>
+      </viewAttribute>
+      <viewAttribute id="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT">
+        <descriptions defaultDescription="taxWarehouseRegistrationOfManufacturingPlant"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYNUMBERFORTAXWAREHOUSE">
+        <descriptions defaultDescription="exciseDutyNumberForTaxWarehouse"/>
+      </viewAttribute>
+      <viewAttribute id="EXTERNALTAXWAREHOUSEREGISTRATION">
+        <descriptions defaultDescription="externalTaxWarehouseRegistration"/>
+      </viewAttribute>
+      <viewAttribute id="EXTERNALEXCISEDUTYNUMBER">
+        <descriptions defaultDescription="externalExciseDutyNumber"/>
+      </viewAttribute>
+      <viewAttribute id="SALESORDERNUMBER">
+        <descriptions defaultDescription="salesOrderNumber"/>
+      </viewAttribute>
+      <viewAttribute id="SALESORDERITEM">
+        <descriptions defaultDescription="salesOrderItem"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYPROCUREMENTINDICATOR">
+        <descriptions defaultDescription="exciseDutyProcurementIndicator"/>
+      </viewAttribute>
+      <viewAttribute id="ACCOUNTINGJOURNALREFERENCE">
+        <descriptions defaultDescription="accountingJournalReference"/>
+      </viewAttribute>
+      <viewAttribute id="TAXVALUECURRENCY">
+        <descriptions defaultDescription="taxValueCurrency"/>
+      </viewAttribute>
+      <viewAttribute id="QUANTITY" aggregationType="sum">
+        <descriptions defaultDescription="quantity"/>
+      </viewAttribute>
+      <viewAttribute id="TAXVALUEAMOUNT" aggregationType="sum">
+        <descriptions defaultDescription="taxValueAmount"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="EXCISEDUTYMODEL_STOCKLEDGERLINEITEM">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTYEAR" source="MATERIALDOCUMENTYEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTNUMBER" source="MATERIALDOCUMENTNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTITEM" source="MATERIALDOCUMENTITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYPOSITIONNUMBER" source="EXCISEDUTYPOSITIONNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYTYPEID" source="EXCISEDUTYTYPEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYCODE" source="COMPANYCODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXWAREHOUSEREGISTRATION" source="TAXWAREHOUSEREGISTRATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STORAGELOCATION" source="STORAGELOCATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTPOSTINGDATE" source="MATERIALDOCUMENTPOSTINGDATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERNUMBER" source="STOCKLEDGERNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOENTRYINEXTENDEDSTOCKLEDGER" source="NOENTRYINEXTENDEDSTOCKLEDGER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALNUMBER" source="MATERIALNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BATCHNUMBER" source="BATCHNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BASEUNITOFMEASURE" source="BASEUNITOFMEASURE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EDMOVEMENTCATEGORYID" source="EDMOVEMENTCATEGORYID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERPMOVEMENTTYPE" source="ERPMOVEMENTTYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERGROUPID" source="STOCKLEDGERGROUPID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERDIVISION" source="STOCKLEDGERDIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERSUBDIVISION" source="STOCKLEDGERSUBDIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALCOHOLICSTRENGTH" source="ALCOHOLICSTRENGTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT" source="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYNUMBERFORTAXWAREHOUSE" source="EXCISEDUTYNUMBERFORTAXWAREHOUSE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALTAXWAREHOUSEREGISTRATION" source="EXTERNALTAXWAREHOUSEREGISTRATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALEXCISEDUTYNUMBER" source="EXTERNALEXCISEDUTYNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALESORDERNUMBER" source="SALESORDERNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALESORDERITEM" source="SALESORDERITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYPROCUREMENTINDICATOR" source="EXCISEDUTYPROCUREMENTINDICATOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACCOUNTINGJOURNALREFERENCE" source="ACCOUNTINGJOURNALREFERENCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXVALUECURRENCY" source="TAXVALUECURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY" source="QUANTITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXVALUEAMOUNT" source="TAXVALUEAMOUNT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="STOCKLEDGERDIVISION" CARDINALITY="C1_N" JOINTYPE="LEFTOUTER">
+    <viewAttributes>
+      <viewAttribute id="MATERIALDOCUMENTYEAR">
+        <descriptions defaultDescription="materialDocumentYear"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALDOCUMENTNUMBER">
+        <descriptions defaultDescription="materialDocumentNumber"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALDOCUMENTITEM">
+        <descriptions defaultDescription="materialDocumentItem"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYPOSITIONNUMBER" AGGREGATIONTYPE="SUM">
+        <descriptions defaultDescription="exciseDutyPositionNumber"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYTYPEID">
+        <descriptions defaultDescription="exciseDutyTypeId"/>
+      </viewAttribute>
+      <viewAttribute id="COMPANYCODE">
+        <descriptions defaultDescription="companyCode"/>
+      </viewAttribute>
+      <viewAttribute id="TAXWAREHOUSEREGISTRATION">
+        <descriptions defaultDescription="taxWarehouseRegistration"/>
+      </viewAttribute>
+      <viewAttribute id="PLANT">
+        <descriptions defaultDescription="plant"/>
+      </viewAttribute>
+      <viewAttribute id="STORAGELOCATION">
+        <descriptions defaultDescription="storageLocation"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALDOCUMENTPOSTINGDATE">
+        <descriptions defaultDescription="materialDocumentPostingDate"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERNUMBER" AGGREGATIONTYPE="SUM">
+        <descriptions defaultDescription="stockLedgerNumber"/>
+      </viewAttribute>
+      <viewAttribute id="NOENTRYINEXTENDEDSTOCKLEDGER">
+        <descriptions defaultDescription="noEntryInExtendedStockLedger"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALNUMBER">
+        <descriptions defaultDescription="materialNumber"/>
+      </viewAttribute>
+      <viewAttribute id="BATCHNUMBER">
+        <descriptions defaultDescription="batchNumber"/>
+      </viewAttribute>
+      <viewAttribute id="BASEUNITOFMEASURE">
+        <descriptions defaultDescription="baseUnitOfMeasure"/>
+      </viewAttribute>
+      <viewAttribute id="EDMOVEMENTCATEGORYID">
+        <descriptions defaultDescription="edMovementCategoryId"/>
+      </viewAttribute>
+      <viewAttribute id="ERPMOVEMENTTYPE">
+        <descriptions defaultDescription="erpMovementType"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERGROUPID">
+        <descriptions defaultDescription="stockLedgerGroupId"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERDIVISION">
+        <descriptions defaultDescription="stockLedgerDivision"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERDIVISIONDESCRIPTION">
+        <descriptions defaultDescription="description"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERSUBDIVISION">
+        <descriptions defaultDescription="stockLedgerSubdivision"/>
+      </viewAttribute>
+      <viewAttribute id="ALCOHOLICSTRENGTH" AGGREGATIONTYPE="SUM">
+        <descriptions defaultDescription="alcoholicStrength"/>
+      </viewAttribute>
+      <viewAttribute id="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT">
+        <descriptions defaultDescription="taxWarehouseRegistrationOfManufacturingPlant"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYNUMBERFORTAXWAREHOUSE">
+        <descriptions defaultDescription="exciseDutyNumberForTaxWarehouse"/>
+      </viewAttribute>
+      <viewAttribute id="EXTERNALTAXWAREHOUSEREGISTRATION">
+        <descriptions defaultDescription="externalTaxWarehouseRegistration"/>
+      </viewAttribute>
+      <viewAttribute id="EXTERNALEXCISEDUTYNUMBER">
+        <descriptions defaultDescription="externalExciseDutyNumber"/>
+      </viewAttribute>
+      <viewAttribute id="SALESORDERNUMBER">
+        <descriptions defaultDescription="salesOrderNumber"/>
+      </viewAttribute>
+      <viewAttribute id="SALESORDERITEM">
+        <descriptions defaultDescription="salesOrderItem"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYPROCUREMENTINDICATOR">
+        <descriptions defaultDescription="exciseDutyProcurementIndicator"/>
+      </viewAttribute>
+      <viewAttribute id="ACCOUNTINGJOURNALREFERENCE">
+        <descriptions defaultDescription="accountingJournalReference"/>
+      </viewAttribute>
+      <viewAttribute id="TAXVALUECURRENCY">
+        <descriptions defaultDescription="taxValueCurrency"/>
+      </viewAttribute>
+      <viewAttribute id="QUANTITY" AGGREGATIONTYPE="SUM">
+        <descriptions defaultDescription="quantity"/>
+      </viewAttribute>
+      <viewAttribute id="TAXVALUEAMOUNT" AGGREGATIONTYPE="SUM">
+        <descriptions defaultDescription="taxValueAmount"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="STOCKLEDGERLINEITEM">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTYEAR" source="MATERIALDOCUMENTYEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTNUMBER" source="MATERIALDOCUMENTNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTITEM" source="MATERIALDOCUMENTITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYPOSITIONNUMBER" source="EXCISEDUTYPOSITIONNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYTYPEID" source="EXCISEDUTYTYPEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYCODE" source="COMPANYCODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXWAREHOUSEREGISTRATION" source="TAXWAREHOUSEREGISTRATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STORAGELOCATION" source="STORAGELOCATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTPOSTINGDATE" source="MATERIALDOCUMENTPOSTINGDATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERNUMBER" source="STOCKLEDGERNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOENTRYINEXTENDEDSTOCKLEDGER" source="NOENTRYINEXTENDEDSTOCKLEDGER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALNUMBER" source="MATERIALNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BATCHNUMBER" source="BATCHNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BASEUNITOFMEASURE" source="BASEUNITOFMEASURE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EDMOVEMENTCATEGORYID" source="EDMOVEMENTCATEGORYID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERPMOVEMENTTYPE" source="ERPMOVEMENTTYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERGROUPID" source="STOCKLEDGERGROUPID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERDIVISION" source="STOCKLEDGERDIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERSUBDIVISION" source="STOCKLEDGERSUBDIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALCOHOLICSTRENGTH" source="ALCOHOLICSTRENGTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT" source="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYNUMBERFORTAXWAREHOUSE" source="EXCISEDUTYNUMBERFORTAXWAREHOUSE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALTAXWAREHOUSEREGISTRATION" source="EXTERNALTAXWAREHOUSEREGISTRATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALEXCISEDUTYNUMBER" source="EXTERNALEXCISEDUTYNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALESORDERNUMBER" source="SALESORDERNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALESORDERITEM" source="SALESORDERITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYPROCUREMENTINDICATOR" source="EXCISEDUTYPROCUREMENTINDICATOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACCOUNTINGJOURNALREFERENCE" source="ACCOUNTINGJOURNALREFERENCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXVALUECURRENCY" source="TAXVALUECURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY" source="QUANTITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXVALUEAMOUNT" source="TAXVALUEAMOUNT"/>
+    </input>
+    <input node="EXCISEDUTYMODEL_STOCKLEDGERDIVISIONVALUEHELP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERDIVISIONDESCRIPTION" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERDIVISION" source="ID"/>
+    </input>
+    <joinAttribute name="STOCKLEDGERDIVISION"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="STOCKLEDGERSUBDIVISION" CARDINALITY="C1_N" JOINTYPE="LEFTOUTER">
+    <viewAttributes>
+      <viewAttribute id="MATERIALDOCUMENTYEAR">
+        <descriptions defaultDescription="materialDocumentYear"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALDOCUMENTNUMBER">
+        <descriptions defaultDescription="materialDocumentNumber"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALDOCUMENTITEM">
+        <descriptions defaultDescription="materialDocumentItem"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYPOSITIONNUMBER" AGGREGATIONTYPE="SUM">
+        <descriptions defaultDescription="exciseDutyPositionNumber"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYTYPEID">
+        <descriptions defaultDescription="exciseDutyTypeId"/>
+      </viewAttribute>
+      <viewAttribute id="COMPANYCODE">
+        <descriptions defaultDescription="companyCode"/>
+      </viewAttribute>
+      <viewAttribute id="TAXWAREHOUSEREGISTRATION">
+        <descriptions defaultDescription="taxWarehouseRegistration"/>
+      </viewAttribute>
+      <viewAttribute id="PLANT">
+        <descriptions defaultDescription="plant"/>
+      </viewAttribute>
+      <viewAttribute id="STORAGELOCATION">
+        <descriptions defaultDescription="storageLocation"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALDOCUMENTPOSTINGDATE">
+        <descriptions defaultDescription="materialDocumentPostingDate"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERNUMBER" AGGREGATIONTYPE="SUM">
+        <descriptions defaultDescription="stockLedgerNumber"/>
+      </viewAttribute>
+      <viewAttribute id="NOENTRYINEXTENDEDSTOCKLEDGER">
+        <descriptions defaultDescription="noEntryInExtendedStockLedger"/>
+      </viewAttribute>
+      <viewAttribute id="MATERIALNUMBER">
+        <descriptions defaultDescription="materialNumber"/>
+      </viewAttribute>
+      <viewAttribute id="BATCHNUMBER">
+        <descriptions defaultDescription="batchNumber"/>
+      </viewAttribute>
+      <viewAttribute id="BASEUNITOFMEASURE">
+        <descriptions defaultDescription="baseUnitOfMeasure"/>
+      </viewAttribute>
+      <viewAttribute id="EDMOVEMENTCATEGORYID">
+        <descriptions defaultDescription="edMovementCategoryId"/>
+      </viewAttribute>
+      <viewAttribute id="ERPMOVEMENTTYPE">
+        <descriptions defaultDescription="erpMovementType"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERGROUPID">
+        <descriptions defaultDescription="stockLedgerGroupId"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERDIVISION">
+        <descriptions defaultDescription="stockLedgerDivision"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERDIVISIONDESCRIPTION">
+        <descriptions defaultDescription="stockLedgerDivisionDescription"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERSUBDIVISION">
+        <descriptions defaultDescription="stockLedgerSubdivision"/>
+      </viewAttribute>
+      <viewAttribute id="STOCKLEDGERSUBDIVISIONDESCRIPTION">
+        <descriptions defaultDescription="description"/>
+      </viewAttribute>
+      <viewAttribute id="ALCOHOLICSTRENGTH" AGGREGATIONTYPE="SUM">
+        <descriptions defaultDescription="alcoholicStrength"/>
+      </viewAttribute>
+      <viewAttribute id="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT">
+        <descriptions defaultDescription="taxWarehouseRegistrationOfManufacturingPlant"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYNUMBERFORTAXWAREHOUSE">
+        <descriptions defaultDescription="exciseDutyNumberForTaxWarehouse"/>
+      </viewAttribute>
+      <viewAttribute id="EXTERNALTAXWAREHOUSEREGISTRATION">
+        <descriptions defaultDescription="externalTaxWarehouseRegistration"/>
+      </viewAttribute>
+      <viewAttribute id="EXTERNALEXCISEDUTYNUMBER">
+        <descriptions defaultDescription="externalExciseDutyNumber"/>
+      </viewAttribute>
+      <viewAttribute id="SALESORDERNUMBER">
+        <descriptions defaultDescription="salesOrderNumber"/>
+      </viewAttribute>
+      <viewAttribute id="SALESORDERITEM">
+        <descriptions defaultDescription="salesOrderItem"/>
+      </viewAttribute>
+      <viewAttribute id="EXCISEDUTYPROCUREMENTINDICATOR">
+        <descriptions defaultDescription="exciseDutyProcurementIndicator"/>
+      </viewAttribute>
+      <viewAttribute id="ACCOUNTINGJOURNALREFERENCE">
+        <descriptions defaultDescription="accountingJournalReference"/>
+      </viewAttribute>
+      <viewAttribute id="TAXVALUECURRENCY">
+        <descriptions defaultDescription="taxValueCurrency"/>
+      </viewAttribute>
+      <viewAttribute id="QUANTITY" AGGREGATIONTYPE="SUM">
+        <descriptions defaultDescription="quantity"/>
+      </viewAttribute>
+      <viewAttribute id="TAXVALUEAMOUNT" AGGREGATIONTYPE="SUM">
+        <descriptions defaultDescription="taxValueAmount"/>
+      </viewAttribute></viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="STOCKLEDGERDIVISION">
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTYEAR" source="MATERIALDOCUMENTYEAR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTNUMBER" source="MATERIALDOCUMENTNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTITEM" source="MATERIALDOCUMENTITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYPOSITIONNUMBER" source="EXCISEDUTYPOSITIONNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYTYPEID" source="EXCISEDUTYTYPEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="COMPANYCODE" source="COMPANYCODE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXWAREHOUSEREGISTRATION" source="TAXWAREHOUSEREGISTRATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANT" source="PLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STORAGELOCATION" source="STORAGELOCATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALDOCUMENTPOSTINGDATE" source="MATERIALDOCUMENTPOSTINGDATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERNUMBER" source="STOCKLEDGERNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NOENTRYINEXTENDEDSTOCKLEDGER" source="NOENTRYINEXTENDEDSTOCKLEDGER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MATERIALNUMBER" source="MATERIALNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BATCHNUMBER" source="BATCHNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BASEUNITOFMEASURE" source="BASEUNITOFMEASURE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EDMOVEMENTCATEGORYID" source="EDMOVEMENTCATEGORYID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ERPMOVEMENTTYPE" source="ERPMOVEMENTTYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERGROUPID" source="STOCKLEDGERGROUPID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERDIVISION" source="STOCKLEDGERDIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERDIVISIONDESCRIPTION" source="STOCKLEDGERDIVISIONDESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERSUBDIVISION" source="STOCKLEDGERSUBDIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ALCOHOLICSTRENGTH" source="ALCOHOLICSTRENGTH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT" source="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYNUMBERFORTAXWAREHOUSE" source="EXCISEDUTYNUMBERFORTAXWAREHOUSE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALTAXWAREHOUSEREGISTRATION" source="EXTERNALTAXWAREHOUSEREGISTRATION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXTERNALEXCISEDUTYNUMBER" source="EXTERNALEXCISEDUTYNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALESORDERNUMBER" source="SALESORDERNUMBER"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALESORDERITEM" source="SALESORDERITEM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EXCISEDUTYPROCUREMENTINDICATOR" source="EXCISEDUTYPROCUREMENTINDICATOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ACCOUNTINGJOURNALREFERENCE" source="ACCOUNTINGJOURNALREFERENCE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXVALUECURRENCY" source="TAXVALUECURRENCY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QUANTITY" source="QUANTITY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TAXVALUEAMOUNT" source="TAXVALUEAMOUNT"/></input>
+    <input node="EXCISEDUTYMODEL_STOCKLEDGERSUBDIVISIONVALUEHELP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERSUBDIVISIONDESCRIPTION" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERDIVISION" source="STOCKLEDGERDIVISION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STOCKLEDGERSUBDIVISION" source="ID"/>
+    </input>
+    <joinAttribute name="STOCKLEDGERDIVISION"/>
+    <joinAttribute name="STOCKLEDGERSUBDIVISION"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="STOCKLEDGERSUBDIVISION">
+  <attributes>
+    <attribute id="MATERIALDOCUMENTYEAR" ORDER="1" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="materialDocumentYear"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="MATERIALDOCUMENTYEAR"/>
+    </attribute>
+    <attribute id="MATERIALDOCUMENTNUMBER" ORDER="2" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="materialDocumentNumber"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="MATERIALDOCUMENTNUMBER"/>
+    </attribute>
+    <attribute id="MATERIALDOCUMENTITEM" ORDER="3" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="materialDocumentItem"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="MATERIALDOCUMENTITEM"/>
+    </attribute>
+    <attribute id="EXCISEDUTYPOSITIONNUMBER" ORDER="4" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="exciseDutyPositionNumber"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="EXCISEDUTYPOSITIONNUMBER"/>
+    </attribute>
+    <attribute id="EXCISEDUTYTYPEID" ORDER="5" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="exciseDutyTypeId"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="EXCISEDUTYTYPEID"/>
+    </attribute>
+    <attribute id="COMPANYCODE" ORDER="6" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="companyCode"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="COMPANYCODE"/>
+    </attribute>
+    <attribute id="TAXWAREHOUSEREGISTRATION" ORDER="7" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="taxWarehouseRegistration"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="TAXWAREHOUSEREGISTRATION"/>
+    </attribute>
+    <attribute id="PLANT" ORDER="8" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="plant"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="PLANT"/>
+    </attribute>
+    <attribute id="STORAGELOCATION" ORDER="9" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="storageLocation"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="STORAGELOCATION"/>
+    </attribute>
+    <attribute id="MATERIALDOCUMENTPOSTINGDATE" ORDER="10" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="materialDocumentPostingDate"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="MATERIALDOCUMENTPOSTINGDATE"/>
+    </attribute>
+    <attribute id="STOCKLEDGERNUMBER" ORDER="11" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="stockLedgerNumber"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="STOCKLEDGERNUMBER"/>
+    </attribute>
+    <attribute id="NOENTRYINEXTENDEDSTOCKLEDGER" ORDER="12" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="noEntryInExtendedStockLedger"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="NOENTRYINEXTENDEDSTOCKLEDGER"/>
+    </attribute>
+    <attribute id="MATERIALNUMBER" ORDER="13" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="materialNumber"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="MATERIALNUMBER"/>
+    </attribute>
+    <attribute id="BATCHNUMBER" ORDER="14" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="batchNumber"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="BATCHNUMBER"/>
+    </attribute>
+    <attribute id="BASEUNITOFMEASURE" ORDER="15" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="baseUnitOfMeasure"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="BASEUNITOFMEASURE"/>
+    </attribute>
+    <attribute id="EDMOVEMENTCATEGORYID" ORDER="16" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="edMovementCategoryId"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="EDMOVEMENTCATEGORYID"/>
+    </attribute>
+    <attribute id="ERPMOVEMENTTYPE" ORDER="17" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="erpMovementType"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="ERPMOVEMENTTYPE"/>
+    </attribute>
+    <attribute id="STOCKLEDGERGROUPID" ORDER="18" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="stockLedgerGroupId"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="STOCKLEDGERGROUPID"/>
+    </attribute>
+    <attribute id="STOCKLEDGERDIVISION" ORDER="19" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="stockLedgerDivision"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="STOCKLEDGERDIVISION"/>
+    </attribute>
+    <attribute id="STOCKLEDGERDIVISIONDESCRIPTION" ORDER="20" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="stockLedgerDivisionDescription"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="STOCKLEDGERDIVISIONDESCRIPTION"/>
+    </attribute>
+    <attribute id="STOCKLEDGERSUBDIVISION" ORDER="21" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="stockLedgerSubdivision"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="STOCKLEDGERSUBDIVISION"/>
+    </attribute>
+    <attribute id="STOCKLEDGERSUBDIVISIONDESCRIPTION" ORDER="22" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="stockLedgerSubdivisionDescription"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="STOCKLEDGERSUBDIVISIONDESCRIPTION"/>
+    </attribute>
+    <attribute id="ALCOHOLICSTRENGTH" ORDER="23" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="alcoholicStrength"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="ALCOHOLICSTRENGTH"/>
+    </attribute>
+    <attribute id="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT" ORDER="24" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="taxWarehouseRegistrationOfManufacturingPlant"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="TAXWAREHOUSEREGISTRATIONOFMANUFACTURINGPLANT"/>
+    </attribute>
+    <attribute id="EXCISEDUTYNUMBERFORTAXWAREHOUSE" ORDER="25" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="exciseDutyNumberForTaxWarehouse"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="EXCISEDUTYNUMBERFORTAXWAREHOUSE"/>
+    </attribute>
+    <attribute id="EXTERNALTAXWAREHOUSEREGISTRATION" ORDER="26" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="externalTaxWarehouseRegistration"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="EXTERNALTAXWAREHOUSEREGISTRATION"/>
+    </attribute>
+    <attribute id="EXTERNALEXCISEDUTYNUMBER" ORDER="27" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="externalExciseDutyNumber"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="EXTERNALEXCISEDUTYNUMBER"/>
+    </attribute>
+    <attribute id="SALESORDERNUMBER" ORDER="28" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="salesOrderNumber"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="SALESORDERNUMBER"/>
+    </attribute>
+    <attribute id="SALESORDERITEM" ORDER="29" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="salesOrderItem"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="SALESORDERITEM"/>
+    </attribute>
+    <attribute id="EXCISEDUTYPROCUREMENTINDICATOR" ORDER="30" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="exciseDutyProcurementIndicator"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="EXCISEDUTYPROCUREMENTINDICATOR"/>
+    </attribute>
+    <attribute id="ACCOUNTINGJOURNALREFERENCE" ORDER="31" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="accountingJournalReference"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="ACCOUNTINGJOURNALREFERENCE"/>
+    </attribute>
+    <attribute id="TAXVALUECURRENCY" ORDER="32" DISPLAYATTRIBUTE="FALSE" ATTRIBUTEHIERARCHYACTIVE="FALSE">
+      <descriptions defaultDescription="taxValueCurrency"/>
+      <keyMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="TAXVALUECURRENCY"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="QUANTITY" ORDER="33" AGGREGATIONTYPE="SUM" MEASURETYPE="SIMPLE">
+      <descriptions defaultDescription="quantity"/>
+      <measureMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="QUANTITY"/>
+    </measure>
+    <measure id="TAXVALUEAMOUNT" ORDER="34" AGGREGATIONTYPE="SUM" MEASURETYPE="SIMPLE">
+      <descriptions defaultDescription="taxValueAmount"/>
+      <measureMapping columnObjectName="STOCKLEDGERSUBDIVISION" columnName="TAXVALUEAMOUNT"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="OUTPUT" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="140"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="STOCKLEDGERLINEITEM" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="457"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="STOCKLEDGERDIVISION" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="337"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="STOCKLEDGERLINEITEM" modelObjectNameSpace="STOCKLEDGERDIVISION" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="321.60302734375"/>
+    </shape>
+    <shape modelObjectName="EXCISEDUTYMODEL_STOCKLEDGERDIVISIONVALUEHELP" modelObjectNameSpace="STOCKLEDGERDIVISION" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="396" y="202"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="STOCKLEDGERSUBDIVISION" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="217"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="STOCKLEDGERDIVISION" modelObjectNameSpace="STOCKLEDGERSUBDIVISION" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="727" y="326"/>
+      <rectangleSize width="321.60302734375"/>
+    </shape>
+    <shape modelObjectName="EXCISEDUTYMODEL_STOCKLEDGERSUBDIVISIONVALUEHELP" modelObjectNameSpace="STOCKLEDGERSUBDIVISION" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="321.60302734375"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

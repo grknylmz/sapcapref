@@ -1,0 +1,15 @@
+entity QueryDefinitionRepository {
+  key customer_tenant_id : String(256);
+  key source_tenant_id : String(256);
+  key query_id : String(256);
+  key version : String(16);
+  query_name : String(4000);
+  created_by : String(256);
+  created_at : UTCTimestamp;
+  last_modified_by : String(256);
+  last_modified_at : UTCTimestamp;
+  last_valid_on : UTCTimestamp;
+  message : String(4000);
+  status : Integer;
+  query_content : hana.CLOB;
+};

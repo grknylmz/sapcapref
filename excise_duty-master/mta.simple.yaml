@@ -1,0 +1,353 @@
+_schema-version: 2.1.0
+ID: com.sap.xs2.samples.odata.exciseDuty
+version: 0.3.0
+
+parameters:
+  deploy_mode: html5-repo
+
+modules:
+
+  - name: exciseDuty-java
+    type: java
+    path: srv
+    requires:
+      - name: ed-hdi
+        properties:
+          JBP_CONFIG_RESOURCE_CONFIGURATION: '[tomcat/webapps/ROOT/META-INF/context.xml: {"service_name_for_DefaultDB" : "~{hdi-container-name}"}]'
+      - name: ed-uaa
+    parameters:
+      health-check-type: http
+      health-check-http-endpoint: /health
+      memory: 2G
+    properties:
+      JBP_CONFIG_SAPJVM: '[ memory_calculator: { memory_sizes: { heap: 1000m, stack: 1m, metaspace: 150m } } ]'
+    provides:
+      - name: java
+        properties: 
+          url: '${default-url}'
+
+  - name: exciseDuty-db
+    type: hdb
+    path: db
+    requires:
+      - name: ed-hdi
+    parameters:
+      buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.24      
+
+
+### UI related artifacts
+
+  - name: exciseDuty-uideployer
+    type: com.sap.html5.application-content
+    requires:
+      - name: ed-apprepo-dt
+    build-parameters:
+      builder: grunt
+      type: com.sap.html5.application-content
+      requires:
+        - name: exciseDuty-ui-conf-exciseduty
+        - name: exciseDuty-ui-conf-extensionfunction
+        - name: exciseDuty-ui-conf-movementcategory
+        - name: exciseDuty-ui-conf-stockledgercharacteristic
+        - name: exciseDuty-ui-conf-taxrate
+        - name: exciseDuty-ui-conf-taxwarehouse
+        - name: exciseDuty-ui-stockledgerlineitem
+        - name: exciseDuty-ui-stockledgerlineitem-alp
+        - name: exciseDuty-ui-stockledgerprocessingerror
+        - name: exciseDuty-ui-md-shiptomaster
+        - name: exciseDuty-ui-md-materialmaster
+            
+  - name: exciseDuty-ui-conf-exciseduty
+    type: html5
+    path: ui-conf-exciseduty
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-conf-extensionfunction
+    type: html5
+    path: ui-conf-extensionfunction
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+    
+  - name: exciseDuty-ui-conf-movementcategory
+    type: html5
+    path: ui-conf-movementcategory
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-conf-stockledgercharacteristic
+    type: html5
+    path: ui-conf-stockledgercharacteristic
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-conf-taxrate
+    type: html5
+    path: ui-conf-taxrate
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-conf-taxwarehouse
+    type: html5
+    path: ui-conf-taxwarehouse
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-md-materialmaster
+    type: html5
+    path: ui-md-materialmaster
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-md-shiptomaster
+    type: html5
+    path: ui-md-shiptomaster
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-stockledgerlineitem
+    type: html5
+    path: ui-stockledgerlineitem
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-stockledgerlineitem-alp
+    type: html5
+    path: ui-stockledgerlineitem-alp
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-ui-stockledgerprocessingerror
+    type: html5
+    path: ui-stockledgerprocessingerror
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    build-parameters:
+      builder: grunt
+    requires:
+      - name: java
+        group: destinations
+        properties:
+          name: java
+          url: '~{url}'      
+
+  - name: exciseDuty-approuter
+    type: nodejs
+    path: approuter
+    parameters:
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: ed-uaa
+      - name: ed-apprepo-rt
+      - name: ed-portal
+      - name: java
+        group: destinations
+        properties:
+          name: ed-backend
+          url: ~{url}
+          forwardAuthToken: true 
+      - name: exciseDuty-xsahaa
+        group: destinations
+        properties:
+          name: XSAHAA_BACKEND
+          url: ~{url}
+          forwardAuthToken: true
+
+  - name: exciseDuty-flp-content
+    type: cfportalsite
+    path: flp-content
+    parameters:
+      memory: 128M
+      buildpack: https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.6.21/nodejs-buildpack-v1.6.21.zip
+    requires:
+     - name: ed-portal
+     - name: ed-uaa
+     - name: ed-apprepo-dt
+     - name: exciseDuty-uideployer
+
+resources:
+  - name: ed-hdi
+    type: com.sap.xs.hdi-container
+    properties:
+      hdi-container-name: '${service-name}'
+
+  - name: ed-uaa
+    type: com.sap.xs.uaa
+    parameters:
+      service-name: ed-uaa
+      config:
+        xsappname: 'ed-${space}'
+        tenant-mode: dedicated
+        scopes:
+          - name: $XSAPPNAME.ConfDisp
+            description: Display configuration
+          - name: $XSAPPNAME.ConfEdit
+            description: Edit configuration
+          - name: $XSAPPNAME.MDDisp
+            description: Display master data
+          - name: $XSAPPNAME.MDEdit
+            description: Edit master data           
+          - name: $XSAPPNAME.SLDisp
+            description: Display stock ledger
+          - name: $XSAPPNAME.SLEdit
+            description: Reprocess stock ledger           
+          - name: $XSAPPNAME.Ext
+            description: Extension functions 
+          - name: $XSAPPNAME.JOBSCHEDULER
+            description: "Job Scheduler Scope"
+            grant-as-authority-to-apps: ["jobscheduler"]
+        role-templates:
+          - name: DisplayConfiguration
+            description: Display configuration
+            scope-references:
+              - $XSAPPNAME.ConfDisp
+              - uaa.user
+          - name: EditConfiguration
+            description: Edit configuration
+            scope-references:
+              - $XSAPPNAME.ConfDisp
+              - $XSAPPNAME.ConfEdit
+              - uaa.user          
+          - name: DisplayMasterData
+            description: Display master data        
+            scope-references:
+              - $XSAPPNAME.MDDisp
+              - uaa.user
+          - name: EditMasterData
+            description: Edit master data
+            scope-references:
+              - $XSAPPNAME.MDDisp
+              - $XSAPPNAME.MDEdit
+              - uaa.user
+          - name: DisplayStockLedger
+            description: Display stock ledger
+            scope-references:
+              - $XSAPPNAME.SLDisp
+              - uaa.user
+          - name: ReprocessStockLedger
+            description: Reprocess stock ledger
+            scope-references:
+              - $XSAPPNAME.SLDisp
+              - $XSAPPNAME.SLEdit
+              - uaa.user  
+          - name: ExtendExciseDuty
+            description: Extension functions
+            scope-references:
+              - $XSAPPNAME.Ext
+              - uaa.user
+        oauth2-configuration:
+          token-validity: 31536000
+
+  - name: ed-apprepo-rt
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo 
+      service-plan: app-runtime
+
+  - name: ed-apprepo-dt
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo 
+      service-plan: app-host
+
+  - name: ed-portal
+    parameters:
+      service-plan: standard
+      service: portal
+    type: org.cloudfoundry.managed-service
+
+  - name: exciseDuty-xsahaa #Provide just a fake URL to fulfill the service binding, xsahaa not part of simple deployment.
+    properties:
+      url: 'https://0.0.0.0/'    

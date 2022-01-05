@@ -1,0 +1,2 @@
+country,exciseDutyTypeId,baseQuantityUnit,validFrom,alcoholicStrengthLowerLimit,taxRate,currency
+DE,BI,HL,2017-01-01,0.5,0.787,EUR

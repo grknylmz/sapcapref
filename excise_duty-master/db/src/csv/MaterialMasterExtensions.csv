@@ -1,0 +1,4 @@
+materialNumber,companyCode,exciseDutyTypeId,exciseDutyProcurementIndicator,taxWarehouseRegistrationOfManufacturingPlant,exciseDutyNumberForTaxWarehouse,exciseDutyTypeIndependentMaterialGroup,alcoholicStrength,validFrom
+EDBDI01,M201,BI,E,DE123456,,,11.0,01.01.2017
+EDBISM01,M201,BI,F,,,,13.0,01.01.2017
+EDBDI02,M201,BI,E,,,,16.0,01.01.2017

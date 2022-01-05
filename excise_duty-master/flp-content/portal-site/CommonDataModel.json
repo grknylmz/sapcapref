@@ -1,0 +1,275 @@
+{
+  "identification": {
+    "sourceSystemType": "JAVA",
+    "modifiedAt": 1515336025601,
+    "entityType": "Bundle",
+    "description": "CDM Default Description",
+    "id": "aaa7cc8e-f3b8-11e7-c095-000000700f4e",
+    "title": "CDM Default Title"
+  },
+  "payload": {
+    "catalogs": [
+      {
+        "_version": "1.1",
+        "identification": {
+          "id": "242f3520-3417-4d6b-955d-dd36c5c7956f-1504082637666",
+          "i18n": "i18n/exciseDutyMasterDataCatalog.properties",
+          "description": "{{description}}",
+          "entityType": "catalog",
+          "title": "{{title}}"
+        },
+        "payload": {
+          "appDescriptors": [
+            {
+              "id": "com.sap.icd.edpoc.ExciseDutyMasterDataMaterialMaster"
+            },
+            {
+              "id": "com.sap.icd.edpoc.ExciseDutyMasterDataShipToMaster"
+            }
+          ]
+        }
+      },
+      {
+        "_version": "1.1",
+        "identification": {
+          "id": "985dcf83-d49f-4f1d-8fa2-a05bd5dd5fd4-1505128475969",
+          "i18n": "i18n/exciseDutyConfigCatalog.properties",
+          "description": "{{description}}",
+          "entityType": "catalog",
+          "title": "{{title}}"
+        },
+        "payload": {
+          "appDescriptors": [
+            {
+              "id": "com.sap.icd.edpoc.ExciseDutyConfigMovementCategory"
+            },
+            {
+              "id": "com.sap.icd.edpoc.ExciseDutyConfigTaxWarehouse"
+            },
+            {
+              "id": "com.sap.icd.edpoc.ExciseDutyConfigTaxRate"
+            },
+            {
+              "id": "com.sap.icd.edpoc.ExciseDutyConfigExciseDuty"
+            },
+            {
+              "id": "com.sap.icd.edpoc.ExciseDutyConfigStockLedgerCharacteristic"
+            }
+          ]
+        }
+      },
+      {
+        "_version": "1.1",
+        "identification": {
+          "id": "55ab60d9-53ce-46d2-91ac-506b559c734b-1504082647626",
+          "i18n": "i18n/exciseDutyStockLedgerCatalog.properties",
+          "description": "{{description}}",
+          "entityType": "catalog",
+          "title": "{{title}}"
+        },
+        "payload": {
+          "appDescriptors": [
+            {
+              "id": "com.sap.icd.edpoc.ExciseDutyStockLedgerLineItem"
+            },
+            {
+              "id": "com.sap.icd.edpoc.ExciseDutyStockLedgerLineItemALP"
+            },
+            {
+              "id": "com.sap.icd.edpoc.ExciseDutyStockLedgerProcessingError"
+            }
+          ]
+        }
+      },
+      {
+        "_version": "1.1",
+        "identification": {
+          "id": "0187b542-66ff-498f-8385-e62cde4cb71c-1509694230087",
+          "i18n": "i18n/defaultCatalogId.properties",
+          "entityType": "catalog",
+          "title": "Excise Duty - Extensibility",
+          "description": "Extensibility configuration"
+        },
+        "payload": {
+          "appDescriptors": [
+            {
+              "id": "com.sap.icd.edpoc.ExciseDutyConfigExtensionFunction",
+              "namespace": ""
+            }
+          ]
+        }
+      }
+    ],
+    "groups": [
+      {
+        "_version": "1.0",
+        "identification": {
+          "id": "d14637b4-cfa8-47e1-b222-fc08e2a2fb46-1509694276023",
+          "i18n": "i18n/defaultGroupId.properties",
+          "description": "",
+          "entityType": "group",
+          "title": "Excise Duty - Extensibility"
+        },
+        "payload": {
+          "tiles": [
+            {
+              "id": "a17039b2-cda8-4eff-ae77-22fce67ddcf8-1509700337904",
+              "appId": "com.sap.icd.edpoc.ExciseDutyConfigExtensionFunction"
+            }
+          ]
+        }
+      },
+      {
+        "_version": "1.0",
+        "identification": {
+          "id": "d48565fd-b754-493a-8604-9a4d25585ff8-1505142603417",
+          "i18n": "i18n/exciseDutyMasterDataGroup.properties",
+          "description": "{{description}}",
+          "entityType": "group",
+          "title": "{{title}}"
+        },
+        "payload": {
+          "tiles": [
+            {
+              "id": "718f339d-3c99-4250-8661-6ca1abeaf505-1505143219679",
+              "appId": "com.sap.icd.edpoc.ExciseDutyMasterDataMaterialMaster"
+            },
+            {
+              "id": "04e5e580-c5c1-4b12-a3ef-9086f277444c-1505145269575",
+              "appId": "com.sap.icd.edpoc.ExciseDutyMasterDataShipToMaster"
+            }
+          ]
+        }
+      },
+      {
+        "_version": "1.0",
+        "identification": {
+          "id": "a3a1c982-c76c-4e9c-8a85-bbcc52fe17ba-1504082537184",
+          "i18n": "i18n/exciseDutyStockLedgerGroup.properties",
+          "description": "{{description}}",
+          "entityType": "group",
+          "title": "{{title}}"
+        },
+        "payload": {
+          "tiles": [
+            {
+              "id": "eeab76ec-0acc-401c-9768-02b15b09c1bc-1505145397589",
+              "appId": "com.sap.icd.edpoc.ExciseDutyStockLedgerLineItem"
+            },
+            {
+              "id": "ab8fbba0-4980-4a85-9eb7-e66efdfc44df-1506689799733",
+              "appId": "com.sap.icd.edpoc.ExciseDutyStockLedgerLineItemALP"
+            },
+            {
+              "id": "cd3909da-8d11-474f-843c-a8a54184fd81-1506689909092",
+              "appId": "com.sap.icd.edpoc.ExciseDutyStockLedgerProcessingError"
+            }
+          ]
+        }
+      },
+      {
+        "_version": "1.0",
+        "identification": {
+          "id": "9f8e20d6-bca8-4b36-89c4-2a292ece8661-1504082524224",
+          "i18n": "i18n/exciseDutyConfigGroup.properties",
+          "description": "{{description}}",
+          "entityType": "group",
+          "title": "{{title}}"
+        },
+        "payload": {
+          "tiles": [
+            {
+              "id": "42c7b742-9f57-45e5-8378-b2ea38633a70-1504082829477",
+              "appId": "com.sap.icd.edpoc.ExciseDutyConfigTaxWarehouse"
+            },
+            {
+              "id": "370986f9-62d6-437b-9a0e-4b4952ce7bad-1505142928913",
+              "appId": "com.sap.icd.edpoc.ExciseDutyConfigExciseDuty"
+            },
+            {
+              "id": "96e1b36b-d519-4c97-8e01-a97ded694c0e-1505143076632",
+              "appId": "com.sap.icd.edpoc.ExciseDutyConfigMovementCategory"
+            },
+            {
+              "id": "7e12d4a3-c161-46ef-818e-16b2269171c4-1505145106422",
+              "appId": "com.sap.icd.edpoc.ExciseDutyConfigTaxRate"
+            },
+            {
+              "appId": "com.sap.icd.edpoc.ExciseDutyConfigStockLedgerCharacteristic",
+              "id": "d08d106d-5ec9-4b57-900c-e13d868b29dc-1505145170499"
+            }
+          ]
+        }
+      }
+    ],
+    "sites": [
+      {
+        "_version": "1.0",
+        "identification": {
+          "id": "03746a20-8d5f-11e7-a2b9-055f624a0e89",
+          "namespace": "",
+          "entityType": "site",
+          "layer": "vendor",
+          "description": "",
+          "i18n": "",
+          "title": "Default"
+        },
+        "payload": {
+          "homeApp": {
+            "semanticObject": "Shell",
+            "action": "home"
+          },
+          "config": {
+            "ushellConfig": {
+              "renderers": {
+                "fiori2": {
+                  "componentData": {
+                    "config": {
+                      "enableTilesOpacity": false,
+                      "enablePersonalization": true,
+                      "enableSetLanguage": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "sap.cloud.portal": {
+            "_version": "1.2.0",
+            "config": {
+              "runtimeEnv": "cf",
+              "isOnline": "true",
+              "templateTitle": "SAP Fiori Launchpad",
+              "solution": "flp",
+              "fioriVersion": "FIORI2",
+              "ui5VersionNumber": "1.58.3",
+              "theme.id": "sap_belize",
+              "theme.active": "[\"sap_belize\", \"sap_belize_plus\", \"sap_hcb\"]",
+              "skipVariantResolving": true,
+              "siteHashVersion": "-254165915",
+              "InAppHelp": {
+                "config": {
+                  "enabled": true,
+                  "productName": "ExciseDutyPOC",
+                  "productVersion": "Beta1.0"
+                }
+              },
+              "CoPilot": {
+                "config": {
+                    "enabled": false
+                }
+              }
+            }
+          },
+          "groupsOrder": [
+            "a3a1c982-c76c-4e9c-8a85-bbcc52fe17ba-1504082537184",
+            "d48565fd-b754-493a-8604-9a4d25585ff8-1505142603417",
+            "9f8e20d6-bca8-4b36-89c4-2a292ece8661-1504082524224",
+            "d14637b4-cfa8-47e1-b222-fc08e2a2fb46-1509694276023"
+          ]
+        }
+      }
+    ]
+  },
+  "_version": "1.0"
+}

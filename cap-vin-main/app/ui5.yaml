@@ -1,0 +1,36 @@
+specVersion: "2.0"
+metadata:
+  name: cap-cave-uimodule
+type: application
+resources:
+  configuration:
+    paths:
+      webapp: webapp
+framework:
+  name: SAPUI5
+  version: 1.77.0
+  libraries:
+    - name: sap.ui.core
+    - name: sap.m
+    - name: sap.ui.layout
+    - name: themelib_sap_fiori_3
+server:
+  customMiddleware:
+    - name: ui5-middleware-simpleproxy
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+builder:
+  resources:
+    excludes:
+      - "/test/**"
+      - "/localService/**"
+  customTasks:
+    - name: webide-extension-task-updateManifestJson
+      afterTask: generateVersionInfo
+      configuration:
+        appFolder: webapp
+        destDir: dist
+    - name: ui5-task-cachebuster-indexing
+      afterTask: generateCachebusterInfo

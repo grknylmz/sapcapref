@@ -1,0 +1,33 @@
+{
+  "welcomeFile": "/customer-apps/launchpad.html",
+  "authenticationMethod": "route",
+  "routes": [
+    {
+      "source": "^/customer-apps/(.*)$",
+      "target": "$1",
+      "localDir": "customer-apps",
+      "cacheControl": "no-cache, no-store, must-revalidate"
+    },
+    {
+      "source": "^/retailer-apps/(.*)$",
+      "target": "$1",
+      "localDir": "retailer-apps",
+      "scope": ["$XSAPPNAME.admin"],
+      "cacheControl": "no-cache, no-store, must-revalidate"
+    },
+    {
+      "source": "/v2/(.*)$",
+      "target": "/v2/$1",
+      "authenticationType": "xsuaa",
+      "destination": "srv_api",
+      "csrfProtection": true
+    },
+    {
+      "source": "/(.*)$",
+      "target": "/$1",
+      "authenticationType": "xsuaa",
+      "destination": "srv_api",
+      "csrfProtection": true
+    }
+  ]
+}

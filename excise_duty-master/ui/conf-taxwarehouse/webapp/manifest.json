@@ -1,0 +1,191 @@
+{
+	"_version": "1.7.0",
+	"sap.app": {
+		"id": "com.sap.icd.edpoc.ExciseDutyConfigTaxWarehouse",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "0.2.1"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"tags": {
+			"keywords": []
+		},
+		"ach": "xx",
+		"resources": "resources.json",
+		"dataSources": {
+			"mainService": {
+				"uri": "odata/v2/TaxWarehouseService/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/metadata.xml",
+					"annotations": ["LocalAnnotations"]
+				}
+			},
+			"LocalAnnotations": {
+				"uri": "annotations/annotations.xml",
+				"type": "ODataAnnotation",
+				"settings": {
+					"localUri": "annotations/annotations.xml"
+				}
+			}
+		},
+		"offline": false,
+		"sourceTemplate": {
+			"id": "ui5template.smartTemplate",
+			"version": "1.40.12"
+		},
+		"crossNavigation": {
+			"inbounds": {
+				"TaxWarehouse-configure": {
+					"semanticObject": "TaxWarehouse",
+					"action": "configure",
+					"icon": "sap-icon://Fiori5/F0252",
+					"title": "{{appTitle}}",
+					"subTitle": "{{appDescription}}",
+					"deviceTypes": {
+						"desktop": true,
+						"tablet": true,
+						"phone": true
+					}
+				}	
+			},
+			"outbounds": {}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": ["sap_hcb", "sap_belize"]
+	},
+	"sap.ui5": {
+		"resources": {
+			"js": [],
+			"css": []
+		},
+		"dependencies": {
+			"minUI5Version": "1.54.6",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.comp": {},
+				"sap.uxap": {},
+				"sap.suite.ui.generic.template": {},
+				"sap.ui.layout": {},
+				"sap.ushell": {},
+				"sap.collaboration": {}
+			},
+			"components": {}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"@i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"i18n|sap.suite.ui.generic.template.ListReport|TaxWarehouse": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/ListReport/TaxWarehouse/i18n.properties"
+			},
+			"i18n|sap.suite.ui.generic.template.ObjectPage|TaxWarehouse": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/ObjectPage/TaxWarehouse/i18n.properties"
+			},
+			"i18n|sap.suite.ui.generic.template.ObjectPage|TaxWarehouseAssignment": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/ObjectPage/TaxWarehouseAssignment/i18n.properties"
+			},
+			"": {
+				"dataSource": "mainService",
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Inline",
+					"refreshAfterChange": false
+				}
+			}
+		},
+		"extends": {
+			"extensions": {
+				"sap.ui.controllerExtensions": {
+					"sap.suite.ui.generic.template.ListReport.view.ListReport": {
+						"controllerName": "com.sap.icd.edpoc.ExciseDutyConfigTaxWarehouse.ext.controller.ListReportExt",
+						"sap.ui.generic.app": {
+							"TaxWarehouse": {
+								"EntitySet": "TaxWarehouse",
+								"Actions": {
+									"ActionB": {
+										"id": "ActionB_requiresSelection",
+										"text": "Tax Report",
+										"press": "onClickActionB_requiresSelection",
+										"requiresSelection": true
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		}
+	},
+	"sap.ui.generic.app": {
+		"pages": [{
+			"entitySet": "TaxWarehouse",
+			"component": {
+				"name": "sap.suite.ui.generic.template.ListReport",
+				"list": true
+			},
+			"pages": [{
+				"entitySet": "TaxWarehouse",
+				"component": {
+					"name": "sap.suite.ui.generic.template.ObjectPage"
+				},
+				"pages": [{
+					"navigationProperty": "taxWarehouseAssignments",
+					"entitySet": "TaxWarehouseAssignment",
+					"component": {
+						"name": "sap.suite.ui.generic.template.ObjectPage"
+					}
+				}]
+			}]
+		}]
+	},
+	"sap.fiori": {
+		"registrationIds": [],
+		"archeType": "transactional"
+	},
+	"sap.platform.hcp": {
+		"uri": ""
+	},
+	"sap.platform.cf": {
+		"oAuthScopes": [
+			"ed-excise_duty!t35.ConfDisp",
+			"ed-excise_duty!t35.ConfEdit",
+			"ed-excise_duty_demo!t35.ConfDisp",
+			"ed-excise_duty_demo!t35.ConfEdit",
+			"ed-excise_duty_test!t35.ConfDisp",
+			"ed-excise_duty_test!t35.ConfEdit",			
+			"ed-excise_duty_playground!t35.ConfDisp",
+			"ed-excise_duty_playground!t35.ConfEdit"
+		  ]
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"fileName": "id_1517239870504_104_propertyChange",
+	"fileType": "change",
+	"changeType": "propertyChange",
+	"reference": "com.sap.icd.edpoc.ExciseDutyMasterDataShipToMaster.Component",
+	"packageName": "$TMP",
+	"content": {
+		"property": "visible",
+		"newValue": false
+	},
+	"selector": {
+		"id": "com.sap.icd.edpoc.ExciseDutyMasterDataShipToMaster::sap.suite.ui.generic.template.ListReport.view.ListReport::ShipToMasterExtension--template::PageVariant-trigger",
+		"type": "sap.m.Button",
+		"idIsLocal": false
+	},
+	"layer": "VENDOR",
+	"texts": {},
+	"namespace": "apps/com.sap.icd.edpoc.ExciseDutyMasterDataShipToMaster/changes/",
+	"creation": "2018-01-29T15:31:14.955Z",
+	"originalLanguage": "EN",
+	"conditions": {},
+	"context": "",
+	"support": {
+		"generator": "Change.createInitialFileContent",
+		"service": "",
+		"user": "",
+		"sapui5Version": "1.52.4"
+	},
+	"dependentSelector": {},
+	"validAppVersions": {
+		"creation": "${project.version}",
+		"from": "${project.version}",
+		"to": "${project.version}"
+	}
+}

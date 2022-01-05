@@ -1,0 +1,15 @@
+entity DATABASECHANGELOG {
+      ID : String(255);
+      AUTHOR : String(255);
+      FILENAME : String(255);
+      DATEEXECUTED : UTCTimestamp;
+      ORDEREXECUTED : Integer;
+      EXECTYPE : String(10);
+      MD5SUM : String(35);
+      DESCRIPTION : String(255);
+      COMMENTS : String(255);
+      TAG : String(255);
+      LIQUIBASE : String(20);
+      CONTEXTS : String(255);
+      LABELS : String(255);
+};

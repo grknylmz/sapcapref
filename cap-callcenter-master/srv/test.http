@@ -1,0 +1,6 @@
+
+GET http://localhost:4004/call-center/Inquiries
+
+###
+POST http://localhost:4004/v2/call-center/Inquiries_start?ID=guid'84143283-345b-43a9-a12f-748840820e8f'
+Content-type: application/json

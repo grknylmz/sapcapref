@@ -1,0 +1,6 @@
+entity DATABASECHANGELOGLOCK {
+  key ID : Integer;
+      LOCKED : hana.SMALLINT;
+      LOCKGRANTED : UTCTimestamp;
+      LOCKEDBY : String(255);
+};

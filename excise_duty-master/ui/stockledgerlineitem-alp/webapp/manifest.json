@@ -1,0 +1,197 @@
+{
+	"_version": "1.7.0",
+	"sap.app": {
+		"id": "com.sap.icd.edpoc.ExciseDutyStockLedgerLineItemALP",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "0.2.1"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"tags": {
+			"keywords": []
+		},
+		"ach": "xx",
+		"resources": "resources.json",
+		"dataSources": {
+			"mainService": {
+				"uri": "odata/v2/StockLedgerAlpService/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/metadata.xml",
+					"annotations": ["LocalAnnotations"]
+				}
+			},
+			"LocalAnnotations": {
+				"uri": "annotations/annotations.xml",
+				"type": "ODataAnnotation",
+				"settings": {
+					"localUri": "annotations/annotations.xml"
+				}
+			}
+		},
+		"offline": false,
+		"sourceTemplate": {
+			"id": "ui5template.smartTemplate",
+			"version": "1.40.12"
+		},
+		"crossNavigation": {
+			"inbounds": {
+				"ExciseDutyStockLedgerLineItem-analyze": {
+					"semanticObject": "ExciseDutyStockLedgerLineItem",
+					"action": "analyze",
+					"icon": "sap-icon://Fiori2/F0252",
+					"title": "{{appTitle}}",
+					"subTitle": "{{appDescription}}",
+					"indicatorDataSource": {
+						"path": "/comsapicdedpocExciseDutyStockLedgerLineItem-0.2.1/odata/v2/StockLedgerService/StockLedgerLineItem/$count",
+						"refresh": "10",
+						"displayNumberUnit": ""
+					},
+					"deviceTypes": {
+						"desktop": true,
+						"tablet": true,
+						"phone": true
+					}	
+				}
+			},
+			"outbounds": {}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": false,
+			"phone": false
+		},
+		"supportedThemes": ["sap_hcb", "sap_belize"]
+	},
+	"sap.ui5": {
+		"resources": {
+			"js": [],
+			"css": []
+		},
+		"dependencies": {
+			"minUI5Version": "1.54.6",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.comp": {},
+				"sap.uxap": {},
+				"sap.suite.ui.generic.template": {},
+				"sap.ui.layout": {},
+				"sap.ushell": {},
+				"sap.collaboration": {}
+			},
+			"components": {}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"@i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			},
+			"": {
+				"dataSource": "mainService",
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Inline",
+					"refreshAfterChange": false
+				}
+			},
+			"kpi": {
+				"dataSource": "mainService",
+				"settings": {
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Inline",
+					"refreshAfterChange": false
+				}
+			}
+		},
+		"extends": {
+			"extensions": {
+				"sap.ui.controllerExtensions": {
+					"sap.suite.ui.generic.template.AnalyticalListPage.view.AnalyticalListPage": {
+						"controllerName": "com.sap.icd.edpoc.ExciseDutyStockLedgerLineItemALP.ext.controller.AnalyticalListPageExt",
+						"sap.ui.generic.app": {
+							"StockLedgerLineItem": {
+								"EntitySet": "StockLedgerLineItem",
+								"Actions": {
+									"ActionB": {
+										"id": "ActionB_requiresSelection",
+										"text": "Document flow",
+										"press": "onClickActionB_requiresSelection",
+										"requiresSelection": true
+									}
+								}
+							}
+						}
+					}
+				}
+				
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		}
+	},
+	"sap.ui.generic.app": {
+		"pages": [{
+			"entitySet": "StockLedgerLineItem",
+			"component": {
+				"name": "sap.suite.ui.generic.template.AnalyticalListPage",
+				"list": true,
+				"settings": {
+					"qualifier": "DefaultPresentationVariant",
+					"defaultContentView": "charttable",
+					"defaultFilterMode": "visual",
+					"smartVariantManagement": false,
+					"showGoButtonOnFilterBar": true,
+					"showAutoHide": true,
+					"autoHide": true,
+					"condensedTableLayout": true,
+					"keyPerformanceIndicators": {
+						"Test": {
+							"model": "kpi",
+							"entitySet": "StockLedgerLineItem",
+							"qualifier": "KPI"
+						}							
+					}
+				}
+			}
+		}]
+	},
+	"sap.fiori": {
+		"registrationIds": [],
+		"archeType": "transactional"
+	},
+	"sap.platform.hcp": {
+		"uri": ""
+	},
+	"sap.platform.cf": {
+		"oAuthScopes": [
+			"ed-excise_duty!t35.SLDisp",
+			"ed-excise_duty!t35.SLEdit",
+			"ed-excise_duty_demo!t35.SLDisp",
+			"ed-excise_duty_demo!t35.SLEdit",
+			"ed-excise_duty_test!t35.SLDisp",
+			"ed-excise_duty_test!t35.SLEdit",			
+			"ed-excise_duty_playground!t35.SLDisp",
+			"ed-excise_duty_playground!t35.SLEdit"
+		  ]
+	}
+}

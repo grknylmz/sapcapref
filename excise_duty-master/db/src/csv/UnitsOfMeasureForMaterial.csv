@@ -1,0 +1,10 @@
+materialNumber,alternativeUnitOfMeasure,numeratorForConversionToBaseUnitsOfMeasure,denominatorForConversionToBaseUnitsOfMeasure
+EDBDI01,PC,1,1
+EDBDI01,L,1,10
+EDBDI01,HL,10,1
+EDBISM01,PC,1,1
+EDBISM01,L,5,33
+EDBISM01,HL,500,33
+EDBDI02,HL,10,1
+EDBDI02,L,1,10
+EDBDI02,PC,1,1

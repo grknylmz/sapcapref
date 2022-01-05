@@ -1,0 +1,178 @@
+{
+  "_version": "1.7.0",
+  "sap.app": {
+    "id": "my.cave.insightwinecellar",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "tags": {
+      "keywords": []
+    },
+    "ach": "ACH",
+    "resources": "resources.json",
+    "dataSources": {
+      "mainService": {
+        "uri": "/customer/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "offline": false
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    },
+    "supportedThemes": ["sap_hcb", "sap_belize", "sap_fiori_3_dark"]
+  },
+  "sap.ui5": {
+    "resources": {
+      "js": [],
+      "css": []
+    },
+    "dependencies": {
+      "minUI5Version": "1.65.0",
+      "libs": {},
+      "components": {}
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      },
+      "mainService": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "extends": {
+      "extensions": {}
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "analytical"
+  },
+  "sap.ovp": {
+    "globalFilterModel": "mainService",
+    "globalFilterEntityType": "",
+    "containerLayout": "resizable",
+    "enableLiveFilter": true,
+    "refreshIntervalInMinutes": 5,
+    "considerAnalyticalParameters": true,
+    "cards": {
+      "card01": {
+        "model": "mainService",
+        "template": "sap.ovp.cards.v4.charts.analytical",
+        "chartType": "cardchartsdonut",
+        "chartSettings": {
+          "showDataLabel":true
+        },
+        "settings": {
+          "title": "{{donutQtyColorWineCellar}}",
+          "entitySet": "CellarAnalytics",
+          "chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#VinPerColor",
+          "presentationAnnotationPath": "com.sap.vocabularies.UI.v1.PresentationVariant#VinPerColor"
+        }
+      },
+      "card02": {
+        "model": "mainService",
+        "template": "sap.ovp.cards.v4.charts.analytical",
+        "chartType": "cardchartscolumnstacked",
+        "chartSettings": {
+          "showDataLabel":true
+        },
+        "settings": {
+          "title": "{{stackedColumnWinePerType}}",
+          "entitySet": "CellarAnalytics",
+          "chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#VinPerYear",
+          "presentationAnnotationPath": "com.sap.vocabularies.UI.v1.PresentationVariant#VinPerYear"
+        }
+      },
+      "card03": {
+        "model": "mainService",
+        "template": "sap.ovp.cards.v4.charts.analytical",
+        "chartType": "cardchartscolumnstacked",
+        "chartSettings": {
+          "showDataLabel":true
+        },
+        "settings": {
+          "title": "{{donutQtyWinePerAgingStatus}}",
+          "entitySet": "CellarAnalytics",
+          "chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#VinPerCriticality",
+          "presentationAnnotationPath": "com.sap.vocabularies.UI.v1.PresentationVariant#VinPerCriticality"
+        }
+      },
+      "card04": {
+        "model": "mainService",
+        "template": "sap.ovp.cards.v4.charts.analytical",
+        "chartType": "cardchartsbar",
+        "chartSettings": {
+          "showDataLabel":true
+        },
+        "settings": {
+          "title": "{{barChartQtyWinesPerNameAndColor}}",
+          "entitySet": "CellarAnalytics",
+          "chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#VinPerNameQuantity"
+        }
+      },
+      "card05": {
+        "model": "mainService",
+        "template": "sap.ovp.cards.v4.charts.analytical",
+        "chartType": "cardchartsbar",
+        "chartSettings": {
+          "showDataLabel":true
+        },
+        "settings": {
+          "title": "{{barChartWinesColorPerVintage}}",
+          "entitySet": "CellarAnalytics",
+          "chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart#VinPerYearColor"
+        }
+      },
+      "card06": {
+        "model": "mainService",
+        "template": "sap.ovp.cards.v4.charts.analytical",
+        "chartType": "cardchartsscatter",
+        "chartSettings": {
+          "showDataLabel":true
+        },
+        "settings": {
+          "title": "{{positionScatterChart}}",
+          "entitySet": "Storage",
+          "chartAnnotationPath": "com.sap.vocabularies.UI.v1.Chart"
+        }
+      }
+    }
+  }
+}
